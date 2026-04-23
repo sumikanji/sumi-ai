@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumi AI - Kanji Mastery Ultimate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Hina+Mincho&family=Zen+Maru+Gothic:wght@500;700&family=IBM+Plex+Sans+JP:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+    <style>
+        :root {
+            --muji-bg: #fdfaf5;
+            --muji-red: #a63d40;
+            --muji-text: #333333;
+            --gray-border: #e8e8e8;
+            --gray-cell: #f5f5f5;
+            --current-font: 'Hina Mincho', serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: var(--muji-bg);
+            display: flex; flex-direction: column; align-items: center;
+            padding: 20px; color: var(--muji-text);
+        }
+
+        /* --- LAYOUT CHIA CỘT --- */
+        .main-layout {
+            display: flex; gap: 30px; width: 100%; max-width: 1100px;
+            margin-top: 20px; align-items: flex-start;
+        }
+        .left-side { flex: 1.5; display: flex; flex-direction: column; gap: 15px; }
+        .right-side { flex: 1; display: flex; flex-direction: column; gap: 15px; position: sticky; top: 20px; }
+
+        /* --- BOT AREA --- */
+        .bot-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; min-height: 180px; justify-content: flex-end; }
+        #sumi-robot { width: 120px; height: 120px; position: relative; animation: floatingSumi 3s ease-in-out infinite; }
+        @keyframes floatingSumi { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .bot-bubble {
+            background: white; padding: 12px 20px; border-radius: 20px; border: 1px solid var(--gray-border); 
+            font-size: 15px; font-weight: 600; margin-top: 10px; width: 100%; max-width: 420px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); color: var(--muji-red); text-align: center;
+        }
+/* Khung chứa các nút cấp độ */
+.level-selection { 
+    display: flex; 
+    gap: 15px; /* Tăng khoảng cách dãn cách giữa các nút */
+    justify-content: center; 
+    flex-wrap: wrap; 
+    padding: 10px 0;
+}
+
+/* Nút cấp độ to hơn */
+.l-btn {
+    background: var(--gray-cell); 
+    border: 1px solid var(--gray-border); 
+    width: 60px;  /* Tăng từ 45px lên 60px */
+    height: 60px; /* Tăng từ 45px lên 60px */
+    border-radius: 15px; /* Bo góc mềm mại hơn */
+    font-size: 16px;     /* Chữ to hơn một chút */
+    cursor: pointer; 
+    transition: 0.3s; 
+    font-weight: 800; 
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hiệu ứng khi di chuột vào hoặc khi đang kích hoạt */
+.l-btn:hover {
+    border-color: var(--muji-red);
+    color: var(--muji-red);
+}
+
+.l-btn.active { 
+    background: var(--muji-red); 
+    color: white; 
+    border-color: var(--muji-red);
+    box-shadow: 0 4px 12px rgba(166, 61, 64, 0.2); /* Thêm bóng đổ cho nút đang chọn */
+}
+        /* --- COMPONENTS --- */
+        .level-card { width: 100%; background: white; padding: 15px; border-radius: 20px; border: 1px solid var(--gray-border); text-align: center; }
+        .l-btn { background: var(--gray-cell); border: 1px solid var(--gray-border); width: 45px; height: 45px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .l-btn.active { background: var(--muji-red); color: white; }
+
+        .feature-row { display: flex; gap: 10px; width: 100%; }
+        .btn-feature {
+            flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--muji-red);
+            background: white; color: var(--muji-red); font-weight: 700; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 11px;
+        }
+        .btn-feature:hover { background: var(--muji-red); color: white; }
+
+        .btn-search-full {
+            width: 100%; background: white; color: var(--muji-red); border: 1px solid var(--muji-red);
+            padding: 14px; border-radius: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase;
+        }
+        .btn-search-full:hover { background: var(--muji-red); color: white; }
+
+        .master-box { background: white; border: 1px solid var(--gray-border); border-radius: 25px; padding: 20px; }
+        .kanji-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 12px; }
+        .kanji-cell {
+            aspect-ratio: 1/1; background: var(--gray-cell); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            font-family: var(--current-font); font-size: 26px; transition: 0.3s; border: 2px solid transparent;
+        }
+        .kanji-cell.selected { background: var(--muji-red) !important; color: white !important; }
+        .kanji-cell.viewing { border-color: var(--muji-red); }
+
+        .preview-card {
+            background: white; border-radius: 30px; padding: 25px; width: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            border: 1px solid var(--gray-border); box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        #writer-canvas { width: 160px; height: 160px; margin-bottom: 15px; }
+        .hv-tag { font-size: 24px; font-weight: 700; color: var(--muji-red); letter-spacing: 3px; }
+        .reading-grid { display: flex; width: 100%; justify-content: space-around; padding: 15px 0; border-top: 1px solid #eee; margin-top: 15px; }
+        .vocab-item { background: var(--gray-cell); padding: 10px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; width: 100%; font-size: 14px; }
+
+        /* --- MODAL TRA CỨU --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: white; padding: 25px; border-radius: 25px; width: 95%; max-width: 550px;
+            position: relative; text-align: center;
+        }
+        #hw-canvas-modal {
+            width: 100%; height: 350px; border: 2px solid var(--gray-border); border-radius: 15px;
+            background-color: #fff; cursor: crosshair; touch-action: none;
+            background-image: linear-gradient(var(--gray-border) 1px, transparent 1px), linear-gradient(90deg, var(--gray-border) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .prediction-row { 
+            display: flex; gap: 8px; overflow-x: auto; margin-bottom: 15px; 
+            min-height: 60px; justify-content: center; padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        @media (max-width: 800px) { .main-layout { flex-direction: column; } .right-side { position: static; } }
+    </style>
+</head>
+<body>
+
+    <div class="bot-container">
+        <div id="sumi-robot">
+            <svg viewBox="0 0 100 100"><rect x="10" y="20" width="80" height="60" rx="30" fill="white" stroke="#e0e0e0" stroke-width="1.5"/><rect x="22" y="32" width="56" height="36" rx="18" fill="#333"/><circle cx="38" cy="50" r="5" fill="#00ffcc"/><circle cx="62" cy="50" r="5" fill="#00ffcc"/><path d="M50 20 L50 5" stroke="#a63d40" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="5" r="7" fill="#a63d40"/></svg>
+        </div>
+        <div class="bot-bubble"><span id="type-text">Cùng Sumi chinh phục Kanji nhé!</span></div>
+    </div>
+
+    <div class="main-layout">
+        <div class="left-side">
+            <div class="level-card">
+         
+        <span style="font-size: 14px; font-weight: 500; color: #888888; display: block; margin-bottom: 5px; letter-spacing: 0.5px;">
+        Chọn chế độ luyện tập
+    </span>
+    
+                <div class="level-selection">
+                    <button class="l-btn active" onclick="switchLevel('N5', this)">N5</button>
+                    <button class="l-btn" onclick="switchLevel('N4', this)">N4</button>
+                    <button class="l-btn" onclick="switchLevel('N3', this)">N3</button>
+                    <button class="l-btn" onclick="switchLevel('N2', this)">N2</button>
+                    <button class="l-btn" onclick="switchLevel('N1', this)">N1</button>
+                </div>
+    
+    </div>
+            <div class="feature-row">
+                <button class="btn-feature" onclick="goToFlashcards()">+ Flashcard</button>
+                <button class="btn-feature" onclick="goToWritingSheet()">+ In PDF</button>
+            </div>
+            <div class="feature-row">
+                <button class="btn-feature" id="count-btn" onclick="countVisibleKanji()">Tổng: 0 chữ</button>
+                <button class="btn-feature" onclick="selectAllInGrid()">Chọn tất cả</button>
+            </div>
+            <div class="master-box">
+                <div class="kanji-grid" id="kanji-grid"></div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <button class="btn-search-full" onclick="openModal()"> + TRA CỨU VIẾT TAY </button>
+            <div class="preview-card">
+                <button id="btn-go-practice" style="width: 100%; background: #a63d40; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; margin-bottom: 15px; cursor: pointer;">✍️ LUYỆN VIẾT RIÊNG</button>
+                <div id="writer-canvas"></div>
+                <div class="info-panel" style="width: 100%; text-align: center;">
+                    <div class="hv-tag" id="hv-val">SUMI AI</div>
+                    <div id="mean-val" style="color: #666; margin-top: 5px;">Chọn chữ để học!</div>
+                    <div class="reading-grid">
+                        <div class="read-box"><span style="font-size: 10px; color: #aaa;">ON</span><div id="on-val" style="font-weight: 700;">-</div></div>
+                        <div class="read-box"><span style="font-size: 10px; color: #aaa;">KUN</span><div id="kun-val" style="font-weight: 700;">-</div></div>
+                    </div>
+                    <div id="vocab-section" style="display:none; text-align: left; width: 100%; margin-top: 15px;">
+                        <span style="font-size: 11px; font-weight: 800; color: #aaa; text-transform: uppercase;">Từ vựng mở rộng</span>
+                        <div id="vocab-list" style="margin-top: 8px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="hw-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span onclick="closeModal()" style="position:absolute; top:10px; right:20px; font-size:35px; cursor:pointer; color:#999;">&times;</span>
+            <h4 style="margin-bottom: 10px; color: var(--muji-red); text-transform: uppercase; letter-spacing: 1px;">Vẽ chữ vào khung</h4>
+            <div id="prediction-row" class="prediction-row">
+                <span style="color:#ccc; font-style:italic; font-size:13px; margin-top:15px;">Kết quả sẽ hiện ở đây...</span>
+            </div>
+            <canvas id="hw-canvas-modal"></canvas>
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn-feature" style="border-color:#ccc; color:#666" onclick="clearCanvas()">Xóa bảng</button>
+                <button class="btn-feature" style="border-color:#ccc; color:#666" onclick="undoStroke()">Hoàn tác</button>
+                <button class="btn-feature" style="background:var(--muji-red); color:white" onclick="closeModal()">Xong</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allLevels = {};
+        let selectedKanjiData = [];
+        window.currentSelectedKanji = "";
+
+        // 1. DỮ LIỆU
+        async function loadData() {
+            try {
+                const response = await fetch('kanji_data.json');
+                allLevels = await response.json();
+                switchLevel('N5', document.querySelector('.l-btn'));
+            } catch (e) { console.error("Lỗi: Không tìm thấy file dữ liệu."); }
+        }
+
+        function typeText(text) {
+    const element = document.getElementById('type-text');
+    if (!element) return;
+    
+    // Xóa bộ đếm cũ nếu đang chạy dở
+    if (window.typingTimer) clearTimeout(window.typingTimer);
+    
+    element.textContent = ""; 
+    let i = 0;
+    
+    function typing() { 
+        if (i < text.length) { 
+            element.textContent += text.charAt(i); 
+            i++; 
+            window.typingTimer = setTimeout(typing, 40); // Tốc độ chạy chữ
+        } 
+    }
+    typing();
+}
+
+        function switchLevel(lvl, btn) {
+            if (btn) {
+                document.querySelectorAll('.l-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            renderGrid(allLevels[lvl] || []);
+        const messages = {
+        'N5': "Cấp độ N5: Những bước đi đầu tiên chinh phục Kanji!",
+        'N4': "Cấp độ N4: Cố gắng lên, cậu đang tiến bộ rất nhanh đó.",
+        'N3': "Cấp độ N3: Bắt đầu vào giai đoạn trung cấp rồi đấy!",
+        'N2': "Cấp độ N2: Wow, cậu đang học những chữ Kanji rất khó rồi.",
+        'N1': "Cấp độ N1: Đỉnh cao Kanji đây rồi, cùng chinh phục nhé!"
+    };
+    
+    typeText(messages[lvl] || `Đang hiển thị danh sách chữ ${lvl}...`);
+    renderGrid(allLevels[lvl] || []);
+
+        }
+
+        function renderGrid(data) {
+            const grid = document.getElementById('kanji-grid');
+            grid.innerHTML = '';
+            data.forEach(item => {
+                const cell = document.createElement('div');
+                cell.className = 'kanji-cell';
+                cell.innerText = item.c;
+                if (selectedKanjiData.some(s => s.c === item.c)) cell.classList.add('selected');
+                cell.onclick = () => {
+                    document.querySelectorAll('.kanji-cell').forEach(c => c.classList.remove('viewing'));
+                    cell.classList.add('viewing');
+                    if (cell.classList.contains('selected')) {
+                        cell.classList.remove('selected');
+                        selectedKanjiData = selectedKanjiData.filter(s => s.c !== item.c);
+                    } else {
+                        cell.classList.add('selected');
+                        selectedKanjiData.push(item);
+                    }
+                    showDetails(item);
+                };
+                grid.appendChild(cell);
+            });
+            document.getElementById('count-btn').innerText = ` Tổng: ${data.length} chữ`;
+        }
+
+        function showDetails(item) {
+            typeText(`Cậu đang xem chi tiết chữ "${item.c}". Hãy nhìn cách viết ở trong khung nhé!`);
+            window.currentSelectedKanji = item.c;
+            document.getElementById('hv-val').textContent = item.hv;
+            document.getElementById('mean-val').textContent = item.m;
+            document.getElementById('on-val').textContent = item.on;
+            document.getElementById('kun-val').textContent = item.kun;
+            const vSection = document.getElementById('vocab-section');
+            const vList = document.getElementById('vocab-list');
+            vList.innerHTML = '';
+            if (item.v && item.v.length > 0) {
+                vSection.style.display = 'block';
+                item.v.forEach(v => { vList.innerHTML += `<div class="vocab-item"><b>${v.w}</b> <span>${v.n}</span></div>`; });
+            } else { vSection.style.display = 'none'; }
+            document.getElementById('writer-canvas').innerHTML = '';
+            HanziWriter.create('writer-canvas', item.c, { width: 160, height: 160, strokeColor: '#a63d40' }).animateCharacter();
+        }
+
+        // 2. HỆ THỐNG VIẾT TAY (ĐÃ FIX TRIỆT ĐỂ)
+        const modalCanvas = document.getElementById('hw-canvas-modal');
+        const modalCtx = modalCanvas.getContext('2d');
+        let isDrawing = false;
+        let strokes = [];
+        let currentStroke = [];
+
+        function openModal() {
+            typeText("Cậu cứ vẽ vào bảng, để Sumi đoán xem đó là chữ gì nhé!");
+            document.getElementById('hw-modal').style.display = 'flex';
+            // Cần delay cực ngắn để Canvas đo đúng kích thước thực tế sau khi hiện Modal
+            setTimeout(() => {
+                const rect = modalCanvas.getBoundingClientRect();
+                modalCanvas.width = rect.width;
+                modalCanvas.height = rect.height;
+                // Cấu hình nét vẽ
+                modalCtx.lineWidth = 5;
+                modalCtx.lineCap = 'round';
+                modalCtx.lineJoin = 'round';
+                modalCtx.strokeStyle = '#333';
+            }, 50);
+        }
+
+        function closeModal() {
+            document.getElementById('hw-modal').style.display = 'none';
+            clearCanvas();
+        }
+
+        function getPos(e) {
+            const rect = modalCanvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            currentStroke = [];
+            const pos = getPos(e);
+            modalCtx.beginPath();
+            modalCtx.moveTo(pos.x, pos.y);
+            currentStroke.push([pos.x, pos.y]);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            modalCtx.lineTo(pos.x, pos.y);
+            modalCtx.stroke();
+            currentStroke.push([pos.x, pos.y]);
+        }
+
+        function endDrawing() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            if (currentStroke.length > 0) {
+                strokes.push(currentStroke);
+                recognizeHandwriting();
+            }
+        }
+
+        // Gắn sự kiện cho Canvas Modal
+        modalCanvas.addEventListener('mousedown', startDrawing);
+        modalCanvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', endDrawing);
+
+        modalCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); }, {passive: false});
+        modalCanvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, {passive: false});
+        modalCanvas.addEventListener('touchend', endDrawing, {passive: false});
+
+        async function recognizeHandwriting() {
+            const url = "https://www.google.com.tw/inputtools/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8";
+            // Định dạng ink theo đúng yêu cầu API Google
+            const ink = strokes.map(s => [
+                s.map(p => Math.round(p[0])),
+                s.map(p => Math.round(p[1])),
+                []
+            ]);
+
+            const payload = {
+                options: "enable_pre_space",
+                requests: [{
+                    writing_guide: { 
+                        writing_area_width: modalCanvas.width, 
+                        writing_area_height: modalCanvas.height 
+                    },
+                    ink: ink,
+                    language: "ja"
+                }]
+            };
+
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data[0] === "SUCCESS") {
+                    renderPredictions(data[1][0][1]);
+                }
+            } catch (err) {
+                console.error("Lỗi API tra cứu:", err);
+            }
+        }
+
+        function renderPredictions(candidates) {
+            const row = document.getElementById('prediction-row');
+            row.innerHTML = '';
+            candidates.slice(0, 10).forEach(char => {
+                const d = document.createElement('div');
+                d.innerText = char;
+                d.style = "background:white; border:1px solid #a63d40; color:#a63d40; min-width:48px; height:48px; display:flex; align-items:center; justify-content:center; border-radius:12px; cursor:pointer; font-weight:bold; font-size:22px; flex-shrink:0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);";
+                d.onclick = () => {
+                    findAndShow(char);
+                    closeModal();
+                };
+                row.appendChild(d);
+            });
+        }
+
+        function findAndShow(char) {
+            let found = null;
+            for (const l in allLevels) {
+                found = allLevels[l].find(i => i.c === char);
+                if (found) break;
+            }
+            if (found) showDetails(found);
+            else showDetails({c: char, hv: "Tra cứu", m: "Chưa có dữ liệu", on: "-", kun: "-", v: []});
+        }
+
+        function clearCanvas() {
+            modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
+            strokes = [];
+            document.getElementById('prediction-row').innerHTML = '<span style="color:#ccc; font-style:italic; font-size:13px; margin-top:15px;">Kết quả sẽ hiện ở đây...</span>';
+        }
+
+        function undoStroke() {
+            strokes.pop();
+            modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
+            strokes.forEach(s => {
+                modalCtx.beginPath();
+                modalCtx.moveTo(s[0][0], s[0][1]);
+                s.forEach(p => modalCtx.lineTo(p[0], p[1]));
+                modalCtx.stroke();
+            });
+            if (strokes.length > 0) recognizeHandwriting();
+            else clearCanvas();
+        }
+
+        // 3. TIỆN ÍCH
+        function goToFlashcards() { typeText("Đang chuẩn bị thẻ Flashcard để cậu ôn tập nè...");localStorage.setItem('selectedKanji', JSON.stringify(selectedKanjiData)); window.location.href = 'flashcard.html'; }
+        function goToWritingSheet() { typeText("Sumi đang tạo file PDF tập viết cho cậu đây!");localStorage.setItem('selectedKanji', JSON.stringify(selectedKanjiData)); window.location.href = 'writing_sheet.html'; }
+        function countVisibleKanji() { typeText(`Hiện có ${document.getElementById('kanji-grid').children.length} chữ.`); }
+        function selectAllInGrid() { const cells = document.querySelectorAll('.kanji-cell'); cells.forEach(c => { if(!c.classList.contains('selected')) c.click(); }); }
+
+        window.onload = loadData;
+
+        document.getElementById('btn-go-practice').onclick = function() {
+            if(!window.currentSelectedKanji) { alert("Cậu chọn 1 chữ trước nhé!"); return; }
+            window.location.href = "practice.html?kanji=" + encodeURIComponent(window.currentSelectedKanji);
+        };
+    </script>
+</body>
+</html>

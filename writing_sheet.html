@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sumi AI - Phiếu Luyện Viết (Nghĩa Màu Xám)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Be+Vietnam+Pro:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --muji-red: #a63d40;
+            --muji-gray: #757575; /* Màu xám Muji cho nghĩa */
+            --line-color: #f0f0f0;
+            --border-color: #ccc;
+        }
+
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Be Vietnam Pro', sans-serif; 
+            background: #f0f0f0; 
+            margin: 0; padding: 20px; 
+        }
+
+        .page { 
+            background: white; width: 210mm; min-height: 297mm; 
+            padding: 15mm; margin: 0 auto; box-shadow: 0 0 15px rgba(0,0,0,0.1); 
+        }
+
+        .header {
+            text-align: center; margin-bottom: 25px;
+            border-bottom: 2px solid var(--muji-red); padding-bottom: 10px;
+        }
+
+        .header h1 { color: var(--muji-red); font-size: 20px; margin: 0; letter-spacing: 2px; }
+
+        .kanji-block { margin-bottom: 30px; page-break-inside: avoid; width: 100%; }
+
+        /* BỐ CỤC THÔNG TIN */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1.5px dashed #cccccc;
+            width: 100%;
+        }
+
+        /* Khối bên trái: Hán Việt (Đỏ) + Nghĩa (Xám) */
+        .left-group {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .hv-main {
+            font-weight: 800; font-size: 20px;
+            color: var(--muji-red); text-transform: uppercase;
+        }
+        .mean-main { 
+            font-size: 14px; 
+            color: var(--muji-gray); /* Đã đổi sang màu xám */
+            font-weight: 500; 
+        }
+
+        /* Khối bên phải: Ví dụ + Nghĩa ví dụ */
+        .right-group {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            text-align: right;
+            max-width: 60%;
+        }
+        .v-word {
+            font-family: 'Hina Mincho', serif; font-size: 16px;
+            color: #333; font-weight: 700; white-space: nowrap;
+        }
+        .v-mean { 
+            font-size: 13px; color: #888; font-style: italic;
+            word-wrap: break-word;
+        }
+
+        /* Lưới ô vuông */
+        .grid-row { display: flex; gap: 8px; justify-content: flex-start; }
+        .box { 
+            width: 50px; height: 50px; border: 1px solid var(--border-color); 
+            display: flex; align-items: center; justify-content: center; 
+            font-family: 'Hina Mincho', serif; font-size: 30px; color: #d0d0d0;
+            position: relative; 
+        }
+
+        .box::after { content: ''; position: absolute; width: 100%; height: 0; border-top: 1px dotted #e0e0e0; top: 50%; }
+        .box::before { content: ''; position: absolute; height: 100%; width: 0; border-left: 1px dotted #e0e0e0; left: 50%; }
+        .box.sample { color: #888; border-color: #999; background: #fafafa; }
+
+        /* ĐIỀU KHIỂN */
+        .controls { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .btn { padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-print { background: var(--muji-red); color: white; }
+        .btn-back { background: white; color: #666; border: 1px solid #ccc; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; margin: 0; width: 100%; padding: 10mm; }
+            .controls { display: none; }
+            .info-row { 
+                border-bottom: 1.5px dashed #bbb !important; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            .mean-main { color: #757575 !important; } /* Giữ màu xám khi in */
+            .v-mean { color: #888 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button class="btn btn-print" onclick="window.print()">🖨️ In Phiếu Luyện Viết</button>
+        <button class="btn btn-back" onclick="window.history.back()">Quay lại</button>
+    </div>
+
+    <div class="page">
+        <div class="header">
+            <h1>LUYỆN VIẾT KANJI</h1>
+        </div>
+        
+        <div id="list-container"></div>
+    </div>
+
+    <script>
+        const selectedData = JSON.parse(localStorage.getItem('selectedKanji')) || [];
+        const container = document.getElementById('list-container');
+
+        selectedData.forEach(item => {
+            const block = document.createElement('div');
+            block.className = 'kanji-block';
+
+            let v_word = ""; let v_mean = "";
+            if(item.v && item.v.length > 0) {
+                v_word = `${item.v[0].w} (${item.v[0].r})`;
+                v_mean = item.v[0].n;
+            } else {
+                v_word = item.c; v_mean = item.m;
+            }
+
+            let boxesHtml = `<div class="box sample">${item.c}</div>`;
+            for (let i = 0; i < 10; i++) boxesHtml += `<div class="box"></div>`;
+
+            block.innerHTML = `
+                <div class="info-row">
+                    <div class="left-group">
+                        <div class="hv-main">${item.hv}</div>
+                        <div class="mean-main">${item.m}</div>
+                    </div>
+                    <div class="right-group">
+                        <div class="v-word">${v_word}</div>
+                        <div class="v-mean">${v_mean}</div>
+                    </div>
+                </div>
+                <div class="grid-row">
+                    ${boxesHtml}
+                </div>
+            `;
+            container.appendChild(block);
+        });
+    </script>
+</body>
+</html>

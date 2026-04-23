@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumi Flashcards - Pro Version</title>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Hina+Mincho&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --muji-bg: #fdfaf5;
+            --muji-red: #a63d40;
+            --muji-text: #333;
+            --gray-sub: #888;
+            --gray-cell: #f8f8f8;
+            --muji-green: #5b8e7d;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Be Vietnam Pro', sans-serif; 
+            background: var(--muji-bg); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .progress { font-size: 13px; color: #999; margin-bottom: 5px; margin-top: 5px; }
+
+        .card-container { 
+            width: 100%;
+            max-width: 350px; 
+            height: 70vh; 
+            max-height: 500px; 
+            perspective: 1000px; 
+            cursor: pointer; 
+            margin-top: 10px;
+        }
+
+        .card { 
+            width: 100%; 
+            height: 100%;
+            position: relative; 
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+            transform-style: preserve-3d; 
+        }
+
+        .card.flipped { transform: rotateY(180deg); }
+
+        .card-face { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            backface-visibility: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            background: white; 
+            border-radius: 25px; 
+            border: 1px solid #eee; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            padding: 20px;
+        }
+
+        .card-front { justify-content: center; align-items: center; }
+        .kanji-main { 
+            font-family: 'Hina Mincho', serif; 
+            font-size: 100px; 
+            color: var(--muji-red); 
+            line-height: 1;
+        }
+        .tap-hint { margin-top: 30px; font-size: 11px; color: #ccc; text-transform: uppercase; letter-spacing: 2px; }
+
+        .card-back { transform: rotateY(180deg); overflow: hidden; }
+        
+        .card-back-content {
+            overflow-y: auto; 
+            flex: 1; 
+            padding-right: 5px;
+        }
+
+        .hv-main { font-size: 24px; font-weight: 800; color: var(--muji-red); text-align: center; text-transform: uppercase; margin-bottom: 4px; }
+        .mean-main { font-size: 15px; color: #555; text-align: center; margin-bottom: 15px; font-weight: 500; }
+
+        .reading-section { 
+            display: flex; 
+            justify-content: space-around; 
+            background: #fdfaf5; 
+            padding: 8px; 
+            border-radius: 12px; 
+            margin-bottom: 15px;
+        }
+        .read-item { text-align: center; flex: 1; }
+        .read-label { font-size: 9px; font-weight: 800; color: #bbb; text-transform: uppercase; }
+        .read-val { font-size: 14px; font-weight: 700; color: var(--muji-text); }
+
+        .vocab-title { font-size: 10px; font-weight: 800; color: var(--gray-sub); text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+
+        .vocab-list { display: flex; flex-direction: column; gap: 8px; }
+
+        .vocab-item { 
+            background: var(--gray-cell); 
+            padding: 10px 12px; 
+            border-radius: 10px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+
+        .v-word-group { display: flex; align-items: baseline; }
+        .v-word { font-size: 18px; font-weight: 700; color: var(--muji-red); }
+        .v-reading { color: #999; font-size: 13px; margin-left: 5px; }
+        .v-mean { font-size: 14px; color: var(--muji-text); font-weight: 500; text-align: right; }
+
+        .controls { margin-top: 15px; display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 350px; }
+        .btn-row { display: flex; gap: 10px; width: 100%; }
+        .btn { flex: 1; border: none; padding: 12px; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 13px; transition: 0.3s; }
+        
+        .btn-next { background: var(--muji-red); color: white; }
+        .btn-learned { background: var(--muji-green); color: white; }
+        .btn-back { background: white; color: #666; border: 1px solid #ddd; }
+        
+        .btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <div class="progress" id="progress-text">0 / 0</div>
+
+    <div class="card-container" onclick="toggleFlip()">
+        <div class="card" id="card">
+            <div class="card-face card-front">
+                <div class="kanji-main" id="f-kanji">-</div>
+                <div class="tap-hint">Chạm để lật</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="card-back-content">
+                    <div class="hv-main" id="b-hv">-</div>
+                    <div class="mean-main" id="b-mean">-</div>
+                    <div class="reading-section">
+                        <div class="read-item"><div class="read-label">On</div><div class="read-val" id="b-on">-</div></div>
+                        <div class="read-item" style="border-left: 1px solid #eee;"><div class="read-label">Kun</div><div class="read-val" id="b-kun">-</div></div>
+                    </div>
+                    <div class="vocab-title">Từ vựng hay dùng</div>
+                    <div class="vocab-list" id="b-vocab"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="btn-row">
+            <button class="btn btn-learned" onclick="removeKanji(event)">Đã thuộc ✓</button>
+            <button class="btn btn-next" onclick="nextCard(event)">Bỏ qua »</button>
+        </div>
+        <button class="btn btn-back" onclick="window.location.href='index.html'">Thoát</button>v1.
+    </div>
+
+    <script>
+        let data = JSON.parse(localStorage.getItem('selectedKanji')) || [];
+        let index = 0;
+
+        function toggleFlip() {
+            document.getElementById('card').classList.toggle('flipped');
+        }
+
+        // HÀM XÓA TỰ ĐỘNG KHÔNG HIỆN THÔNG BÁO
+        function removeKanji(event) {
+            event.stopPropagation();
+            if (data.length === 0) return;
+
+            // Xóa ngay lập tức khỏi mảng
+            data.splice(index, 1);
+            
+            // Cập nhật LocalStorage
+            localStorage.setItem('selectedKanji', JSON.stringify(data));
+
+            // Kiểm tra nếu hết danh sách
+            if (data.length === 0) {
+                alert("Bạn đã hoàn thành danh sách học!");
+                window.location.href = 'ai kanji v1.1.html';
+                return;
+            }
+
+            // Nếu xóa phần tử cuối cùng, quay về phần tử 0
+            if (index >= data.length) {
+                index = 0;
+            }
+
+            // Lật mặt thẻ về mặt trước và đổi nội dung
+            const card = document.getElementById('card');
+            card.classList.remove('flipped');
+            
+            // Đợi hiệu ứng lật một chút rồi mới thay chữ
+            setTimeout(showCard, 150);
+        }
+
+        function showCard() {
+            if (data.length === 0) return;
+
+            const item = data[index];
+            document.getElementById('f-kanji').innerText = item.c;
+            document.getElementById('b-hv').innerText = item.hv;
+            document.getElementById('b-mean').innerText = item.m;
+            document.getElementById('b-on').innerText = item.on || '-';
+            document.getElementById('b-kun').innerText = item.kun || '-';
+            
+            const vocabContainer = document.getElementById('b-vocab');
+            vocabContainer.innerHTML = '';
+            document.querySelector('.card-back-content').scrollTop = 0;
+
+            if (item.v && item.v.length > 0) {
+                item.v.forEach(v => {
+                    vocabContainer.innerHTML += `
+                        <div class="vocab-item">
+                            <div class="v-word-group">
+                                <span class="v-word">${v.w}</span>
+                                <span class="v-reading">(${v.r})</span>
+                            </div>
+                            <div class="v-mean">${v.n}</div>
+                        </div>`;
+                });
+            } else {
+                vocabContainer.innerHTML = '<div style="color:#ccc; font-size:12px; text-align:center; padding: 10px;">Không có từ vựng đi kèm.</div>';
+            }
+
+            document.getElementById('progress-text').innerText = `${index + 1} / ${data.length}`;
+        }
+
+        function nextCard(event) {
+            event.stopPropagation();
+            if (data.length <= 1) return;
+            index = (index + 1) % data.length;
+            
+            document.getElementById('card').classList.remove('flipped');
+            setTimeout(showCard, 150);
+        }
+
+        window.onload = showCard;
+    </script>
+</body>
+</html>
