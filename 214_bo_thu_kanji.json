@@ -1,0 +1,1286 @@
+[
+    {
+        "STT": 1,
+        "BO": "一",
+        "TEN BO": "Nhất",
+        "NGHIA": "Số một"
+    },
+    {
+        "STT": 2,
+        "BO": "〡",
+        "TEN BO": "Cổn",
+        "NGHIA": "Nét sổ"
+    },
+    {
+        "STT": 3,
+        "BO": "丶",
+        "TEN BO": "Chủ",
+        "NGHIA": "Điểm, chấm"
+    },
+    {
+        "STT": 4,
+        "BO": "丿",
+        "TEN BO": "Phiệt",
+        "NGHIA": "Nét sổ xiên qua trái"
+    },
+    {
+        "STT": 5,
+        "BO": "乙",
+        "TEN BO": "Ất",
+        "NGHIA": "Vị trí thứ 2 trong thiên can"
+    },
+    {
+        "STT": 6,
+        "BO": "亅",
+        "TEN BO": "Quyết",
+        "NGHIA": "Nét sổ có móc"
+    },
+    {
+        "STT": 7,
+        "BO": "二",
+        "TEN BO": "Nhị",
+        "NGHIA": "Số hai"
+    },
+    {
+        "STT": 8,
+        "BO": "亠",
+        "TEN BO": "Đầu",
+        "NGHIA": "Chưa có nghĩa"
+    },
+    {
+        "STT": 9,
+        "BO": "人",
+        "TEN BO": "Nhân",
+        "NGHIA": "Người"
+    },
+    {
+        "STT": 10,
+        "BO": "儿",
+        "TEN BO": "Nhi",
+        "NGHIA": "Trẻ con"
+    },
+    {
+        "STT": 11,
+        "BO": "入",
+        "TEN BO": "Nhập",
+        "NGHIA": "Vào"
+    },
+    {
+        "STT": 12,
+        "BO": "八",
+        "TEN BO": "Bát",
+        "NGHIA": "Số tám"
+    },
+    {
+        "STT": 13,
+        "BO": "冂",
+        "TEN BO": "Quynh",
+        "NGHIA": "Vùng biên giới xa, hoang địa"
+    },
+    {
+        "STT": 14,
+        "BO": "冖",
+        "TEN BO": "Mịch",
+        "NGHIA": "Trùm chăn lên"
+    },
+    {
+        "STT": 15,
+        "BO": "冫",
+        "TEN BO": "Băng",
+        "NGHIA": "Nước đá"
+    },
+    {
+        "STT": 16,
+        "BO": "几",
+        "TEN BO": "Kỷ",
+        "NGHIA": "Ghế tựa"
+    },
+    {
+        "STT": 17,
+        "BO": "凵",
+        "TEN BO": "Khảm",
+        "NGHIA": "Há miệng"
+    },
+    {
+        "STT": 18,
+        "BO": "刀",
+        "TEN BO": "Đao",
+        "NGHIA": "Con dao, cây đao (vũ khí)"
+    },
+    {
+        "STT": 19,
+        "BO": "力",
+        "TEN BO": "Lực",
+        "NGHIA": "Sức mạnh"
+    },
+    {
+        "STT": 20,
+        "BO": "勹",
+        "TEN BO": "Bao",
+        "NGHIA": "ba"
+    },
+    {
+        "STT": 21,
+        "BO": "匕",
+        "TEN BO": "Chủy",
+        "NGHIA": "Cái thìa, cái muỗng"
+    },
+    {
+        "STT": 22,
+        "BO": "匚",
+        "TEN BO": "Phương",
+        "NGHIA": "Tủ đựng"
+    },
+    {
+        "STT": 23,
+        "BO": "匸",
+        "TEN BO": "Hệ",
+        "NGHIA": "Che đậy, giấu giếm"
+    },
+    {
+        "STT": 24,
+        "BO": "十",
+        "TEN BO": "Thập",
+        "NGHIA": "Số mười"
+    },
+    {
+        "STT": 25,
+        "BO": "卜",
+        "TEN BO": "Bốc",
+        "NGHIA": "Xem bói"
+    },
+    {
+        "STT": 26,
+        "BO": "卩",
+        "TEN BO": "Tiết",
+        "NGHIA": "Đốt tre"
+    },
+    {
+        "STT": 27,
+        "BO": "厂",
+        "TEN BO": "Hán, xưởng",
+        "NGHIA": "Sườn núi, vách đá"
+    },
+    {
+        "STT": 28,
+        "BO": "厶",
+        "TEN BO": "Khư, tư",
+        "NGHIA": "Riêng tư"
+    },
+    {
+        "STT": 29,
+        "BO": "又",
+        "TEN BO": "Hựu",
+        "NGHIA": "Lại nữa, một lần nữa"
+    },
+    {
+        "STT": 30,
+        "BO": "口",
+        "TEN BO": "Khẩu",
+        "NGHIA": "Cái miệng"
+    },
+    {
+        "STT": 31,
+        "BO": "囗",
+        "TEN BO": "Vi",
+        "NGHIA": "Vây quanh"
+    },
+    {
+        "STT": 32,
+        "BO": "土",
+        "TEN BO": "Thổ",
+        "NGHIA": "Đất"
+    },
+    {
+        "STT": 33,
+        "BO": "士",
+        "TEN BO": "Sỹ",
+        "NGHIA": "Kẻ sỹ"
+    },
+    {
+        "STT": 34,
+        "BO": "夂",
+        "TEN BO": "Trĩ",
+        "NGHIA": "Đến ở phía sau"
+    },
+    {
+        "STT": 35,
+        "BO": "夊",
+        "TEN BO": "Truy",
+        "NGHIA": "Đia chậm"
+    },
+    {
+        "STT": 36,
+        "BO": "夕",
+        "TEN BO": "Tịch",
+        "NGHIA": "Đêm tối"
+    },
+    {
+        "STT": 37,
+        "BO": "大",
+        "TEN BO": "Đại",
+        "NGHIA": "To lớn"
+    },
+    {
+        "STT": 38,
+        "BO": "女",
+        "TEN BO": "Nữ",
+        "NGHIA": "Con gái, đàn bà"
+    },
+    {
+        "STT": 39,
+        "BO": "子",
+        "TEN BO": "Tử",
+        "NGHIA": "Con"
+    },
+    {
+        "STT": 40,
+        "BO": "宀",
+        "TEN BO": "Miên",
+        "NGHIA": "Mái nhà, mái che"
+    },
+    {
+        "STT": 41,
+        "BO": "寸",
+        "TEN BO": "Thốn",
+        "NGHIA": "Đơn vị"
+    },
+    {
+        "STT": 42,
+        "BO": "小",
+        "TEN BO": "Tiểu",
+        "NGHIA": "Nhỏ bé"
+    },
+    {
+        "STT": 43,
+        "BO": "尢",
+        "TEN BO": "Uông",
+        "NGHIA": "Yếu đuối"
+    },
+    {
+        "STT": 44,
+        "BO": "尸",
+        "TEN BO": "Thi",
+        "NGHIA": "Xác chết, thây ma"
+    },
+    {
+        "STT": 45,
+        "BO": "屮",
+        "TEN BO": "Triệt",
+        "NGHIA": "Mầm non, cỏ non mới mọc"
+    },
+    {
+        "STT": 46,
+        "BO": "山",
+        "TEN BO": "Sơn",
+        "NGHIA": "Núi"
+    },
+    {
+        "STT": 47,
+        "BO": "巛",
+        "TEN BO": "Xuyên",
+        "NGHIA": "Sông"
+    },
+    {
+        "STT": 48,
+        "BO": "工",
+        "TEN BO": "Công",
+        "NGHIA": "Người thợ, công việc"
+    },
+    {
+        "STT": 49,
+        "BO": "己",
+        "TEN BO": "Kỷ",
+        "NGHIA": "Bản thân mình"
+    },
+    {
+        "STT": 50,
+        "BO": "巾",
+        "TEN BO": "Cân",
+        "NGHIA": "Cái khăn"
+    },
+    {
+        "STT": 51,
+        "BO": "干",
+        "TEN BO": "Can",
+        "NGHIA": "Thiên can, can dự"
+    },
+    {
+        "STT": 52,
+        "BO": "幺",
+        "TEN BO": "Yêu",
+        "NGHIA": "Nhỏ nhắn"
+    },
+    {
+        "STT": 53,
+        "BO": "广",
+        "TEN BO": "Nghiễm",
+        "NGHIA": "Mái nhà"
+    },
+    {
+        "STT": 54,
+        "BO": "廴",
+        "TEN BO": "Dẫn",
+        "NGHIA": "Bước dài"
+    },
+    {
+        "STT": 55,
+        "BO": "廾",
+        "TEN BO": "Củng",
+        "NGHIA": "Chắp tay"
+    },
+    {
+        "STT": 56,
+        "BO": "弋",
+        "TEN BO": "Dặc",
+        "NGHIA": "Bắn, chiếm lấy"
+    },
+    {
+        "STT": 57,
+        "BO": "弓",
+        "TEN BO": "Cung",
+        "NGHIA": "Cái cung"
+    },
+    {
+        "STT": 58,
+        "BO": "彐",
+        "TEN BO": "Kệ",
+        "NGHIA": "Đầu con nhím"
+    },
+    {
+        "STT": 59,
+        "BO": "彡",
+        "TEN BO": "Sam",
+        "NGHIA": "Lông tóc dài"
+    },
+    {
+        "STT": 60,
+        "BO": "彳",
+        "TEN BO": "Xích",
+        "NGHIA": "Bước chân trái"
+    },
+    {
+        "STT": 61,
+        "BO": "心",
+        "TEN BO": "Tâm",
+        "NGHIA": "Quả tim, tâm trí, tấm lòng"
+    },
+    {
+        "STT": 62,
+        "BO": "戈",
+        "TEN BO": "Qua",
+        "NGHIA": "Cây qua (một thứ binh khí dài)"
+    },
+    {
+        "STT": 63,
+        "BO": "戶",
+        "TEN BO": "Hộ 6",
+        "NGHIA": "Cửa một cánh"
+    },
+    {
+        "STT": 64,
+        "BO": "手",
+        "TEN BO": "Thủ",
+        "NGHIA": "Tay"
+    },
+    {
+        "STT": 65,
+        "BO": "支",
+        "TEN BO": "Chi",
+        "NGHIA": "Cành nhánh"
+    },
+    {
+        "STT": 66,
+        "BO": "攴",
+        "TEN BO": "Phộc",
+        "NGHIA": "Đánh khẽ"
+    },
+    {
+        "STT": 67,
+        "BO": "文",
+        "TEN BO": "Văn",
+        "NGHIA": "Văn vẻ, văn chương, vẻ sang"
+    },
+    {
+        "STT": 68,
+        "BO": "斗",
+        "TEN BO": "Đầu 7",
+        "NGHIA": "Cái đấu để đong"
+    },
+    {
+        "STT": 69,
+        "BO": "斤",
+        "TEN BO": "Cân",
+        "NGHIA": "Cái búa, rìu"
+    },
+    {
+        "STT": 70,
+        "BO": "方",
+        "TEN BO": "Phương 9",
+        "NGHIA": "Vuông"
+    },
+    {
+        "STT": 71,
+        "BO": "无",
+        "TEN BO": "Vô",
+        "NGHIA": "Không"
+    },
+    {
+        "STT": 72,
+        "BO": "日",
+        "TEN BO": "Nhật",
+        "NGHIA": "Ngày, mặt trời"
+    },
+    {
+        "STT": 73,
+        "BO": "曰",
+        "TEN BO": "Viết",
+        "NGHIA": "Nói rằng"
+    },
+    {
+        "STT": 74,
+        "BO": "月",
+        "TEN BO": "Nguyệt",
+        "NGHIA": "Tháng, mặt trăng"
+    },
+    {
+        "STT": 75,
+        "BO": "木",
+        "TEN BO": "Mộc",
+        "NGHIA": "Cây"
+    },
+    {
+        "STT": 76,
+        "BO": "欠",
+        "TEN BO": "Khiếm",
+        "NGHIA": "Khiếm khuyết, thiếu vắng"
+    },
+    {
+        "STT": 77,
+        "BO": "止",
+        "TEN BO": "Chỉ",
+        "NGHIA": "Dừng lai"
+    },
+    {
+        "STT": 78,
+        "BO": "歹",
+        "TEN BO": "Đãi",
+        "NGHIA": "Xấu xa, tệ hại"
+    },
+    {
+        "STT": 79,
+        "BO": "殳",
+        "TEN BO": "Thù",
+        "NGHIA": "Binh khí dài"
+    },
+    {
+        "STT": 80,
+        "BO": "毋",
+        "TEN BO": "Vô",
+        "NGHIA": "Chớ, đừng"
+    },
+    {
+        "STT": 81,
+        "BO": "比",
+        "TEN BO": "Tỷ",
+        "NGHIA": "So sánh"
+    },
+    {
+        "STT": 82,
+        "BO": "毛",
+        "TEN BO": "Mao",
+        "NGHIA": "Lông"
+    },
+    {
+        "STT": 83,
+        "BO": "氏",
+        "TEN BO": "Thị",
+        "NGHIA": "Họ"
+    },
+    {
+        "STT": 84,
+        "BO": "气",
+        "TEN BO": "Khí",
+        "NGHIA": "Hơi nước"
+    },
+    {
+        "STT": 85,
+        "BO": "水",
+        "TEN BO": "Thủy",
+        "NGHIA": "Nước"
+    },
+    {
+        "STT": 86,
+        "BO": "火",
+        "TEN BO": "Hỏa",
+        "NGHIA": "Lửa"
+    },
+    {
+        "STT": 87,
+        "BO": "爪",
+        "TEN BO": "Trảo",
+        "NGHIA": "Móng vuốt cầm thú"
+    },
+    {
+        "STT": 88,
+        "BO": "父",
+        "TEN BO": "Phụ",
+        "NGHIA": "Cha"
+    },
+    {
+        "STT": 89,
+        "BO": "爻",
+        "TEN BO": "Hào",
+        "NGHIA": "Hào âm, hào dương (kinh dịch)"
+    },
+    {
+        "STT": 90,
+        "BO": "爿,丬",
+        "TEN BO": "Tường",
+        "NGHIA": "Mảnh gỗ, cái giường"
+    },
+    {
+        "STT": 91,
+        "BO": "片",
+        "TEN BO": "Phiến",
+        "NGHIA": "Mảnh, tấm, miếng"
+    },
+    {
+        "STT": 92,
+        "BO": "牙",
+        "TEN BO": "Nha",
+        "NGHIA": "Răng"
+    },
+    {
+        "STT": 93,
+        "BO": "牛",
+        "TEN BO": "Ngưu",
+        "NGHIA": "Trâu"
+    },
+    {
+        "STT": 94,
+        "BO": "犬",
+        "TEN BO": "Khuyển",
+        "NGHIA": "Con chó"
+    },
+    {
+        "STT": 95,
+        "BO": "玄",
+        "TEN BO": "Huyền",
+        "NGHIA": "Màu đen huyền, huyền bí"
+    },
+    {
+        "STT": 96,
+        "BO": "玉",
+        "TEN BO": "Ngọc",
+        "NGHIA": "Đá quý, ngọc"
+    },
+    {
+        "STT": 97,
+        "BO": "瓜",
+        "TEN BO": "Qua",
+        "NGHIA": "Quả dưa"
+    },
+    {
+        "STT": 98,
+        "BO": "瓦",
+        "TEN BO": "Ngõa",
+        "NGHIA": "Ngói"
+    },
+    {
+        "STT": 99,
+        "BO": "甘",
+        "TEN BO": "Cam",
+        "NGHIA": "Ngọt"
+    },
+    {
+        "STT": 100,
+        "BO": "生",
+        "TEN BO": "Sinh",
+        "NGHIA": "Sinh đẻ, sinh sốn"
+    },
+    {
+        "STT": 101,
+        "BO": "用",
+        "TEN BO": "Dụng",
+        "NGHIA": "Sử dụng"
+    },
+    {
+        "STT": 102,
+        "BO": "田",
+        "TEN BO": "Điền",
+        "NGHIA": "Ruộng"
+    },
+    {
+        "STT": 103,
+        "BO": "疋, 匹",
+        "TEN BO": "Thất",
+        "NGHIA": "Đơn vị đo chiều dài, tấm (vải)"
+    },
+    {
+        "STT": 104,
+        "BO": "疒",
+        "TEN BO": "Nạch",
+        "NGHIA": "Bệnh tật"
+    },
+    {
+        "STT": 105,
+        "BO": "癶",
+        "TEN BO": "Bát",
+        "NGHIA": "Gạt ngược lại, trở lại"
+    },
+    {
+        "STT": 106,
+        "BO": "白",
+        "TEN BO": "Bạch",
+        "NGHIA": "Màu trắng"
+    },
+    {
+        "STT": 107,
+        "BO": "皮",
+        "TEN BO": "Bì",
+        "NGHIA": "Da"
+    },
+    {
+        "STT": 108,
+        "BO": "皿",
+        "TEN BO": "Mãnh",
+        "NGHIA": "Bát đĩa"
+    },
+    {
+        "STT": 109,
+        "BO": "目",
+        "TEN BO": "Mục",
+        "NGHIA": "Mắt"
+    },
+    {
+        "STT": 110,
+        "BO": "矛",
+        "TEN BO": "Mâu",
+        "NGHIA": "Cây giáo để đâm"
+    },
+    {
+        "STT": 111,
+        "BO": "矢",
+        "TEN BO": "Thỉ",
+        "NGHIA": "Mũi tên"
+    },
+    {
+        "STT": 112,
+        "BO": "石",
+        "TEN BO": "Thạch",
+        "NGHIA": "Đá"
+    },
+    {
+        "STT": 113,
+        "BO": "示, 礻",
+        "TEN BO": "Thị, kỳ",
+        "NGHIA": "Chỉ thị, thần đất"
+    },
+    {
+        "STT": 114,
+        "BO": "禸",
+        "TEN BO": "Nhựu",
+        "NGHIA": "Vất chân, lốt chân"
+    },
+    {
+        "STT": 115,
+        "BO": "禾",
+        "TEN BO": "Hòa",
+        "NGHIA": "Lúa"
+    },
+    {
+        "STT": 116,
+        "BO": "穴",
+        "TEN BO": "Huyệt",
+        "NGHIA": "Hang lỗ"
+    },
+    {
+        "STT": 117,
+        "BO": "立",
+        "TEN BO": "Lập",
+        "NGHIA": "Đứng, thành lập"
+    },
+    {
+        "STT": 118,
+        "BO": "竹",
+        "TEN BO": "Trúc",
+        "NGHIA": "Tre trúc"
+    },
+    {
+        "STT": 119,
+        "BO": "米",
+        "TEN BO": "Mễ",
+        "NGHIA": "Gạo"
+    },
+    {
+        "STT": 120,
+        "BO": "糸,糹,纟",
+        "TEN BO": "Mịch",
+        "NGHIA": "Sợi tơ nhỏ"
+    },
+    {
+        "STT": 121,
+        "BO": "缶",
+        "TEN BO": "Phẫu",
+        "NGHIA": "Đồ sành"
+    },
+    {
+        "STT": 122,
+        "BO": "网",
+        "TEN BO": "Võng",
+        "NGHIA": "Cái lưới"
+    },
+    {
+        "STT": 123,
+        "BO": "羊",
+        "TEN BO": "dương",
+        "NGHIA": "Con dê"
+    },
+    {
+        "STT": 124,
+        "BO": "羽",
+        "TEN BO": "Vũ",
+        "NGHIA": "Lông vũ"
+    },
+    {
+        "STT": 125,
+        "BO": "老",
+        "TEN BO": "Lão",
+        "NGHIA": "Già"
+    },
+    {
+        "STT": 126,
+        "BO": "而",
+        "TEN BO": "Nhi",
+        "NGHIA": "Mà, và"
+    },
+    {
+        "STT": 127,
+        "BO": "耒",
+        "TEN BO": "Lỗi",
+        "NGHIA": "Cái này"
+    },
+    {
+        "STT": 128,
+        "BO": "耳",
+        "TEN BO": "Nhĩ",
+        "NGHIA": "Tai (lỗ tai)"
+    },
+    {
+        "STT": 129,
+        "BO": "聿",
+        "TEN BO": "Duật",
+        "NGHIA": "Cây bút"
+    },
+    {
+        "STT": 130,
+        "BO": "肉",
+        "TEN BO": "Nhục",
+        "NGHIA": "Thịt"
+    },
+    {
+        "STT": 131,
+        "BO": "臣",
+        "TEN BO": "Thần",
+        "NGHIA": "Bầy tôi"
+    },
+    {
+        "STT": 132,
+        "BO": "自",
+        "TEN BO": "Tự",
+        "NGHIA": "Tự bản thân, kể từ"
+    },
+    {
+        "STT": 133,
+        "BO": "至",
+        "TEN BO": "Chí",
+        "NGHIA": "Đến"
+    },
+    {
+        "STT": 134,
+        "BO": "臼",
+        "TEN BO": "Cữu",
+        "NGHIA": "Cái cối giã gạo"
+    },
+    {
+        "STT": 135,
+        "BO": "舌",
+        "TEN BO": "Thiệt",
+        "NGHIA": "Cái lưỡi"
+    },
+    {
+        "STT": 136,
+        "BO": "舛",
+        "TEN BO": "Suyễn",
+        "NGHIA": "Sai suyễn, sai lầm"
+    },
+    {
+        "STT": 137,
+        "BO": "舟",
+        "TEN BO": "Chu",
+        "NGHIA": "Cái thuyền"
+    },
+    {
+        "STT": 138,
+        "BO": "艮",
+        "TEN BO": "Cấn",
+        "NGHIA": "Quẻ Cấn (kinh dịch), dừng, bền"
+    },
+    {
+        "STT": 139,
+        "BO": "色",
+        "TEN BO": "Sắc",
+        "NGHIA": "Màu, dáng vẻ, nữ sắc"
+    },
+    {
+        "STT": 140,
+        "BO": "艸, 艹",
+        "TEN BO": "Thảo",
+        "NGHIA": "Cỏ"
+    },
+    {
+        "STT": 141,
+        "BO": "虍",
+        "TEN BO": "Hô",
+        "NGHIA": "Vằn vện của con hổ"
+    },
+    {
+        "STT": 142,
+        "BO": "虫",
+        "TEN BO": "Trùng",
+        "NGHIA": "Sâu bọ"
+    },
+    {
+        "STT": 143,
+        "BO": "血",
+        "TEN BO": "Huyết",
+        "NGHIA": "Máu"
+    },
+    {
+        "STT": 144,
+        "BO": "行",
+        "TEN BO": "Hành",
+        "NGHIA": "Đi, thi hành, làm được"
+    },
+    {
+        "STT": 145,
+        "BO": "衣,衤",
+        "TEN BO": "Y",
+        "NGHIA": "Áo"
+    },
+    {
+        "STT": 146,
+        "BO": "襾",
+        "TEN BO": "Á",
+        "NGHIA": "Che đậy, úp lên"
+    },
+    {
+        "STT": 147,
+        "BO": "見",
+        "TEN BO": "Kiến",
+        "NGHIA": "Trông thấy"
+    },
+    {
+        "STT": 148,
+        "BO": "角",
+        "TEN BO": "Giác",
+        "NGHIA": "Góc, sừng"
+    },
+    {
+        "STT": 149,
+        "BO": "言",
+        "TEN BO": "Ngôn",
+        "NGHIA": "Nói"
+    },
+    {
+        "STT": 150,
+        "BO": "谷",
+        "TEN BO": "Cốc",
+        "NGHIA": "Thung lũng"
+    },
+    {
+        "STT": 151,
+        "BO": "豆",
+        "TEN BO": "Đậu",
+        "NGHIA": "Hạt đậu, cây đậu"
+    },
+    {
+        "STT": 152,
+        "BO": "豕",
+        "TEN BO": "Thỉ",
+        "NGHIA": "Con heo, con lợn"
+    },
+    {
+        "STT": 153,
+        "BO": "豸",
+        "TEN BO": "Trãi",
+        "NGHIA": "Loài sâu không chân"
+    },
+    {
+        "STT": 154,
+        "BO": "貝",
+        "TEN BO": "Bối",
+        "NGHIA": "Vật báu"
+    },
+    {
+        "STT": 155,
+        "BO": "赤",
+        "TEN BO": "Xích",
+        "NGHIA": "Màu đỏ"
+    },
+    {
+        "STT": 156,
+        "BO": "走, 赱",
+        "TEN BO": "Tẩu",
+        "NGHIA": "Đi, chạy"
+    },
+    {
+        "STT": 157,
+        "BO": "足",
+        "TEN BO": "Túc",
+        "NGHIA": "Chân, đầy đủ"
+    },
+    {
+        "STT": 158,
+        "BO": "身",
+        "TEN BO": "Thân",
+        "NGHIA": "Thân thể, thân mình"
+    },
+    {
+        "STT": 159,
+        "BO": "車, 车",
+        "TEN BO": "Xa",
+        "NGHIA": "Xe"
+    },
+    {
+        "STT": 160,
+        "BO": "辛",
+        "TEN BO": "Tân",
+        "NGHIA": "cay"
+    },
+    {
+        "STT": 161,
+        "BO": "辰",
+        "TEN BO": "Thần",
+        "NGHIA": "Nhật, nguyệt, tinh, thin (12chi)"
+    },
+    {
+        "STT": 162,
+        "BO": "辵, 辶",
+        "TEN BO": "Sước",
+        "NGHIA": "Chợt bước đi, chợt dừng lại"
+    },
+    {
+        "STT": 163,
+        "BO": "邑,阝",
+        "TEN BO": "Ấp",
+        "NGHIA": "Vùng đất, đất phong cho quan"
+    },
+    {
+        "STT": 164,
+        "BO": "酉",
+        "TEN BO": "Dậu",
+        "NGHIA": "Một trong 12 địa chi"
+    },
+    {
+        "STT": 165,
+        "BO": "釆",
+        "TEN BO": "Biện",
+        "NGHIA": "Phân biệt"
+    },
+    {
+        "STT": 166,
+        "BO": "里",
+        "TEN BO": "Lý",
+        "NGHIA": "Dặm, hàng xóm"
+    },
+    {
+        "STT": 167,
+        "BO": "金",
+        "TEN BO": "Kim",
+        "NGHIA": "Kim loại, vàng"
+    },
+    {
+        "STT": 168,
+        "BO": "長,镸,长",
+        "TEN BO": "Trường",
+        "NGHIA": "Dài, lớn"
+    },
+    {
+        "STT": 169,
+        "BO": "門, 门",
+        "TEN BO": "Môn",
+        "NGHIA": "Cửa hai cánh"
+    },
+    {
+        "STT": 170,
+        "BO": "阜,阝",
+        "TEN BO": "Phụ",
+        "NGHIA": "Đống đất, gò đất"
+    },
+    {
+        "STT": 171,
+        "BO": "隶",
+        "TEN BO": "Đãi",
+        "NGHIA": "Kịp, kịp đến"
+    },
+    {
+        "STT": 172,
+        "BO": "隹",
+        "TEN BO": "Truy, chuy",
+        "NGHIA": "Chim đuôi ngắn"
+    },
+    {
+        "STT": 173,
+        "BO": "雨",
+        "TEN BO": "Vũ",
+        "NGHIA": "Mưa"
+    },
+    {
+        "STT": 174,
+        "BO": "青,靑",
+        "TEN BO": "Thanh",
+        "NGHIA": "Màu xanh"
+    },
+    {
+        "STT": 175,
+        "BO": "非",
+        "TEN BO": "Phi",
+        "NGHIA": "Không"
+    },
+    {
+        "STT": 176,
+        "BO": "面,靣",
+        "TEN BO": "Diện",
+        "NGHIA": "Mặt, bề mặt"
+    },
+    {
+        "STT": 177,
+        "BO": "革",
+        "TEN BO": "Cách",
+        "NGHIA": "Da thú, thay đổi, cải cách"
+    },
+    {
+        "STT": 178,
+        "BO": "韋,韦",
+        "TEN BO": "Vi",
+        "NGHIA": "Da đã thuộc rồi"
+    },
+    {
+        "STT": 179,
+        "BO": "韭",
+        "TEN BO": "Phỉ, cửu",
+        "NGHIA": "Rau phỉ (hẹ)"
+    },
+    {
+        "STT": 180,
+        "BO": "音",
+        "TEN BO": "Âm",
+        "NGHIA": "Âm thanh,, tiếng"
+    },
+    {
+        "STT": 181,
+        "BO": "♛,页",
+        "TEN BO": "Hiệt",
+        "NGHIA": "Đầu, trang giấy"
+    },
+    {
+        "STT": 182,
+        "BO": "風,凬,风",
+        "TEN BO": "Phong",
+        "NGHIA": "Gió"
+    },
+    {
+        "STT": 183,
+        "BO": "飛,飞",
+        "TEN BO": "Phi",
+        "NGHIA": "Bay"
+    },
+    {
+        "STT": 184,
+        "BO": "食,飠,饣",
+        "TEN BO": "Thực",
+        "NGHIA": "Ăn"
+    },
+    {
+        "STT": 185,
+        "BO": "首",
+        "TEN BO": "Thủ",
+        "NGHIA": "Đầu"
+    },
+    {
+        "STT": 186,
+        "BO": "香",
+        "TEN BO": "Hương",
+        "NGHIA": "Mùi hương, hương thơm"
+    },
+    {
+        "STT": 187,
+        "BO": "馬,马",
+        "TEN BO": "Mã",
+        "NGHIA": "Con ngựa"
+    },
+    {
+        "STT": 188,
+        "BO": "骫",
+        "TEN BO": "Cốt",
+        "NGHIA": "Xương"
+    },
+    {
+        "STT": 189,
+        "BO": "高",
+        "TEN BO": "Cao",
+        "NGHIA": "Cao"
+    },
+    {
+        "STT": 190,
+        "BO": "髟",
+        "TEN BO": "Bưu, tiêu",
+        "NGHIA": "Tóc dài, sam"
+    },
+    {
+        "STT": 191,
+        "BO": "鬥",
+        "TEN BO": "Đấu",
+        "NGHIA": "Chống nhau, chiến đấu"
+    },
+    {
+        "STT": 192,
+        "BO": "鬯",
+        "TEN BO": "Sưởng",
+        "NGHIA": "Rượu nếp, bao đựng cây cung"
+    },
+    {
+        "STT": 193,
+        "BO": "鬲",
+        "TEN BO": "Cách",
+        "NGHIA": "Tên một con song xưa, cái đỉnh"
+    },
+    {
+        "STT": 194,
+        "BO": "鬼",
+        "TEN BO": "Quỷ",
+        "NGHIA": "Con quỷ"
+    },
+    {
+        "STT": 195,
+        "BO": "魚,鱼",
+        "TEN BO": "Ngư",
+        "NGHIA": "con cá"
+    },
+    {
+        "STT": 196,
+        "BO": "鳥",
+        "TEN BO": "Điểu",
+        "NGHIA": "Con chim"
+    },
+    {
+        "STT": 197,
+        "BO": "鹵",
+        "TEN BO": "Lỗ",
+        "NGHIA": "Đất mặn"
+    },
+    {
+        "STT": 198,
+        "BO": "鹿",
+        "TEN BO": "Lộc",
+        "NGHIA": "Con hươu"
+    },
+    {
+        "STT": 199,
+        "BO": "麥,麦",
+        "TEN BO": "Mạch",
+        "NGHIA": "Lúa mạch"
+    },
+    {
+        "STT": 200,
+        "BO": "麻",
+        "TEN BO": "Ma",
+        "NGHIA": "Cây gai"
+    },
+    {
+        "STT": 201,
+        "BO": "黃",
+        "TEN BO": "Hoàng",
+        "NGHIA": "Màu vàng"
+    },
+    {
+        "STT": 202,
+        "BO": "黍",
+        "TEN BO": "Thử",
+        "NGHIA": "Lúa nếp"
+    },
+    {
+        "STT": 203,
+        "BO": "黑",
+        "TEN BO": "Hắc",
+        "NGHIA": "Màu đen"
+    },
+    {
+        "STT": 204,
+        "BO": "黹",
+        "TEN BO": "Chỉ",
+        "NGHIA": "May vá, khâu vá"
+    },
+    {
+        "STT": 205,
+        "BO": "黽",
+        "TEN BO": "Mãnh",
+        "NGHIA": "Con ếch, cố gắng"
+    },
+    {
+        "STT": 206,
+        "BO": "鼎",
+        "TEN BO": "Đỉnh",
+        "NGHIA": "Cái đỉnh"
+    },
+    {
+        "STT": 207,
+        "BO": "鼓",
+        "TEN BO": "Cổ",
+        "NGHIA": "Cái trống"
+    },
+    {
+        "STT": 208,
+        "BO": "鼠",
+        "TEN BO": "Thử",
+        "NGHIA": "Con chuột"
+    },
+    {
+        "STT": 209,
+        "BO": "鼻",
+        "TEN BO": "Tỵ",
+        "NGHIA": "Cái mũi"
+    },
+    {
+        "STT": 210,
+        "BO": "齊,斉,齐",
+        "TEN BO": "Tề",
+        "NGHIA": "Ngang bằng, cùng nhau"
+    },
+    {
+        "STT": 211,
+        "BO": "齒,齿,歯",
+        "TEN BO": "Xỉ",
+        "NGHIA": "Răng"
+    },
+    {
+        "STT": 212,
+        "BO": "龍,龙",
+        "TEN BO": "Long",
+        "NGHIA": "Con rồng"
+    },
+    {
+        "STT": 213,
+        "BO": "龜, 亀,龟",
+        "TEN BO": "Quy",
+        "NGHIA": "Con rùa"
+    },
+    {
+        "STT": 214,
+        "BO": "龠",
+        "TEN BO": "Dược",
+        "NGHIA": "Sáo 3 lỗ"
+    }
+]
