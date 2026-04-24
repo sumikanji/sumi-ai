@@ -27,7 +27,32 @@
             padding: 10px;
             overflow: hidden;
         }
+/* Khung thông báo khi trống */
+.empty-notice {
+    text-align: center;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 20px;
+    border: 2px dashed var(--gray-border);
+    margin: 20px auto;
+    max-width: 400px;
+}
 
+.empty-notice h3 {
+    color: var(--muji-red);
+    margin-bottom: 10px;
+}
+
+.btn-back {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: var(--muji-red);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
         .progress { font-size: 13px; color: #999; margin-bottom: 5px; margin-top: 5px; }
 
         .card-container { 
@@ -155,7 +180,7 @@
             <button class="btn btn-learned" onclick="removeKanji(event)">Đã thuộc ✓</button>
             <button class="btn btn-next" onclick="nextCard(event)">Bỏ qua »</button>
         </div>
-        <button class="btn btn-back" onclick="window.location.href='index.html'">Thoát</button>v1.
+        <button class="btn btn-back" onclick="window.location.href='index.html'">Thoát</button>
     </div>
 
     <script>
@@ -174,13 +199,46 @@
             // Xóa ngay lập tức khỏi mảng
             data.splice(index, 1);
             
-            // Cập nhật LocalStorage
-            localStorage.setItem('selectedKanji', JSON.stringify(data));
+            window.onload = function() {
+    // 1. Lấy dữ liệu và kiểm tra
+    const rawData = localStorage.getItem('selectedKanji');
+    let selectedKanji = [];
+    
+    try {
+        selectedKanji = JSON.parse(rawData) || [];
+    } catch (e) {
+        selectedKanji = [];
+    }
+
+    // 2. Tìm vùng chứa trên trang web của bạn
+    const displayArea = document.getElementById('flashcard-area'); 
+
+    // 3. Nếu mảng trống, chặn và hiện thông báo
+    if (!selectedKanji || selectedKanji.length === 0) {
+        displayArea.innerHTML = `
+            <div class="empty-notice-box">
+                <div class="sumi-sad-icon">🍵</div>
+                <h2 style="color: #a63d40;">Sumi chưa thấy chữ nào!</h2>
+                <p style="color: #888;">Cậu hãy quay lại trang chủ, chọn các chữ Kanji hoặc Bộ thủ <br> muốn học trước khi vào đây nhé.</p>
+                <a href="index.html" class="btn-return">Quay về chọn chữ</a>
+            </div>
+        `;
+        
+        // Ẩn các nút điều hướng của Flashcard (nếu có) để giao diện sạch sẽ
+        const controls = document.querySelector('.controls-area'); 
+        if (controls) controls.style.display = 'none';
+        
+        return; // Dừng chương trình tại đây
+    }
+
+    // 4. Nếu có dữ liệu, mới chạy hàm tạo Flashcard của bạn
+    initFlashcards(selectedKanji); 
+};
 
             // Kiểm tra nếu hết danh sách
             if (data.length === 0) {
                 alert("Bạn đã hoàn thành danh sách học!");
-                window.location.href = 'ai kanji v1.1.html';
+                window.location.href = 'index.html';
                 return;
             }
 
