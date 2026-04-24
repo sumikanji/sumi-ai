@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sumi AI - Kanji Mastery Ultimate</title>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Hina+Mincho&family=Zen+Maru+Gothic:wght@500;700&family=IBM+Plex+Sans+JP:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Klee+One:wght@300;400&family=Noto+Serif+JP:wght@200;300&display=swap" rel="stylesheet"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&family=Kiwi+Maru:wght@300&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400&family=Kiwi+Maru:wght@300;400&family=Zen+Maru+Gothic:wght@300;400&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400&family=Noto+Sans+JP:wght@100;300&family=Noto+Serif+JP:wght@200;300&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Hina+Mincho&family=Zen+Maru+Gothic:wght@500;700&family=IBM+Plex+Sans+JP:wght@500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
         :root {
@@ -13,7 +13,7 @@
             --muji-text: #333333;
             --gray-border: #e8e8e8;
             --gray-cell: #f5f5f5;
-            --current-font: 'Hina Mincho', serif;
+            --current-font: 'Klee One', serif;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,7 +49,16 @@
     flex-wrap: wrap; 
     padding: 10px 0;
 }
+/* Thêm vào thẻ <style> */
+.hv-label.hidden {
+    display: none !important;
+}
 
+/* Tùy chỉnh nút khi ở trạng thái khác */
+.btn-feature.active-toggle {
+    background: var(--muji-red);
+    color: white;
+}
 /* Nút cấp độ to hơn */
 .l-btn {
     background: var(--gray-cell); 
@@ -96,16 +105,125 @@
             padding: 14px; border-radius: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase;
         }
         .btn-search-full:hover { background: var(--muji-red); color: white; }
+/* 1. Cố định toàn bộ phần phía trên (Bot và Level Selection) */
+.top-sticky-area {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--muji-bg); /* Trùng màu nền để không bị lộ khi cuộn */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+      /* 2. Giới hạn chiều cao của khung chứa Kanji và cho phép cuộn */
+.master-box {
+    background: white;
+    border: 1px solid var(--gray-border);
+    border-radius: 25px;
+    padding: 20px;
+    
+    /* Thiết lập chiều cao tối đa (ví dụ 500px hoặc theo màn hình) */
+    max-height: 65vh; 
+    overflow-y: auto; /* Hiện thanh cuộn khi vượt quá chiều cao */
+    
+    /* Làm đẹp thanh cuộn theo phong cách tối giản */
+    scrollbar-width: thin;
+    scrollbar-color: var(--muji-red) transparent;
+}
 
-        .master-box { background: white; border: 1px solid var(--gray-border); border-radius: 25px; padding: 20px; }
+/* Tùy chỉnh thanh cuộn cho Chrome/Safari */
+.master-box::-webkit-scrollbar {
+    width: 6px;
+}
+.master-box::-webkit-scrollbar-thumb {
+    background-color: var(--muji-red);
+    border-radius: 10px;
+}
+}
         .kanji-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 12px; }
-        .kanji-cell {
-            aspect-ratio: 1/1; background: var(--gray-cell); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            font-family: var(--current-font); font-size: 26px; transition: 0.3s; border: 2px solid transparent;
-        }
-        .kanji-cell.selected { background: var(--muji-red) !important; color: white !important; }
-        .kanji-cell.viewing { border-color: var(--muji-red); }
+        /* Ô chứa chữ */
+.kanji-cell {
+    aspect-ratio: 1/1; 
+    background: var(--gray-cell); 
+    border-radius: 12px;
+    display: flex; 
+    flex-direction: column; /* Xếp theo chiều dọc */
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer;
+    transition: 0.3s; 
+    border: 2px solid transparent;
+    padding: 2px;
+}
+
+/* Chữ Kanji/Bộ thủ chính */
+.kanji-char {
+    font-family: var(--current-font);
+    font-size: 24px; /* Chỉnh lại kích cỡ vừa vặn */
+    line-height: 1.2;
+}
+/* Danh sách Kanji có cùng bộ thủ (hiển thị trong bảng chi tiết bên phải) */
+.related-kanji-container {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+    text-align: left;
+}
+
+.related-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.related-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.related-item {
+    font-family: 'Klee One', cursive;
+    font-size: 18px;
+    color: #444;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: #f9f9f9;
+}
+
+.related-item:hover {
+    color: var(--muji-red);
+    background: #fffafa;
+}
+/* Âm Hán Việt bên dưới */
+.hv-label {
+    font-size: 9px; 
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    margin-top: 1px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    white-space: nowrap; /* Không cho xuống dòng */
+    overflow: hidden;
+    max-width: 90%;
+    text-overflow: ellipsis; /* Nếu dài quá sẽ hiện dấu ... */
+}
+
+/* Đổi màu khi được chọn */
+.kanji-cell.selected { background: var(--muji-red) !important; color: white !important; }
+.kanji-cell.selected .hv-label { color: rgba(255,255,255,0.8); }
+.kanji-cell.viewing { border-color: var(--muji-red); }
 
         .preview-card {
             background: white; border-radius: 30px; padding: 25px; width: 100%;
@@ -142,7 +260,7 @@
     </style>
 </head>
 <body>
-
+<div class="top-sticky-area">
     <div class="bot-container">
         <div id="sumi-robot">
             <svg viewBox="0 0 100 100"><rect x="10" y="20" width="80" height="60" rx="30" fill="white" stroke="#e0e0e0" stroke-width="1.5"/><rect x="22" y="32" width="56" height="36" rx="18" fill="#333"/><circle cx="38" cy="50" r="5" fill="#00ffcc"/><circle cx="62" cy="50" r="5" fill="#00ffcc"/><path d="M50 20 L50 5" stroke="#a63d40" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="5" r="7" fill="#a63d40"/></svg>
@@ -164,6 +282,7 @@
                     <button class="l-btn" onclick="switchLevel('N3', this)">N3</button>
                     <button class="l-btn" onclick="switchLevel('N2', this)">N2</button>
                     <button class="l-btn" onclick="switchLevel('N1', this)">N1</button>
+                    <button class="l-btn" onclick="loadBoThu(this)" style="width: auto; padding: 0 15px; font-size: 13px;">214 BỘ THỦ</button>
                 </div>
     
     </div>
@@ -172,8 +291,8 @@
                 <button class="btn-feature" onclick="goToWritingSheet()">+ In PDF</button>
             </div>
             <div class="feature-row">
-                <button class="btn-feature" id="count-btn" onclick="countVisibleKanji()">Tổng: 0 chữ</button>
-                <button class="btn-feature" onclick="selectAllInGrid()">Chọn tất cả</button>
+            <button class="btn-feature" id="toggle-hv-btn" onclick="toggleHánViệt()">Ẩn Hán Việt</button>
+    <button class="btn-feature" onclick="selectAllInGrid()">Chọn / Bỏ chọn tất cả</button>
             </div>
             <div class="master-box">
                 <div class="kanji-grid" id="kanji-grid"></div>
@@ -182,6 +301,7 @@
 
         <div class="right-side">
             <button class="btn-search-full" onclick="openModal()"> + TRA CỨU VIẾT TAY </button>
+            
             <div class="preview-card">
                 <button id="btn-go-practice" style="width: 100%; background: #a63d40; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; margin-bottom: 15px; cursor: pointer;">✍️ LUYỆN VIẾT RIÊNG</button>
                 <div id="writer-canvas"></div>
@@ -195,12 +315,16 @@
                     <div id="vocab-section" style="display:none; text-align: left; width: 100%; margin-top: 15px;">
                         <span style="font-size: 11px; font-weight: 800; color: #aaa; text-transform: uppercase;">Từ vựng mở rộng</span>
                         <div id="vocab-list" style="margin-top: 8px;"></div>
+                        <div id="related-section" class="related-kanji-container" style="display:none;">
+    <div class="related-title">Chữ Kanji cùng bộ thủ</div>
+    <div id="related-grid" class="related-grid"></div>
+</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
     <div id="hw-modal" class="modal-overlay">
         <div class="modal-content">
             <span onclick="closeModal()" style="position:absolute; top:10px; right:20px; font-size:35px; cursor:pointer; color:#999;">&times;</span>
@@ -221,7 +345,157 @@
         let allLevels = {};
         let selectedKanjiData = [];
         window.currentSelectedKanji = "";
+// Biến lưu trữ dữ liệu bộ thủ sau khi tải
+let boThuData = [];
 
+// Hàm tải file JSON bộ thủ
+async function loadBoThu(btn) {
+    document.querySelectorAll('.l-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    typeText("Đang tải danh sách 214 bộ thủ...");
+
+    try {
+        if (boThuData.length === 0) {
+            // Sử dụng fetch với đường dẫn tương đối
+            const response = await fetch('214_bo_thu_kanji.json');
+            
+            if (!response.ok) {
+                throw new Error(`Không tìm thấy file (Mã lỗi: ${response.status})`);
+            }
+            
+            boThuData = await response.json();
+        }
+        renderBoThuGrid(boThuData);
+    } catch (e) {
+        console.error("Lỗi chi tiết:", e);
+        typeText("Lỗi 404: Cậu kiểm tra lại tên file JSON trong thư mục nhé!");
+        alert("Sumi không thấy file '214_bo_thu_kanji.json'. Cậu hãy chắc chắn đã đặt file này cùng chỗ với file web!");
+    }
+}
+// Biến lưu trạng thái hiện tại (mặc định là đang hiện)
+let isHvVisible = true;
+function findKanjiByRadical(radicalChar) {
+    let results = [];
+    
+    // Duyệt qua tất cả các cấp độ trong file kanji_data.json
+    for (let level in allLevels) {
+        allLevels[level].forEach(kanjiItem => {
+            // Kiểm tra nếu thông tin bộ thủ của chữ Kanji trùng với radicalChar
+            // Lưu ý: Dữ liệu kanji_data.json của bạn cần có thuộc tính radical (bộ thủ)
+            if (kanjiItem.r === radicalChar) {
+                results.push(kanjiItem);
+            }
+        });
+    }
+    return results;
+}
+
+// Hàm hiển thị danh sách lọc được lên bảng chi tiết
+function displayRelatedKanji(radicalChar) {
+    const relatedKanji = findKanjiByRadical(radicalChar);
+    const container = document.getElementById('related-section'); // Thêm id này vào HTML bên phải
+    const grid = document.getElementById('related-grid');
+    
+    grid.innerHTML = '';
+    
+    if (relatedKanji.length > 0) {
+        container.style.display = 'block';
+        relatedKanji.forEach(item => {
+            const span = document.createElement('div');
+            span.className = 'related-item';
+            span.innerText = item.c;
+            span.onclick = () => showDetails(item); // Nhấn vào để xem chi tiết chữ đó
+            grid.appendChild(span);
+        });
+    } else {
+        container.style.display = 'none';
+    }
+}
+function toggleHánViệt() {
+    isHvVisible = !isHvVisible; // Đảo ngược trạng thái
+    
+    const btn = document.getElementById('toggle-hv-btn');
+    const labels = document.querySelectorAll('.hv-label');
+    
+    if (isHvVisible) {
+        // Trạng thái HIỆN
+        labels.forEach(label => label.classList.remove('hidden'));
+        btn.innerText = "Ẩn Hán Việt";
+        btn.classList.remove('active-toggle');
+    } else {
+        // Trạng thái ẨN
+        labels.forEach(label => label.classList.add('hidden'));
+        btn.innerText = "Hiện Hán Việt";
+        btn.classList.add('active-toggle');
+    }
+}
+// Hàm hiển thị bộ thủ lên lưới (Grid)
+function renderBoThuGrid(data) {
+    const grid = document.getElementById('kanji-grid');
+    grid.innerHTML = '';
+    data.forEach(item => {
+        const cell = document.createElement('div');
+        cell.className = 'kanji-cell';
+        
+        const mainChar = item.BO ? item.BO.split(',')[0].trim() : "";
+        if (selectedKanjiData.some(s => s.c === mainChar)) cell.classList.add('selected');
+        
+        // Cấu trúc HTML mới cho bộ thủ (Sử dụng "TEN BO" từ file JSON của bạn)
+        cell.innerHTML = `
+            <div class="kanji-char">${mainChar}</div>
+            <div class="hv-label">${item["TEN BO"] || ''}</div>
+        `;
+
+        cell.onclick = () => {
+            document.querySelectorAll('.kanji-cell').forEach(c => c.classList.remove('viewing'));
+            cell.classList.add('viewing');
+            if (cell.classList.contains('selected')) {
+                cell.classList.remove('selected');
+                selectedKanjiData = selectedKanjiData.filter(s => s.c !== mainChar);
+            } else {
+                cell.classList.add('selected');
+                selectedKanjiData.push({
+                    c: mainChar,
+                    hv: item["TEN BO"] || "",
+                    m: item.NGHIA || "",
+                    on: "STT: " + (item.STT || ""),
+                    kun: "", v: []
+                });
+            }
+            showBoThuDetails(item);
+        };
+        grid.appendChild(cell);
+    });
+}
+
+// Hàm hiển thị chi tiết bộ thủ vào bảng bên phải
+function showBoThuDetails(item) {
+    // Lấy chữ chính để vẽ (HanziWriter chỉ vẽ được 1 chữ)
+    const mainChar = item.BO ? item.BO.split(',')[0].trim() : "";
+    // Kích hoạt lọc các Kanji có bộ thủ này
+    displayRelatedKanji(mainChar);
+    typeText(`Bộ thủ: ${mainChar} - Ý nghĩa: ${item.NGHIA}`);
+    window.currentSelectedKanji = mainChar;
+    
+    // Đổ dữ liệu vào bảng bên phải - chú ý tên thuộc tính VIẾT HOA
+    document.getElementById('hv-val').textContent = item["TEN BO"] || "---"; 
+    document.getElementById('mean-val').textContent = item.NGHIA || "Chưa có nghĩa";
+    document.getElementById('on-val').textContent = "STT: " + (item.STT || "0");
+    document.getElementById('kun-val').textContent = "-";
+    
+    document.getElementById('vocab-section').style.display = 'none';
+    
+    // Vẽ animation
+    document.getElementById('writer-canvas').innerHTML = '';
+    if (mainChar) {
+        HanziWriter.create('writer-canvas', mainChar, { 
+            width: 160, 
+            height: 160, 
+            strokeColor: '#a63d40' 
+        }).animateCharacter();
+    }
+}
         // 1. DỮ LIỆU
         async function loadData() {
             try {
@@ -270,30 +544,35 @@
 
         }
 
-        function renderGrid(data) {
-            const grid = document.getElementById('kanji-grid');
-            grid.innerHTML = '';
-            data.forEach(item => {
-                const cell = document.createElement('div');
-                cell.className = 'kanji-cell';
-                cell.innerText = item.c;
-                if (selectedKanjiData.some(s => s.c === item.c)) cell.classList.add('selected');
-                cell.onclick = () => {
-                    document.querySelectorAll('.kanji-cell').forEach(c => c.classList.remove('viewing'));
-                    cell.classList.add('viewing');
-                    if (cell.classList.contains('selected')) {
-                        cell.classList.remove('selected');
-                        selectedKanjiData = selectedKanjiData.filter(s => s.c !== item.c);
-                    } else {
-                        cell.classList.add('selected');
-                        selectedKanjiData.push(item);
-                    }
-                    showDetails(item);
-                };
-                grid.appendChild(cell);
-            });
-            document.getElementById('count-btn').innerText = ` Tổng: ${data.length} chữ`;
-        }
+       function renderGrid(data) {
+    const grid = document.getElementById('kanji-grid');
+    grid.innerHTML = '';
+    data.forEach(item => {
+        const cell = document.createElement('div');
+        cell.className = 'kanji-cell';
+        if (selectedKanjiData.some(s => s.c === item.c)) cell.classList.add('selected');
+        
+        // Cấu trúc HTML mới cho ô vuông
+        cell.innerHTML = `
+            <div class="kanji-char">${item.c}</div>
+            <div class="hv-label">${item.hv || ''}</div>
+        `;
+
+        cell.onclick = () => {
+            document.querySelectorAll('.kanji-cell').forEach(c => c.classList.remove('viewing'));
+            cell.classList.add('viewing');
+            if (cell.classList.contains('selected')) {
+                cell.classList.remove('selected');
+                selectedKanjiData = selectedKanjiData.filter(s => s.c !== item.c);
+            } else {
+                cell.classList.add('selected');
+                selectedKanjiData.push(item);
+            }
+            showDetails(item);
+        };
+        grid.appendChild(cell);
+    });
+}
 
         function showDetails(item) {
             typeText(`Cậu đang xem chi tiết chữ "${item.c}". Hãy nhìn cách viết ở trong khung nhé!`);
@@ -467,10 +746,70 @@
         }
 
         // 3. TIỆN ÍCH
-        function goToFlashcards() { typeText("Đang chuẩn bị thẻ Flashcard để cậu ôn tập nè...");localStorage.setItem('selectedKanji', JSON.stringify(selectedKanjiData)); window.location.href = 'flashcard.html'; }
-        function goToWritingSheet() { typeText("Sumi đang tạo file PDF tập viết cho cậu đây!");localStorage.setItem('selectedKanji', JSON.stringify(selectedKanjiData)); window.location.href = 'writing_sheet.html'; }
+        function goToFlashcards() {
+    // 1. Kiểm tra xem danh sách có từ nào không
+    if (selectedKanjiData.length === 0) {
+        // Cho Robot Sumi "rung" nhẹ để báo hiệu
+        const robot = document.getElementById('sumi-robot');
+        robot.style.animation = 'none';
+        setTimeout(() => robot.style.animation = 'floatingSumi 0.5s ease-in-out infinite', 10);
+        
+        // Hiện thông báo bằng hiệu ứng chạy chữ của Sumi
+        typeText("Cậu ơi, danh sách đang trống! Hãy chọn ít nhất một chữ để làm Flashcard nhé 🍵");
+        
+        // (Tùy chọn) Có thể rung điện thoại nếu dùng trên di động
+        if (navigator.vibrate) navigator.vibrate(50); 
+        
+        return; // Dừng lại ở đây, không chuyển trang
+    }
+    
+    // 2. Nếu có từ, mới tiến hành lưu và chuyển trang
+    typeText("Đang chuẩn bị thẻ Flashcard cho cậu đây...");
+    localStorage.setItem('selectedKanji', JSON.stringify(selectedKanjiData));
+    
+    // Đợi 1 chút để người dùng kịp đọc tin nhắn của Sumi rồi mới chuyển
+    setTimeout(() => {
+        window.location.href = 'flashcard.html';
+    }, 800);
+}
+        function goToWritingSheet() {
+    if (selectedKanjiData.length === 0) {
+        typeText("Bảng chọn đang trống, Sumi chưa biết in chữ gì cho cậu cả! ✍️");
+        return;
+    }
+    typeText("Sumi đang tạo file PDF tập viết cho cậu đây!");
+    localStorage.setItem('selectedKanji', JSON.stringify(selectedKanjiData));
+    setTimeout(() => {
+        window.location.href = 'writing_sheet.html';
+    }, 800);
+}
         function countVisibleKanji() { typeText(`Hiện có ${document.getElementById('kanji-grid').children.length} chữ.`); }
-        function selectAllInGrid() { const cells = document.querySelectorAll('.kanji-cell'); cells.forEach(c => { if(!c.classList.contains('selected')) c.click(); }); }
+        function selectAllInGrid() {
+    const cells = document.querySelectorAll('.kanji-cell');
+    if (cells.length === 0) return;
+
+    // Kiểm tra xem có phải tất cả các ô hiện tại đều đã được chọn hay chưa
+    const allSelected = Array.from(cells).every(c => c.classList.contains('selected'));
+
+    if (allSelected) {
+        // TRƯỜNG HỢP 1: BỎ CHỌN TẤT CẢ
+        cells.forEach(c => {
+            c.classList.remove('selected');
+            const char = c.innerText;
+            selectedKanjiData = selectedKanjiData.filter(s => s.c !== char);
+        });
+        typeText("Đã bỏ chọn toàn bộ danh sách này.");
+    } else {
+        // TRƯỜNG HỢP 2: CHỌN TẤT CẢ (Chưa chọn hết thì chọn cho hết)
+        cells.forEach(c => {
+            if (!c.classList.contains('selected')) {
+                // Giả lập cú nhấp chuột để kích hoạt logic lưu dữ liệu đã viết ở hàm render
+                c.click(); 
+            }
+        });
+        typeText(`Đã chọn tất cả ${cells.length} mục trong danh sách!`);
+    }
+}
 
         window.onload = loadData;
 
