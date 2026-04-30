@@ -825,6 +825,77 @@ header.hero-island {
 .threads-scroll-area::-webkit-scrollbar-thumb:hover {
     background: var(--forest-green);
 }
+/* --- TỐI ƯU HOÁ CHO IPHONE & MOBILE --- */
+@media (max-width: 768px) {
+    /* 1. Header & Nav */
+    .top-nav-bar {
+        width: 90%;
+        height: 60px;
+        top: 10px;
+    }
+    .logo-text { font-size: 20px; }
+    .top-nav-bar .flex.gap-4 { gap: 8px; }
+    .btn-util { padding: 6px 12px; font-size: 10px; }
+
+    /* 2. Banner Island */
+    header.hero-island {
+        margin-top: 80px !important;
+        border-radius: 30px;
+        padding: 30px 20px;
+        flex-direction: column-reverse; /* Đưa chữ lên trên, card xuống dưới */
+    }
+    .hero-title-new { font-size: 2.2rem; text-align: center; }
+    .hero-desc-new { font-size: 1rem; text-align: center; }
+    .daily-kanji-card { width: 100%; max-width: 200px; margin: 0 auto; }
+    .btn-start-orange { width: 100%; text-align: center; padding: 15px 0; }
+
+    /* 3. Search Bar */
+    .search-kanji-container { margin-top: -30px; }
+    .search-wrapper { flex-direction: column; gap: 10px; border-radius: 20px; }
+    .search-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .btn-search-main, .btn-search-stroke { padding: 12px 5px; font-size: 10px; width: 100%; }
+
+    /* 4. Bản đồ hành trình (Quan trọng) */
+    .map-section { overflow: hidden; padding: 0 15px; }
+    .trail-step { 
+        flex-direction: column !important; /* Xếp dọc icon và chữ */
+        margin-bottom: 80px;
+        padding: 0 !important;
+        text-align: center !important;
+    }
+    .big-node { width: 100px; height: 100px; margin-bottom: 15px; }
+    .desc-box { width: 100% !important; margin: 0 !important; text-align: center !important; }
+    .line-svg { display: none; } /* Ẩn đường kẻ lằng nhằng trên mobile */
+
+    /* 5. Khung Thảo luận (Threads) */
+    .threads-container { 
+        margin: 60px 15px; 
+        padding: 45px 15px 20px; 
+        border-radius: 25px; 
+    }
+    .threads-banner { 
+        left: 50%; 
+        transform: translateX(-50%); 
+        white-space: nowrap; 
+        font-size: 12px; 
+        padding: 8px 20px; 
+    }
+    .thread-card { padding: 15px; gap: 12px; }
+    .avatar-circle { width: 40px; height: 40px; font-size: 18px; }
+    .reply-container { margin-left: 20px; } /* Giảm thụt lề trên mobile */
+    .reply-container::before { left: -12px; }
+    .reply-card { padding: 12px; }
+    .quick-reply-input { margin-left: 20px; }
+    
+    /* Ô nhập tin chính */
+    .threads-container > .mt-8 { 
+        flex-direction: column; 
+        padding: 15px; 
+        border-radius: 20px; 
+    }
+    .threads-container > .mt-8 input { width: 100%; text-align: center; }
+    .threads-container > .mt-8 button { width: 100%; }
+}
     </style>
 </head>
 <body>
