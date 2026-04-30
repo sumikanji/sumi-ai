@@ -3,820 +3,1095 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumi AI - Kanji Mastery Ultimate</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Klee+One:wght@300;400&family=Noto+Serif+JP:wght@200;300&display=swap" rel="stylesheet"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&family=Kiwi+Maru:wght@300&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400&family=Kiwi+Maru:wght@300;400&family=Zen+Maru+Gothic:wght@300;400&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400&family=Noto+Sans+JP:wght@100;300&family=Noto+Serif+JP:wght@200;300&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Hina+Mincho&family=Zen+Maru+Gothic:wght@500;700&family=IBM+Plex+Sans+JP:wght@500&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+    <title>Sumi AI Farm - Hành Trình Bậc Thầy Kanji</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --muji-bg: #fdfaf5;
-            --muji-red: #a63d40;
-            --muji-text: #333333;
-            --gray-border: #e8e8e8;
-            --gray-cell: #f5f5f5;
-            --current-font: 'Klee One', serif;
+            --forest-green: #558b2f;
+            --soft-green: #f1f8e9;
+            --candy-orange: #ffb74d;
+            --bg-dot: #c5e1a5;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Be Vietnam Pro', sans-serif;
-            background-color: var(--muji-bg);
-            display: flex; flex-direction: column; align-items: center;
-            padding: 20px; color: var(--muji-text);
+            background-color: var(--soft-green);
+            background-image: radial-gradient(var(--bg-dot) 2px, transparent 2px);
+            background-size: 25px 25px;
+            color: #4e342e;
+            margin: 0;
+            scroll-behavior: smooth;
         }
 
-        /* --- LAYOUT CHIA CỘT --- */
-        .main-layout {
-            display: flex; gap: 30px; width: 100%; max-width: 1100px;
-            margin-top: 20px; align-items: flex-start;
+        /* --- HEADER & NAVIGATION --- */
+        .top-utility {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .left-side { flex: 1.5; display: flex; flex-direction: column; gap: 15px; }
-        .right-side { flex: 1; display: flex; flex-direction: column; gap: 15px; position: sticky; top: 20px; }
 
-        /* --- BOT AREA --- */
-        .bot-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; min-height: 180px; justify-content: flex-end; }
-        #sumi-robot { width: 120px; height: 120px; position: relative; animation: floatingSumi 3s ease-in-out infinite; }
-        @keyframes floatingSumi { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .bot-bubble {
-            background: white; padding: 12px 20px; border-radius: 20px; border: 1px solid var(--gray-border); 
-            font-size: 15px; font-weight: 600; margin-top: 10px; width: 100%; max-width: 420px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03); color: var(--muji-red); text-align: center;
+        .btn-util {
+            background: white;
+            border: 2px solid var(--bg-dot);
+            padding: 8px 18px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--forest-green);
         }
-/* Khung chứa các nút cấp độ */
-.level-selection { 
-    display: flex; 
-    gap: 15px; /* Tăng khoảng cách dãn cách giữa các nút */
-    justify-content: center; 
-    flex-wrap: wrap; 
-    padding: 10px 0;
-}
-/* Thêm vào thẻ <style> */
-.hv-label.hidden {
-    display: none !important;
-}
 
-/* Tùy chỉnh nút khi ở trạng thái khác */
-.btn-feature.active-toggle {
-    background: var(--muji-red);
+        .btn-orange {
+            background-color: var(--candy-orange);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 0px #e67e22;
+        }
+
+        /* --- SLIDE 1: BANNER ISLAND --- */
+        .hero-island {
+            background-color: var(--forest-green);
+            color: white;
+            border-radius: 50px; 
+            padding: 80px 40px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 10px auto 100px;
+            border: 4px solid white;
+            box-shadow: 0 15px 35px rgba(85, 139, 47, 0.2);
+        }
+
+        .hero-island h1 { 
+            font-size: 3.8rem; 
+            font-weight: 900; 
+            line-height: 1; 
+            margin-bottom: 25px; 
+            text-transform: uppercase;
+            font-style: italic;
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+        }
+
+        .hero-island p { 
+            font-size: 1.1rem; 
+            max-width: 700px; 
+            margin: 0 auto 35px; 
+            font-weight: 700; 
+            color: #f1f8e9;
+        }
+
+        .btn-start-orange {
+    background-color: var(--candy-orange);
     color: white;
-}
-/* Nút cấp độ to hơn */
-.l-btn {
-    background: var(--gray-cell); 
-    border: 1px solid var(--gray-border); 
-    width: 60px;  /* Tăng từ 45px lên 60px */
-    height: 60px; /* Tăng từ 45px lên 60px */
-    border-radius: 15px; /* Bo góc mềm mại hơn */
-    font-size: 16px;     /* Chữ to hơn một chút */
-    cursor: pointer; 
-    transition: 0.3s; 
-    font-weight: 800; 
-    color: #888;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 18px 60px;
+    border-radius: 50px;
+    font-weight: 900;
+    text-transform: uppercase;
+    display: inline-block;
+    font-size: 1.2rem;
+    /* Bóng đổ cứng tạo độ dày cho nút */
+    box-shadow: 0 6px 0px #e67e22; 
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
 }
 
-/* Hiệu ứng khi di chuột vào hoặc khi đang kích hoạt */
-.l-btn:hover {
-    border-color: var(--muji-red);
-    color: var(--muji-red);
+/* Hiệu ứng nhô lên khi di chuột vào */
+.btn-start-orange:hover {
+    transform: translateY(-5px); /* Nhô lên nhẹ */
+    box-shadow: 0 11px 0px #e67e22; /* Bóng đổ dày thêm khi nhô lên */
 }
 
-.l-btn.active { 
-    background: var(--muji-red); 
-    color: white; 
-    border-color: var(--muji-red);
-    box-shadow: 0 4px 12px rgba(166, 61, 64, 0.2); /* Thêm bóng đổ cho nút đang chọn */
+/* Hiệu ứng lún xuống khi click (nhấn giữ chuột) */
+.btn-start-orange:active {
+    transform: translateY(3px); /* Lún xuống */
+    box-shadow: 0 2px 0px #e67e22; /* Bóng đổ mỏng lại */
 }
-        /* --- COMPONENTS --- */
-        .level-card { width: 100%; background: white; padding: 15px; border-radius: 20px; border: 1px solid var(--gray-border); text-align: center; }
-        .l-btn { background: var(--gray-cell); border: 1px solid var(--gray-border); width: 45px; height: 45px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .l-btn.active { background: var(--muji-red); color: white; }
 
-        .feature-row { display: flex; gap: 10px; width: 100%; }
-        .btn-feature {
-            flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--muji-red);
-            background: white; color: var(--muji-red); font-weight: 700; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 11px;
+        /* --- SLIDE 2: BẢN ĐỒ HÀNH TRÌNH --- */
+        .map-section {
+            max-width: 900px;
+            margin: 0 auto 150px;
+            position: relative;
         }
-        .btn-feature:hover { background: var(--muji-red); color: white; }
 
-        .btn-search-full {
-            width: 100%; background: white; color: var(--muji-red); border: 1px solid var(--muji-red);
-            padding: 14px; border-radius: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase;
+        .trail-step {
+            display: flex;
+            
+            align-items: center;
+            position: relative;
+            margin-bottom: 140px;
         }
-        .btn-search-full:hover { background: var(--muji-red); color: white; }
-/* 1. Cố định toàn bộ phần phía trên (Bot và Level Selection) */
-.top-sticky-area {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: var(--muji-bg); /* Trùng màu nền để không bị lộ khi cuộn */
-    width: 100%;
+
+        /* Icon với bóng đổ cứng */
+.big-node {
+    width: 120px;
+    height: 120px;
+    background: white;
+    border: 4px solid var(--candy-orange);
+    border-radius: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 10px;
-      /* 2. Giới hạn chiều cao của khung chứa Kanji và cho phép cuộn */
-.master-box {
-    background: white;
-    border: 1px solid var(--gray-border);
-    border-radius: 25px;
-    padding: 20px;
-    
-    /* Thiết lập chiều cao tối đa (ví dụ 500px hoặc theo màn hình) */
-    max-height: 65vh; 
-    overflow-y: auto; /* Hiện thanh cuộn khi vượt quá chiều cao */
-    
-    /* Làm đẹp thanh cuộn theo phong cách tối giản */
-    scrollbar-width: thin;
-    scrollbar-color: var(--muji-red) transparent;
-}
-
-/* Tùy chỉnh thanh cuộn cho Chrome/Safari */
-.master-box::-webkit-scrollbar {
-    width: 6px;
-}
-.master-box::-webkit-scrollbar-thumb {
-    background-color: var(--muji-red);
-    border-radius: 10px;
-}
-}
-        .kanji-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 12px; }
-        /* Ô chứa chữ */
-.kanji-cell {
-    aspect-ratio: 1/1; 
-    background: var(--gray-cell); 
-    border-radius: 12px;
-    display: flex; 
-    flex-direction: column; /* Xếp theo chiều dọc */
-    align-items: center; 
-    justify-content: center; 
+    justify-content: center;
+    /* Bóng đổ khối cứng, không nhòe */
+    box-shadow: 0 10px 0px #ffe0b2; 
+    z-index: 30;
+    flex-shrink: 0;
+    /* Hiệu ứng nhô lên mượt mà */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
-    transition: 0.3s; 
-    border: 2px solid transparent;
-    padding: 2px;
 }
 
-/* Chữ Kanji/Bộ thủ chính */
-.kanji-char {
-    font-family: var(--current-font);
-    font-size: 24px; /* Chỉnh lại kích cỡ vừa vặn */
-    line-height: 1.2;
-}
-/* Danh sách Kanji có cùng bộ thủ (hiển thị trong bảng chi tiết bên phải) */
-.related-kanji-container {
-    margin-top: 15px;
-    padding-top: 10px;
-    border-top: 1px solid #f0f0f0;
-    text-align: left;
+/* HIỆU ỨNG NHÔ LÊN KHI DI CHUỘT */
+.big-node:hover {
+    transform: translateY(-15px); /* Nhô lên cao */
+    box-shadow: 0 25px 0px #ffe0b2; /* Bóng đổ dài ra theo tỉ lệ nhô lên */
 }
 
-.related-title {
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    font-weight: 300;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
+/* Trạng thái đã kích hoạt (Màu xanh) */
+.node-active { 
+    border-color: var(--forest-green); 
+    background: #e8f5e9; 
+    box-shadow: 0 10px 0px #c5e1a5; 
 }
 
-.related-grid {
+.node-active:hover {
+    box-shadow: 0 25px 0px #c5e1a5;
+}
+
+        .desc-box { width: 350px; z-index: 40; }
+        .trail-step:nth-child(odd) { justify-content: flex-start; padding-left: 10%; }
+        .trail-step:nth-child(odd) .desc-box { margin-left: 50px; text-align: left; }
+        .trail-step:nth-child(even) { justify-content: flex-end; padding-right: 10%; }
+        .trail-step:nth-child(even) .desc-box { margin-right: 50px; text-align: right; }
+
+        .desc-box h3 { font-size: 24px; font-weight: 900; color: var(--forest-green); text-transform: uppercase; }
+        .desc-box p { font-size: 14px; color: #7f8c8d; font-style: italic; margin-top: 8px; }
+
+        .line-svg {
+            position: absolute;
+            width: 280px;
+            height: 160px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .trail-step:nth-child(odd) .line-svg { top: 110px; left: calc(10% + 60px); }
+        .trail-step:nth-child(even) .line-svg { top: 110px; right: calc(10% + 60px); transform: scaleX(-1); }
+
+        /* --- SLIDE 3: CHI TIẾT CÁC CẤP ĐỘ --- */
+        .info-grid {
+            max-width: 1000px;
+            margin: 0 auto 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .tile-card {
+            background: white;
+            border: 2px solid var(--candy-orange);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 8px 8px 0px #ffe0b2;
+            transition: transform 0.3s ease;
+        }
+        .tile-card:hover { transform: translateY(-10px); }
+
+        .tile-card h4 {
+            color: var(--forest-green);
+            font-size: 20px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin: 15px 0;
+        }
+
+/* Trạm Bậc Thầy với màu cam nhạt hơn */
+.glory-node { 
+    /* Gradient từ cam sữa đến cam nhạt */
+    background: linear-gradient(135deg, #ffe0b2, #ffcc80) !important; 
+    border-color: white !important; 
+    /* Bóng đổ cứng màu cam nhạt */
+    box-shadow: 0 10px 0px #ffcc80 !important;
+}
+
+.glory-node:hover {
+    /* Khi nhô lên, bóng đổ dài ra nhưng vẫn giữ màu cam nhạt */
+    box-shadow: 0 25px 0px #ffcc80 !important;
+}
+
+/* Chỉnh lại màu chữ bên dưới icon Master cho dễ đọc trên nền cam nhạt */
+.glory-node b, .glory-node span.text-white {
+    color: #d84315 !important; /* Chữ màu cam đậm để nổi bật trên nền nhạt */
+}
+/* CSS CHO BANNER ĐẢO BÊN */
+    .hero-island {
+        background-color: var(--forest-green);
+        border-radius: 50px; 
+        padding: 60px 50px;
+        max-width: 1000px;
+        margin: 10px auto 80px;
+        border: 4px solid white;
+        box-shadow: 0 15px 35px rgba(85, 139, 47, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Hiệu ứng nhô lên cho thẻ Kanji bên trái */
+    .daily-kanji-card {
+        background: white;
+        padding: 25px;
+        border-radius: 30px;
+        width: 220px;
+        box-shadow: 0 10px 0px #e0e0e0; /* Bóng đổ cứng nhạt */
+        border: 3px solid var(--candy-orange);
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+    }
+    
+    .daily-kanji-card:hover {
+        transform: translateY(-15px) rotate(3deg); /* Nhô lên và xoay nhẹ */
+        box-shadow: 0 25px 0px #e0e0e0; /* Bóng đổ dài ra khi nhô lên */
+    }
+
+    .hero-title-new {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: white;
+        text-transform: uppercase;
+        font-style: italic;
+        text-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+        margin-bottom: 15px;
+        line-height: 1;
+    }
+
+    .hero-desc-new {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #f1f8e9;
+        line-height: 1.6;
+        margin-bottom: 30px;
+    }
+
+    .kanji-label {
+        font-size: 10px;
+        font-weight: 900;
+        color: var(--forest-green);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .kanji-main {
+        font-size: 85px;
+        font-weight: 900;
+        color: #d84315; /* Màu đỏ mộc mạc đặc trưng */
+        line-height: 1.1;
+    }
+
+    .kanji-meaning { font-size: 18px; font-weight: 900; color: #333; }
+    
+    .kanji-info {
+        font-size: 10px;
+        font-weight: 700;
+        color: #7f8c8d;
+        margin-top: 5px;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .kanji-footer {
+        margin-top: 15px;
+        padding-top: 12px;
+        border-top: 1px dashed #ddd;
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--candy-orange);
+    }
+    /* CSS CHO THANH TRA CỨU */
+    .search-kanji-container {
+        max-width: 850px;
+        margin: -40px auto 60px; /* Nhô lên một chút đè nhẹ lên banner */
+        position: relative;
+        z-index: 50;
+        padding: 0 20px;
+    }
+
+    .search-wrapper {
+        background: white;
+        padding: 12px 15px;
+        border-radius: 25px;
+        border: 4px solid var(--candy-orange);
+        box-shadow: 0 10px 0px #ffe0b2;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: all 0.3s ease;
+    }
+
+    /* Hiệu ứng nhô lên cho thanh tra cứu khi hover */
+    .search-wrapper:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 0px #ffe0b2;
+    }
+
+    .search-input-group {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        background: #f9f9f9;
+        padding: 8px 15px;
+        border-radius: 15px;
+    }
+
+    .search-icon { margin-right: 10px; opacity: 0.5; }
+
+    .search-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 700;
+        color: #4e342e;
+    }
+
+    .search-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-search-main {
+        background: var(--forest-green);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+        box-shadow: 0 4px 0px #3d6321;
+        transition: all 0.2s;
+    }
+
+    .btn-search-stroke {
+        background: white;
+        color: var(--candy-orange);
+        border: 2px solid var(--candy-orange);
+        padding: 8px 20px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+        box-shadow: 0 4px 0px #ffe0b2;
+        transition: all 0.2s;
+    }
+
+    /* Hiệu ứng nhấn nút */
+    .btn-search-main:active, .btn-search-stroke:active {
+        transform: translateY(3px);
+        box-shadow: 0 1px 0px transparent;
+    }
+
+    .btn-search-main:hover { background: #689f38; }
+    .btn-search-stroke:hover { background: #fffcf5; }
+   
+
+/* --- THANH ĐIỀU HƯỚNG TRONG SUỐT & VỪA KHUNG BANNER --- */
+.top-nav-bar {
+    position: absolute;
+    top: 20px; /* Cách đỉnh một chút cho thoáng */
+    left: 50%;
+    transform: translateX(-50%); /* Căn giữa màn hình */
+    
+    width: 1000px; /* Bằng max-width của hero-island */
+    max-width: calc(100% - 40px); /* Đảm bảo co giãn trên mobile */
+    
+    height: 70px;
+    background: transparent; 
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px; /* Thụt lề một chút để logo không dính sát mép */
+    z-index: 2000;
 }
 
-.related-item {
-    font-family: 'Klee One', cursive;
-    font-size: 18px;
-    color: #444;
-    cursor: pointer;
-    transition: 0.2s;
-    width: 30px;
-    height: 30px;
+/* Logo Sumi Kanji */
+.logo-text {
+    font-size: 24px;
+    font-weight: 900;
+    color: #a63d40; /* Đỏ Muji */
+    text-transform: lowercase;
+    letter-spacing: -1px;
+}
+
+.logo-text span {
+    color: var(--forest-green);
+}
+
+/* Điều chỉnh lại Banner để nằm ngay dưới Nav */
+header.hero-island {
+    margin-top: 100px !important; 
+    /* Giữ nguyên các thuộc tính khác của banner */
+}
+/* --- CHẾ ĐỘ MÁY TÍNH: CHẠY DỌC 2 BÊN --- */
+.community-section {
+    position: fixed; /* Cố định để chạy dọc */
+    top: 55%;
+    transform: translateY(-50%);
+    width: 100%;
+    pointer-events: none; /* Để không che mất các nút bấm ở giữa */
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+/* --- CHẾ ĐỘ MÁY TÍNH: TỐI ƯU CHIỀU RỘNG --- */
+.community-card {
+    width: 360px; /* Tăng rộng thêm để đọc nội dung sướng hơn */
+    height: 480px; /* Tăng chiều cao để không bị quá lùn so với chiều rộng */
+    background: white;
+    border-radius: 30px; /* Bo tròn mạnh hơn cho nghệ thuật */
+    border: 4px solid var(--forest-green);
+    box-shadow: 0 12px 0px #c5e1a5;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    pointer-events: auto;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Hiệu ứng nhô lên cao hơn một chút vì khung to hơn */
+.community-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 0px #c5e1a5;
+}
+
+/* Chỉnh lại độ rộng khung chứa tổng để tránh bị che mất nội dung ở giữa */
+.community-section {
+    padding: 0 30px; /* Đẩy sát ra mép màn hình hơn một chút */
+}
+
+/* Tinh chỉnh Header bên trong khung cho sang trọng */
+.card-header-v2 {
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+/* --- CHẾ ĐỘ MOBILE: XẾP CHỒNG TRÊN DƯỚI --- */
+@media (max-width: 1100px) {
+    .community-section {
+        position: relative; /* Trở về vị trí bình thường */
+        top: 0;
+        transform: none;
+        flex-direction: column; /* Xếp chồng dọc */
+        align-items: center;
+        gap: 40px;
+        margin-top: 60px;
+        padding-bottom: 50px;
+    }
+
+    .community-card {
+        width: 100%; /* Giãn bằng chiều rộng màn hình */
+        max-width: 500px;
+        height: 350px;
+    }
+}
+
+/* Khung chung cho cả hai */
+.community-card {
+    background: white;
+    border-radius: 30px;
+    border: 4px solid var(--forest-green);
+    box-shadow: 0 12px 0px #c5e1a5;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 450px; /* Tăng chiều cao để chứa được nhiều nội dung hơn */
+}
+
+/* Biến thể màu cam cho Hội Nông Dân */
+.chat-card {
+    border-color: var(--candy-orange);
+    box-shadow: 0 12px 0px #ffe0b2;
+}
+
+.card-header {
+    padding: 18px 25px;
+    color: white;
+    font-weight: 900;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bg-green { background-color: var(--forest-green); }
+.bg-orange { background-color: var(--candy-orange); }
+
+.card-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Nội dung Mẹo Member */
+.tip-item-v2 {
+    background: #f9fdf9;
+    padding: 15px;
+    border-radius: 18px;
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Nội dung Chat */
+.chat-bubble-v2 {
+    margin-bottom: 15px;
+}
+
+.user-tag {
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+}
+/* --- SNS THREADS: BORDER STYLE (XANH FOREST) --- */
+.threads-wrapper {
+    max-width: 750px;
+    margin: 80px auto;
+    padding: 30px;
+    background: #fdfdfd; /* Nền sáng nhẹ sạch sẽ */
+    border: 4px solid var(--forest-green); /* Đóng khung xanh toàn khu vực */
+    border-radius: 40px;
+    box-shadow: 0 12px 0px #c5e1a5; /* Bóng đổ cứng đặc trưng */
+}
+
+.thread-post {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    background: white;
+    border: 2px solid #e0e0e0; /* Viền nhạt mặc định */
+    border-radius: 20px;
+    margin-bottom: 15px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+/* Hiệu ứng di chuột: Chỉ đổi màu viền và nhô lên, KHÔNG bóng tỏa */
+.thread-post:hover {
+    transform: translateY(-5px);
+    border-color: var(--forest-green); /* Đổi sang viền xanh khi di chuột */
+    background: #f9fdf9;
+}
+
+/* Avatar tối giản với viền xanh */
+.avatar-circle {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--forest-green);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 6px;
-    background: #f9f9f9;
+    font-size: 20px;
+    background: white;
 }
 
-.related-item:hover {
-    color: var(--muji-red);
-    background: #fffafa;
+/* Đường nối thread màu xanh nhạt */
+.thread-connector {
+    position: absolute;
+    left: 42px;
+    top: 70px;
+    bottom: -20px;
+    width: 3px;
+    background: #c5e1a5;
+    z-index: 0;
 }
-/* Âm Hán Việt bên dưới */
-.hv-label {
-    font-size: 9px; 
-    font-weight: 700;
+
+/* Nút tương tác phong cách tối giản */
+.btn-action {
     color: #999;
-    text-transform: uppercase;
-    margin-top: 1px;
-    font-family: 'Be Vietnam Pro', sans-serif;
-    white-space: nowrap; /* Không cho xuống dòng */
-    overflow: hidden;
-    max-width: 90%;
-    text-overflow: ellipsis; /* Nếu dài quá sẽ hiện dấu ... */
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.2s;
 }
 
-/* Đổi màu khi được chọn */
-.kanji-cell.selected { background: var(--muji-red) !important; color: white !important; }
-.kanji-cell.selected .hv-label { color: rgba(255,255,255,0.8); }
-.kanji-cell.viewing { border-color: var(--muji-red); }
+.btn-action:hover {
+    color: var(--forest-green);
+}
 
-        .preview-card {
-            background: white; border-radius: 30px; padding: 25px; width: 100%;
-            display: flex; flex-direction: column; align-items: center;
-            border: 1px solid var(--gray-border); box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
-        #writer-canvas { width: 160px; height: 160px; margin-bottom: 15px; }
-        .hv-tag { font-size: 24px; font-weight: 700; color: var(--muji-red); letter-spacing: 3px; }
-        .reading-grid { display: flex; width: 100%; justify-content: space-around; padding: 15px 0; border-top: 1px solid #eee; margin-top: 15px; }
-        .vocab-item { background: var(--gray-cell); padding: 10px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; width: 100%; font-size: 14px; }
+/* --- CONTAINER CHÍNH MÀU CAM NHẠT --- */
+.threads-container {
+    max-width: 850px;
+    margin: 100px auto;
+    padding: 60px 40px 40px;
+    background-color: #fff3e0; /* Màu cam cực nhạt (Peach) */
+    border-radius: 40px;
+    border: 3px solid #ffcc80; /* Viền cam đồng bộ */
+    position: relative;
+    box-shadow: 0 15px 0px #ffe0b2; /* Bóng đổ cứng màu cam */
+}
 
-        /* --- MODAL TRA CỨU --- */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center;
-        }
-        .modal-content {
-            background: white; padding: 25px; border-radius: 25px; width: 95%; max-width: 550px;
-            position: relative; text-align: center;
-        }
-        #hw-canvas-modal {
-            width: 100%; height: 350px; border: 2px solid var(--gray-border); border-radius: 15px;
-            background-color: #fff; cursor: crosshair; touch-action: none;
-            background-image: linear-gradient(var(--gray-border) 1px, transparent 1px), linear-gradient(90deg, var(--gray-border) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-        .prediction-row { 
-            display: flex; gap: 8px; overflow-x: auto; margin-bottom: 15px; 
-            min-height: 60px; justify-content: center; padding: 5px;
-            border-bottom: 1px solid #eee;
-        }
+/* BANNER XANH CHỮ TRẮNG (GIỮ NGUYÊN ĐỂ NỔI BẬT) */
+.threads-banner {
+    position: absolute;
+    top: -25px;
+    left: 40px;
+    background: var(--forest-green);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 0px #3d6321;
+    border: 3px solid white;
+    z-index: 10;
+}
 
-        @media (max-width: 800px) { .main-layout { flex-direction: column; } .right-side { position: static; } }
+/* --- KHUNG BÌNH LUẬN MÀU XANH --- */
+.thread-card {
+    background: #f1f8e9; /* Màu xanh mint nhẹ */
+    border: 2px solid #c5e1a5;
+    border-radius: 25px;
+    padding: 25px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.thread-card:hover {
+    transform: translateY(-5px);
+    background: white; /* Chuyển trắng khi hover để làm nổi bật */
+    border-color: var(--forest-green);
+}
+
+/* BỘ NÚT TƯƠNG TÁC */
+.interaction-bar {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(85, 139, 47, 0.2);
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: lowercase;
+}
+
+.action-btn:hover { color: var(--forest-green); transform: scale(1.1); }
+.action-btn.dislike:hover { color: #a63d40; } /* Màu đỏ khi dislike */
+
+.avatar-circle {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 2px solid var(--forest-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+/* --- PHẦN PHẢN HỒI (SUB-COMMENT) --- */
+.reply-container {
+    margin-left: 60px; /* Thụt lề để phân cấp */
+    margin-top: 10px;
+    position: relative;
+}
+
+/* Đường nối giữa bình luận chính và phụ */
+.reply-container::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: -20px;
+    bottom: 25px;
+    width: 2px;
+    background: #c5e1a5;
+    border-radius: 2px;
+}
+
+.reply-card {
+    background: rgba(255, 255, 255, 0.6); /* Trắng trong suốt nhẹ trên nền xanh */
+    border: 1px solid #c5e1a5;
+    border-radius: 18px;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.reply-avatar {
+    width: 32px;
+    height: 32px;
+    background: white;
+    border: 1px solid var(--forest-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.reply-content h5 {
+    font-size: 12px;
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+.reply-content p {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* Ô nhập phản hồi nhanh */
+.quick-reply-input {
+    margin-left: 60px;
+    margin-top: 5px;
+    display: flex;
+    gap: 10px;
+}
+
+.quick-reply-input input {
+    flex: 1;
+    background: white;
+    border: 1px solid #ffcc80;
+    border-radius: 10px;
+    padding: 5px 15px;
+    font-size: 11px;
+    outline: none;
+}
+/* --- KHUNG CHỨA CÁC BÀI ĐĂNG (CÓ CUỘN) --- */
+.threads-scroll-area {
+    /* Độ cao tương đương khoảng 2 bài đăng chính kèm phản hồi */
+    max-height: 650px; 
+    overflow-y: auto;
+    padding-right: 15px; /* Khoảng trống cho thanh cuộn */
+    margin-bottom: 20px;
+}
+
+/* Tùy chỉnh thanh cuộn (Scrollbar) cho đẹp và tối giản */
+.threads-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.threads-scroll-area::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.threads-scroll-area::-webkit-scrollbar-thumb {
+    background: #ffcc80; /* Màu cam đậm hơn một chút cho thanh cuộn */
+    border-radius: 10px;
+}
+
+.threads-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: var(--forest-green);
+}
     </style>
 </head>
 <body>
-<div class="top-sticky-area">
-    <div class="bot-container">
-        <div id="sumi-robot">
-            <svg viewBox="0 0 100 100"><rect x="10" y="20" width="80" height="60" rx="30" fill="white" stroke="#e0e0e0" stroke-width="1.5"/><rect x="22" y="32" width="56" height="36" rx="18" fill="#333"/><circle cx="38" cy="50" r="5" fill="#00ffcc"/><circle cx="62" cy="50" r="5" fill="#00ffcc"/><path d="M50 20 L50 5" stroke="#a63d40" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="5" r="7" fill="#a63d40"/></svg>
-        </div>
-        <div class="bot-bubble"><span id="type-text">Cùng Sumi chinh phục Kanji nhé!</span></div>
-    </div>
 
-    <div class="main-layout">
-        <div class="left-side">
-            <div class="level-card">
-         
-        <span style="font-size: 14px; font-weight: 500; color: #888888; display: block; margin-bottom: 5px; letter-spacing: 0.5px;">
-        Chọn chế độ luyện tập
-    </span>
+   <nav class="top-nav-bar">
+    <a href="#" class="logo-wrapper">
+        <div class="logo-icon">🪴</div>
+        <div class="logo-text">sumi <span>kanji</span></div>
+    </a>
+
+    <div class="flex items-center gap-4">
+        <button class="btn-util">🌐 Việt Nam</button>
+        <button class="btn-util">🔔</button>
+        <button class="btn-util btn-orange">Đăng nhập</button>
+    </div>
+</nav>
+
+    <header class="hero-island">
+    <div class="absolute top-4 left-10 text-white opacity-5 font-black text-9xl pointer-events-none">学</div>
     
-                <div class="level-selection">
-                    <button class="l-btn active" onclick="switchLevel('N5', this)">N5</button>
-                    <button class="l-btn" onclick="switchLevel('N4', this)">N4</button>
-                    <button class="l-btn" onclick="switchLevel('N3', this)">N3</button>
-                    <button class="l-btn" onclick="switchLevel('N2', this)">N2</button>
-                    <button class="l-btn" onclick="switchLevel('N1', this)">N1</button>
-                    <button class="l-btn" onclick="loadBoThu(this)" style="width: auto; padding: 0 15px; font-size: 13px;">214 BỘ THỦ</button>
+    <div class="flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
+        
+        <div class="daily-kanji-card">
+            <div class="kanji-label">Hạt mầm hôm nay</div>
+            <div class="kanji-main">木</div>
+            <div class="kanji-meaning">Mộc (Cây)</div>
+            <div class="kanji-info">
+                <span>ON: MOKU</span>
+                <span>KUN: ki</span>
+            </div>
+            <div class="kanji-footer">Kích để học nét vẽ 🖌️</div>
+        </div>
+
+        <div class="text-right flex-1">
+            <h1 class="hero-title-new">Nông Trại Kanji </h1>
+            <p class="hero-desc-new">
+                ĐỪNG HỌC KANJI, HÃY CHĂM SÓC CHÚNG!<br>
+                Mỗi ngày gieo một hạt mầm tri thức, gặt hái rừng cây tri thức vĩ đại cùng Sumi Kanji 
+            </p>
+            <a href="#map" class="btn-start-orange">Khám phá lộ trình</a>
+        </div>
+    </div>
+</header>
+<section class="search-kanji-container">
+    <div class="search-wrapper">
+        <div class="search-input-group">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Nhập Kanji hoặc ý nghĩa muốn tra cứu..." class="search-input">
+        </div>
+        <div class="search-actions">
+            <button class="btn-search-main">Tra từ điển</button>
+            <button class="btn-search-stroke">Tra nét vẽ 🖌️</button>
+        </div>
+    </div>
+</section>
+    <main class="map-section" id="map">
+        <div class="text-center mb-20">
+            <h2 class="text-3xl font-black text-[#558b2f] uppercase tracking-tighter">Con đường gặt hái tri thức</h2>
+        </div>
+        
+        <div class="trail-step">
+            <div class="big-node node-active">
+                <span class="text-5xl">🪴</span>
+                <span class="text-[13px] font-black mt-1 uppercase">Bộ Thủ</span>
+            </div>
+            <div class="desc-box">
+                <h3>Gốc Rễ Nông Trại</h3>
+                <p>"214 hạt giống nền tảng giúp bạn hiểu sâu mọi chữ Kanji ngay từ khi bắt đầu."</p>
+            </div>
+            <svg class="line-svg" viewBox="0 0 200 120">
+                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+            </svg>
+        </div>
+
+        <div class="trail-step">
+            <div class="big-node node-active">
+                <span class="text-5xl">🌱</span>
+                <span class="text-[13px] font-black mt-1 uppercase">JLPT N5</span>
+            </div>
+            <div class="desc-box">
+                <h3>Mầm Non Đầu Tiên</h3>
+                <p>"100 chữ Kanji căn bản bắt đầu nhú khỏi mặt đất kiến thức."</p>
+            </div>
+            <svg class="line-svg" viewBox="0 0 200 120">
+                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+            </svg>
+        </div>
+
+        <div class="trail-step">
+            <div class="big-node">
+                <span class="text-5xl">🌿</span>
+                <span class="text-[13px] font-black mt-1 uppercase">JLPT N4</span>
+            </div>
+            <div class="desc-box">
+                <h3>Lá Xanh Vươn Mình</h3>
+                <p>"300 chữ Kanji phổ thông giúp bạn làm quen với nhịp sống Nhật Bản."</p>
+            </div>
+            <svg class="line-svg" viewBox="0 0 200 120">
+                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+            </svg>
+        </div>
+
+        <div class="trail-step">
+            <div class="big-node">
+                <span class="text-5xl">🌸</span>
+                <span class="text-[13px] font-black mt-1 uppercase">JLPT N3</span>
+            </div>
+            <div class="desc-box">
+                <h3>Vụ Mùa Rực Rỡ</h3>
+                <p>"Chinh phục 650 chữ Kanji trung cấp, nông trại bắt đầu trổ hoa rực rỡ."</p>
+            </div>
+            <svg class="line-svg" viewBox="0 0 200 120">
+                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+            </svg>
+        </div>
+
+        <div class="trail-step">
+            <div class="big-node">
+                <span class="text-5xl">🍓</span>
+                <span class="text-[13px] font-black mt-1 uppercase">JLPT N2</span>
+            </div>
+            <div class="desc-box">
+                <h3>Trái Ngọt Cao Cấp</h3>
+                <p>"Làm chủ 1000 chữ Kanji để tự tin làm việc trong môi trường chuyên nghiệp."</p>
+            </div>
+            <svg class="line-svg" viewBox="0 0 200 120">
+                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+            </svg>
+        </div>
+
+        <div class="trail-step">
+            <div class="big-node">
+                <span class="text-5xl">🍁</span>
+                <span class="text-[13px] font-black mt-1 uppercase">JLPT N1</span>
+            </div>
+            <div class="desc-box">
+                <h3>Rừng Cây Cổ Thụ</h3>
+                <p>"Sở hữu hơn 2000 cây đại thụ tri thức, thông thạo như người bản xứ."</p>
+            </div>
+            <svg class="line-svg" viewBox="0 0 200 120">
+                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+            </svg>
+        </div>
+
+        <div class="trail-step">
+            <div class="big-node glory-node">
+                <span class="text-5xl">⛩️</span>
+                <span class="text-[13px] font-black text-white mt-1 uppercase">Master</span>
+            </div>
+            <div class="desc-box">
+                <h3 class="text-orange-600">Bậc Thầy Kanji</h3>
+                <p class="text-orange-400 font-bold">"Đỉnh vinh quang! Bạn đã hoàn toàn làm chủ mọi kho báu của nông trại Sumi AI."</p>
+            </div>
+        </div>
+    </main>
+
+<section class="threads-container">
+    <div class="threads-banner">
+        <span>👨‍🌾</span> hội nông dân thảo luận
+    </div>
+<div class="threads-scroll-area">
+    <div class="mb-8">
+        <div class="thread-card">
+            <div class="avatar-circle">🦊</div>
+            <div class="flex-1">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="font-black text-sm text-[#333]">hoa_kanji.master</span>
+                    <span class="text-[10px] font-bold text-gray-400">2 giờ trước</span>
                 </div>
-    
-    </div>
-            <div class="feature-row">
-                <button class="btn-feature" onclick="goToFlashcards()">+ Flashcard</button>
-                <button class="btn-feature" onclick="goToWritingSheet()">+ In PDF</button>
-            </div>
-            <div class="feature-row">
-            <button class="btn-feature" id="toggle-hv-btn" onclick="toggleHánViệt()">Ẩn Hán Việt</button>
-    <button class="btn-feature" onclick="selectAllInGrid()">Chọn / Bỏ chọn tất cả</button>
-            </div>
-            <div class="master-box">
-                <div class="kanji-grid" id="kanji-grid"></div>
-            </div>
-        </div>
-
-        <div class="right-side">
-            <button class="btn-search-full" onclick="openModal()"> + TRA CỨU VIẾT TAY </button>
-            
-            <div class="preview-card">
-                <button id="btn-go-practice" style="width: 100%; background: #a63d40; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; margin-bottom: 15px; cursor: pointer;">✍️ LUYỆN VIẾT RIÊNG</button>
-                <div id="writer-canvas"></div>
-                <div class="info-panel" style="width: 100%; text-align: center;">
-                    <div class="hv-tag" id="hv-val">SUMI AI</div>
-                    <div id="mean-val" style="color: #666; margin-top: 5px;">Chọn chữ để học!</div>
-                    <div class="reading-grid">
-                        <div class="read-box"><span style="font-size: 10px; color: #aaa;">ON</span><div id="on-val" style="font-weight: 700;">-</div></div>
-                        <div class="read-box"><span style="font-size: 10px; color: #aaa;">KUN</span><div id="kun-val" style="font-weight: 700;">-</div></div>
-                    </div>
-                    <div id="vocab-section" style="display:none; text-align: left; width: 100%; margin-top: 15px;">
-                        <span style="font-size: 11px; font-weight: 800; color: #aaa; text-transform: uppercase;">Từ vựng mở rộng</span>
-                        <div id="vocab-list" style="margin-top: 8px;"></div>
-                        <div id="related-section" class="related-kanji-container" style="display:none;">
-    <div class="related-title">Chữ Kanji cùng bộ thủ</div>
-    <div id="related-grid" class="related-grid"></div>
-</div>
-                    </div>
+                <p class="text-sm text-gray-700">
+                    Mẹo nhớ chữ <b>聞 (Vấn - Nghe)</b>: Có tai (耳) đặt trong cửa (門). Muốn hóng chuyện thì phải ghé tai sát cửa nhé các bác!
+                </p>
+                <div class="interaction-bar">
+                    <div class="action-btn">👍 <span>12</span></div>
+                    <div class="action-btn dislike">👎 <span>2</span></div>
+                    <div class="action-btn">💬 <span>phản hồi</span></div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-    <div id="hw-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span onclick="closeModal()" style="position:absolute; top:10px; right:20px; font-size:35px; cursor:pointer; color:#999;">&times;</span>
-            <h4 style="margin-bottom: 10px; color: var(--muji-red); text-transform: uppercase; letter-spacing: 1px;">Vẽ chữ vào khung</h4>
-            <div id="prediction-row" class="prediction-row">
-                <span style="color:#ccc; font-style:italic; font-size:13px; margin-top:15px;">Kết quả sẽ hiện ở đây...</span>
+
+        <div class="reply-container">
+            <div class="reply-card">
+                <div class="reply-avatar">🧑‍🌾</div>
+                <div class="reply-content">
+                    <h5>minh_nhat.n3</h5>
+                    <p>Bác giải thích hay quá, em vừa thử áp tai vào cửa phòng học và thuộc luôn chữ này rồi! 😂</p>
+                    <div class="flex gap-4 mt-2 opacity-60 text-[10px] font-bold">
+                        <span>thích</span>
+                        <span>trả lời</span>
+                    </div>
+                </div>
             </div>
-            <canvas id="hw-canvas-modal"></canvas>
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <button class="btn-feature" style="border-color:#ccc; color:#666" onclick="clearCanvas()">Xóa bảng</button>
-                <button class="btn-feature" style="border-color:#ccc; color:#666" onclick="undoStroke()">Hoàn tác</button>
-                <button class="btn-feature" style="background:var(--muji-red); color:white" onclick="closeModal()">Xong</button>
+
+            <div class="reply-card">
+                <div class="reply-avatar">🌸</div>
+                <div class="reply-content">
+                    <h5>nhi_jp</h5>
+                    <p>Có thêm hình minh họa cái tai dính vào cửa thì tuyệt bác ạ.</p>
+                </div>
+            </div>
+
+            <div class="quick-reply-input">
+                <input type="text" placeholder="viết phản hồi của bác..." class="lowercase">
+                <button class="bg-[#ffcc80] text-[#a63d40] px-3 py-1 rounded-lg text-[10px] font-black uppercase">gửi</button>
             </div>
         </div>
     </div>
+<div class="mb-8">
+        <div class="thread-card">
+            <div class="user-avatar-box">🍎</div>
+            <div class="flex-1">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="font-black text-sm text-[#333]">hanh_nông_dân</span>
+                    <span class="text-[10px] font-bold text-gray-400">5 giờ trước</span>
+                </div>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                    Có bác nào để ý chữ <b>休 (Hưu - Nghỉ ngơi)</b> không? Một người (亻) đứng tựa vào cái cây (木). Nhìn cái hình là muốn tắt máy tính đi ngủ ngay lập tức luôn á! 😴
+                </p>
+                <div class="interaction-bar">
+                    <div class="action-btn">👍 <span>25</span></div>
+                    <div class="action-btn dislike">👎 <span>0</span></div>
+                    <div class="action-btn">💬 <span>phản hồi</span></div>
+                </div>
+            </div>
+        </div>
 
-    <script>
-        let allLevels = {};
-        let selectedKanjiData = [];
-        window.currentSelectedKanji = "";
-// Biến lưu trữ dữ liệu bộ thủ sau khi tải
-let boThuData = [];
+        <div class="reply-container">
+            <div class="reply-card">
+                <div class="reply-avatar">🤖</div>
+                <div class="reply-content">
+                    <h5>sumi_bot</h5>
+                    <p>Đúng rồi bác Hạnh ơi! Đây là một trong những chữ tượng hình dễ nhớ nhất. Học xong nhớ "Hưu" một lát rồi học tiếp nhé! 🪴</p>
+                    <div class="flex gap-4 mt-2 opacity-60 text-[10px] font-bold">
+                        <span>thích</span>
+                        <span>trả lời</span>
+                    </div>
+                </div>
+            </div>
 
-// Hàm tải file JSON bộ thủ
-async function loadBoThu(btn) {
-    document.querySelectorAll('.l-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+            <div class="reply-card">
+                <div class="reply-avatar">🚜</div>
+                <div class="reply-content">
+                    <h5>bac_ba_vườn_cam</h5>
+                    <p>Bot nay lại còn biết đùa nữa cơ à. Mà công nhận, nhìn chữ Kanji như đang xem tranh vẽ ấy, không áp lực chút nào.</p>
+                </div>
+            </div>
+
+            <div class="quick-reply-input">
+                <input type="text" placeholder="viết phản hồi của bác..." class="lowercase">
+                <button class="bg-[#ffcc80] text-[#a63d40] px-3 py-1 rounded-lg text-[10px] font-black uppercase">gửi</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="mt-8 flex items-center gap-4 bg-white border-2 border-[#ffcc80] p-4 rounded-3xl">
+        <div class="w-10 h-10 rounded-full bg-[#fff3e0] flex items-center justify-center">✍️</div>
+        <input type="text" placeholder="bác nông dân chia sẻ gì không..." class="flex-1 bg-transparent outline-none text-sm font-bold lowercase">
+        <button class="bg-[#558b2f] text-white px-6 py-2 rounded-2xl text-xs font-black uppercase shadow-[0_4px_0_#3d6321]">
+            đăng tin
+        </button>
+    </div>
     
-    typeText("Đang tải danh sách 214 bộ thủ...");
+</section>
 
-    try {
-        if (boThuData.length === 0) {
-            // Sử dụng fetch với đường dẫn tương đối
-            const response = await fetch('214_bo_thu_kanji.json');
-            
-            if (!response.ok) {
-                throw new Error(`Không tìm thấy file (Mã lỗi: ${response.status})`);
-            }
-            
-            boThuData = await response.json();
-        }
-        renderBoThuGrid(boThuData);
-    } catch (e) {
-        console.error("Lỗi chi tiết:", e);
-        typeText("Lỗi 404: Cậu kiểm tra lại tên file JSON trong thư mục nhé!");
-        alert("Sumi không thấy file '214_bo_thu_kanji.json'. Cậu hãy chắc chắn đã đặt file này cùng chỗ với file web!");
-    }
-}
-// Biến lưu trạng thái hiện tại (mặc định là đang hiện)
-let isHvVisible = true;
-function findKanjiByRadical(radicalChar) {
-    let results = [];
-    
-    // Duyệt qua tất cả các cấp độ trong file kanji_data.json
-    for (let level in allLevels) {
-        allLevels[level].forEach(kanjiItem => {
-            // Kiểm tra nếu thông tin bộ thủ của chữ Kanji trùng với radicalChar
-            // Lưu ý: Dữ liệu kanji_data.json của bạn cần có thuộc tính radical (bộ thủ)
-            if (kanjiItem.r === radicalChar) {
-                results.push(kanjiItem);
-            }
-        });
-    }
-    return results;
-}
+    <footer class="mt-20 text-center text-slate-300 font-bold text-[10px] uppercase tracking-[0.5em] pb-10">
+        © 2026 SUMI AI • NATURE & HARMONY STORY
+    </footer>
 
-// Hàm hiển thị danh sách lọc được lên bảng chi tiết
-function displayRelatedKanji(radicalChar) {
-    const relatedKanji = findKanjiByRadical(radicalChar);
-    const container = document.getElementById('related-section'); // Thêm id này vào HTML bên phải
-    const grid = document.getElementById('related-grid');
-    
-    grid.innerHTML = '';
-    
-    if (relatedKanji.length > 0) {
-        container.style.display = 'block';
-        relatedKanji.forEach(item => {
-            const span = document.createElement('div');
-            span.className = 'related-item';
-            span.innerText = item.c;
-            span.onclick = () => showDetails(item); // Nhấn vào để xem chi tiết chữ đó
-            grid.appendChild(span);
-        });
-    } else {
-        container.style.display = 'none';
-    }
-}
-function toggleHánViệt() {
-    isHvVisible = !isHvVisible; // Đảo ngược trạng thái
-    
-    const btn = document.getElementById('toggle-hv-btn');
-    const labels = document.querySelectorAll('.hv-label');
-    
-    if (isHvVisible) {
-        // Trạng thái HIỆN
-        labels.forEach(label => label.classList.remove('hidden'));
-        btn.innerText = "Ẩn Hán Việt";
-        btn.classList.remove('active-toggle');
-    } else {
-        // Trạng thái ẨN
-        labels.forEach(label => label.classList.add('hidden'));
-        btn.innerText = "Hiện Hán Việt";
-        btn.classList.add('active-toggle');
-    }
-}
-// Hàm hiển thị bộ thủ lên lưới (Grid)
-function renderBoThuGrid(data) {
-    const grid = document.getElementById('kanji-grid');
-    grid.innerHTML = '';
-    data.forEach(item => {
-        const cell = document.createElement('div');
-        cell.className = 'kanji-cell';
-        
-        const mainChar = item.BO ? item.BO.split(',')[0].trim() : "";
-        if (selectedKanjiData.some(s => s.c === mainChar)) cell.classList.add('selected');
-        
-        // Cấu trúc HTML mới cho bộ thủ (Sử dụng "TEN BO" từ file JSON của bạn)
-        cell.innerHTML = `
-            <div class="kanji-char">${mainChar}</div>
-            <div class="hv-label">${item["TEN BO"] || ''}</div>
-        `;
-
-        cell.onclick = () => {
-            document.querySelectorAll('.kanji-cell').forEach(c => c.classList.remove('viewing'));
-            cell.classList.add('viewing');
-            if (cell.classList.contains('selected')) {
-                cell.classList.remove('selected');
-                selectedKanjiData = selectedKanjiData.filter(s => s.c !== mainChar);
-            } else {
-                cell.classList.add('selected');
-                selectedKanjiData.push({
-                    c: mainChar,
-                    hv: item["TEN BO"] || "",
-                    m: item.NGHIA || "",
-                    on: "STT: " + (item.STT || ""),
-                    kun: "", v: []
-                });
-            }
-            showBoThuDetails(item);
-        };
-        grid.appendChild(cell);
-    });
-}
-
-// Hàm hiển thị chi tiết bộ thủ vào bảng bên phải
-function showBoThuDetails(item) {
-    // Lấy chữ chính để vẽ (HanziWriter chỉ vẽ được 1 chữ)
-    const mainChar = item.BO ? item.BO.split(',')[0].trim() : "";
-    // Kích hoạt lọc các Kanji có bộ thủ này
-    displayRelatedKanji(mainChar);
-    typeText(`Bộ thủ: ${mainChar} - Ý nghĩa: ${item.NGHIA}`);
-    window.currentSelectedKanji = mainChar;
-    
-    // Đổ dữ liệu vào bảng bên phải - chú ý tên thuộc tính VIẾT HOA
-    document.getElementById('hv-val').textContent = item["TEN BO"] || "---"; 
-    document.getElementById('mean-val').textContent = item.NGHIA || "Chưa có nghĩa";
-    document.getElementById('on-val').textContent = "STT: " + (item.STT || "0");
-    document.getElementById('kun-val').textContent = "-";
-    
-    document.getElementById('vocab-section').style.display = 'none';
-    
-    // Vẽ animation
-    document.getElementById('writer-canvas').innerHTML = '';
-    if (mainChar) {
-        HanziWriter.create('writer-canvas', mainChar, { 
-            width: 160, 
-            height: 160, 
-            strokeColor: '#a63d40' 
-        }).animateCharacter();
-    }
-}
-        // 1. DỮ LIỆU
-        async function loadData() {
-            try {
-                const response = await fetch('kanji_data.json');
-                allLevels = await response.json();
-                switchLevel('N5', document.querySelector('.l-btn'));
-            } catch (e) { console.error("Lỗi: Không tìm thấy file dữ liệu."); }
-        }
-
-        function typeText(text) {
-    const element = document.getElementById('type-text');
-    if (!element) return;
-    
-    // Xóa bộ đếm cũ nếu đang chạy dở
-    if (window.typingTimer) clearTimeout(window.typingTimer);
-    
-    element.textContent = ""; 
-    let i = 0;
-    
-    function typing() { 
-        if (i < text.length) { 
-            element.textContent += text.charAt(i); 
-            i++; 
-            window.typingTimer = setTimeout(typing, 40); // Tốc độ chạy chữ
-        } 
-    }
-    typing();
-}
-
-        function switchLevel(lvl, btn) {
-            if (btn) {
-                document.querySelectorAll('.l-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            }
-            renderGrid(allLevels[lvl] || []);
-        const messages = {
-        'N5': "Cấp độ N5: Những bước đi đầu tiên chinh phục Kanji!",
-        'N4': "Cấp độ N4: Cố gắng lên, cậu đang tiến bộ rất nhanh đó.",
-        'N3': "Cấp độ N3: Bắt đầu vào giai đoạn trung cấp rồi đấy!",
-        'N2': "Cấp độ N2: Wow, cậu đang học những chữ Kanji rất khó rồi.",
-        'N1': "Cấp độ N1: Đỉnh cao Kanji đây rồi, cùng chinh phục nhé!"
-    };
-    
-    typeText(messages[lvl] || `Đang hiển thị danh sách chữ ${lvl}...`);
-    renderGrid(allLevels[lvl] || []);
-
-        }
-
-       function renderGrid(data) {
-    const grid = document.getElementById('kanji-grid');
-    grid.innerHTML = '';
-    data.forEach(item => {
-        const cell = document.createElement('div');
-        cell.className = 'kanji-cell';
-        if (selectedKanjiData.some(s => s.c === item.c)) cell.classList.add('selected');
-        
-        // Cấu trúc HTML mới cho ô vuông
-        cell.innerHTML = `
-            <div class="kanji-char">${item.c}</div>
-            <div class="hv-label">${item.hv || ''}</div>
-        `;
-
-        cell.onclick = () => {
-            document.querySelectorAll('.kanji-cell').forEach(c => c.classList.remove('viewing'));
-            cell.classList.add('viewing');
-            if (cell.classList.contains('selected')) {
-                cell.classList.remove('selected');
-                selectedKanjiData = selectedKanjiData.filter(s => s.c !== item.c);
-            } else {
-                cell.classList.add('selected');
-                selectedKanjiData.push(item);
-            }
-            showDetails(item);
-        };
-        grid.appendChild(cell);
-    });
-}
-
-        function showDetails(item) {
-            typeText(`Cậu đang xem chi tiết chữ "${item.c}". Hãy nhìn cách viết ở trong khung nhé!`);
-            window.currentSelectedKanji = item.c;
-            document.getElementById('hv-val').textContent = item.hv;
-            document.getElementById('mean-val').textContent = item.m;
-            document.getElementById('on-val').textContent = item.on;
-            document.getElementById('kun-val').textContent = item.kun;
-            const vSection = document.getElementById('vocab-section');
-            const vList = document.getElementById('vocab-list');
-            vList.innerHTML = '';
-            if (item.v && item.v.length > 0) {
-                vSection.style.display = 'block';
-                item.v.forEach(v => { vList.innerHTML += `<div class="vocab-item"><b>${v.w}</b> <span>${v.n}</span></div>`; });
-            } else { vSection.style.display = 'none'; }
-            document.getElementById('writer-canvas').innerHTML = '';
-            HanziWriter.create('writer-canvas', item.c, { width: 160, height: 160, strokeColor: '#a63d40' }).animateCharacter();
-        }
-
-        // 2. HỆ THỐNG VIẾT TAY (ĐÃ FIX TRIỆT ĐỂ)
-        const modalCanvas = document.getElementById('hw-canvas-modal');
-        const modalCtx = modalCanvas.getContext('2d');
-        let isDrawing = false;
-        let strokes = [];
-        let currentStroke = [];
-
-        function openModal() {
-            typeText("Cậu cứ vẽ vào bảng, để Sumi đoán xem đó là chữ gì nhé!");
-            document.getElementById('hw-modal').style.display = 'flex';
-            // Cần delay cực ngắn để Canvas đo đúng kích thước thực tế sau khi hiện Modal
-            setTimeout(() => {
-                const rect = modalCanvas.getBoundingClientRect();
-                modalCanvas.width = rect.width;
-                modalCanvas.height = rect.height;
-                // Cấu hình nét vẽ
-                modalCtx.lineWidth = 5;
-                modalCtx.lineCap = 'round';
-                modalCtx.lineJoin = 'round';
-                modalCtx.strokeStyle = '#333';
-            }, 50);
-        }
-
-        function closeModal() {
-            document.getElementById('hw-modal').style.display = 'none';
-            clearCanvas();
-        }
-
-        function getPos(e) {
-            const rect = modalCanvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            return {
-                x: clientX - rect.left,
-                y: clientY - rect.top
-            };
-        }
-
-        function startDrawing(e) {
-            isDrawing = true;
-            currentStroke = [];
-            const pos = getPos(e);
-            modalCtx.beginPath();
-            modalCtx.moveTo(pos.x, pos.y);
-            currentStroke.push([pos.x, pos.y]);
-        }
-
-        function draw(e) {
-            if (!isDrawing) return;
-            const pos = getPos(e);
-            modalCtx.lineTo(pos.x, pos.y);
-            modalCtx.stroke();
-            currentStroke.push([pos.x, pos.y]);
-        }
-
-        function endDrawing() {
-            if (!isDrawing) return;
-            isDrawing = false;
-            if (currentStroke.length > 0) {
-                strokes.push(currentStroke);
-                recognizeHandwriting();
-            }
-        }
-
-        // Gắn sự kiện cho Canvas Modal
-        modalCanvas.addEventListener('mousedown', startDrawing);
-        modalCanvas.addEventListener('mousemove', draw);
-        window.addEventListener('mouseup', endDrawing);
-
-        modalCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); }, {passive: false});
-        modalCanvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, {passive: false});
-        modalCanvas.addEventListener('touchend', endDrawing, {passive: false});
-
-        async function recognizeHandwriting() {
-            const url = "https://www.google.com.tw/inputtools/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8";
-            // Định dạng ink theo đúng yêu cầu API Google
-            const ink = strokes.map(s => [
-                s.map(p => Math.round(p[0])),
-                s.map(p => Math.round(p[1])),
-                []
-            ]);
-
-            const payload = {
-                options: "enable_pre_space",
-                requests: [{
-                    writing_guide: { 
-                        writing_area_width: modalCanvas.width, 
-                        writing_area_height: modalCanvas.height 
-                    },
-                    ink: ink,
-                    language: "ja"
-                }]
-            };
-
-            try {
-                const res = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                if (data[0] === "SUCCESS") {
-                    renderPredictions(data[1][0][1]);
-                }
-            } catch (err) {
-                console.error("Lỗi API tra cứu:", err);
-            }
-        }
-
-        function renderPredictions(candidates) {
-            const row = document.getElementById('prediction-row');
-            row.innerHTML = '';
-            candidates.slice(0, 10).forEach(char => {
-                const d = document.createElement('div');
-                d.innerText = char;
-                d.style = "background:white; border:1px solid #a63d40; color:#a63d40; min-width:48px; height:48px; display:flex; align-items:center; justify-content:center; border-radius:12px; cursor:pointer; font-weight:bold; font-size:22px; flex-shrink:0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);";
-                d.onclick = () => {
-                    findAndShow(char);
-                    closeModal();
-                };
-                row.appendChild(d);
-            });
-        }
-
-        function findAndShow(char) {
-            let found = null;
-            for (const l in allLevels) {
-                found = allLevels[l].find(i => i.c === char);
-                if (found) break;
-            }
-            if (found) showDetails(found);
-            else showDetails({c: char, hv: "Tra cứu", m: "Chưa có dữ liệu", on: "-", kun: "-", v: []});
-        }
-
-        function clearCanvas() {
-            modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
-            strokes = [];
-            document.getElementById('prediction-row').innerHTML = '<span style="color:#ccc; font-style:italic; font-size:13px; margin-top:15px;">Kết quả sẽ hiện ở đây...</span>';
-        }
-
-        function undoStroke() {
-            strokes.pop();
-            modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
-            strokes.forEach(s => {
-                modalCtx.beginPath();
-                modalCtx.moveTo(s[0][0], s[0][1]);
-                s.forEach(p => modalCtx.lineTo(p[0], p[1]));
-                modalCtx.stroke();
-            });
-            if (strokes.length > 0) recognizeHandwriting();
-            else clearCanvas();
-        }
-
-        // 3. TIỆN ÍCH
-        function goToFlashcards() {
-    // 1. Kiểm tra xem danh sách có từ nào không
-    if (selectedKanjiData.length === 0) {
-        // Cho Robot Sumi "rung" nhẹ để báo hiệu
-        const robot = document.getElementById('sumi-robot');
-        robot.style.animation = 'none';
-        setTimeout(() => robot.style.animation = 'floatingSumi 0.5s ease-in-out infinite', 10);
-        
-        // Hiện thông báo bằng hiệu ứng chạy chữ của Sumi
-        typeText("Cậu ơi, danh sách đang trống! Hãy chọn ít nhất một chữ để làm Flashcard nhé 🍵");
-        
-        // (Tùy chọn) Có thể rung điện thoại nếu dùng trên di động
-        if (navigator.vibrate) navigator.vibrate(50); 
-        
-        return; // Dừng lại ở đây, không chuyển trang
-    }
-    
-    // 2. Nếu có từ, mới tiến hành lưu và chuyển trang
-    typeText("Đang chuẩn bị thẻ Flashcard cho cậu đây...");
-    localStorage.setItem('selectedKanji', JSON.stringify(selectedKanjiData));
-    
-    // Đợi 1 chút để người dùng kịp đọc tin nhắn của Sumi rồi mới chuyển
-    setTimeout(() => {
-        window.location.href = 'flashcard.html';
-    }, 800);
-}
-        function goToWritingSheet() {
-    if (selectedKanjiData.length === 0) {
-        typeText("Bảng chọn đang trống, Sumi chưa biết in chữ gì cho cậu cả! ✍️");
-        return;
-    }
-    typeText("Sumi đang tạo file PDF tập viết cho cậu đây!");
-    localStorage.setItem('selectedKanji', JSON.stringify(selectedKanjiData));
-    setTimeout(() => {
-        window.location.href = 'writing_sheet.html';
-    }, 800);
-}
-        function countVisibleKanji() { typeText(`Hiện có ${document.getElementById('kanji-grid').children.length} chữ.`); }
-        function selectAllInGrid() {
-    const cells = document.querySelectorAll('.kanji-cell');
-    if (cells.length === 0) return;
-
-    // Kiểm tra xem có phải tất cả các ô hiện tại đều đã được chọn hay chưa
-    const allSelected = Array.from(cells).every(c => c.classList.contains('selected'));
-
-    if (allSelected) {
-        // TRƯỜNG HỢP 1: BỎ CHỌN TẤT CẢ
-        cells.forEach(c => {
-            c.classList.remove('selected');
-            const char = c.innerText;
-            selectedKanjiData = selectedKanjiData.filter(s => s.c !== char);
-        });
-        typeText("Đã bỏ chọn toàn bộ danh sách này.");
-    } else {
-        // TRƯỜNG HỢP 2: CHỌN TẤT CẢ (Chưa chọn hết thì chọn cho hết)
-        cells.forEach(c => {
-            if (!c.classList.contains('selected')) {
-                // Giả lập cú nhấp chuột để kích hoạt logic lưu dữ liệu đã viết ở hàm render
-                c.click(); 
-            }
-        });
-        typeText(`Đã chọn tất cả ${cells.length} mục trong danh sách!`);
-    }
-}
-
-        window.onload = loadData;
-
-        document.getElementById('btn-go-practice').onclick = function() {
-            if(!window.currentSelectedKanji) { alert("Cậu chọn 1 chữ trước nhé!"); return; }
-            window.location.href = "practice.html?kanji=" + encodeURIComponent(window.currentSelectedKanji);
-        };
-    </script>
 </body>
 </html>
