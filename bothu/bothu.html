@@ -222,6 +222,20 @@
             border: none;
             box-shadow: 0 4px 0px #e67e22;
         }
+        .radical-item {
+    background: white;
+    border: 1px solid #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    transition: 0.2s;
+}
+.radical-item:hover {
+    border-color: #a63d40;
+}
+.category-card.active {
+    border-color: #a63d40;
+    background-color: #fffafa;
+}
     </style>
 </head>
 <body>
@@ -291,84 +305,84 @@
     <!-- DANH SÁCH THẺ SVG -->
     <section class="radicals-grid">
         
-        <!-- 1. Human & Body -->
-        <a href="#" class="category-card">
-            <div class="icon-box">
-                <svg viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
-            </div>
-            <div>
-                <h4 class="category-title">Human & Body</h4>
-                <p class="category-subtitle">Con người & Cơ thể</p>
-            </div>
-        </a>
+    <!-- 1. Human & Body -->
+    <a href="category.html?id=0" class="category-card">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
+        </div>
+        <div>
+            <h4 class="category-title">human & body</h4>
+            <p class="category-subtitle">con người & cơ thể</p>
+        </div>
+    </a>
 
-        <!-- 2. Nature & Elements -->
-        <a href="#" class="category-card">
-            <div class="icon-box">
-                <svg viewBox="0 0 24 24"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.5h-2v3h2V1zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.75l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-7c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm-7.45 2.49l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8zM11 23h2v-3h-2v3z"/></svg>
-            </div>
-            <div>
-                <h4 class="category-title">Nature & Elements</h4>
-                <p class="category-subtitle">Thiên nhiên & Yếu tố</p>
-            </div>
-        </a>
+    <!-- 2. Nature & Elements -->
+    <a href="category.html?id=1" class="category-card">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.5h-2v3h2V1zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.75l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-7c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm-7.45 2.49l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8zM11 23h2v-3h-2v3z"/></svg>
+        </div>
+        <div>
+            <h4 class="category-title">nature & elements</h4>
+            <p class="category-subtitle">thiên nhiên & yếu tố</p>
+        </div>
+    </a>
 
-        <!-- 3. Movement & Space -->
-        <a href="#" class="category-card">
-            <div class="icon-box">
-                <svg viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 9.5V14h2V10.4l1.8-1.5z"/></svg>
-            </div>
-            <div>
-                <h4 class="category-title">Movement & Space</h4>
-                <p class="category-subtitle">Chuyển động & Không gian</p>
-            </div>
-        </a>
+    <!-- 3. Movement & Space -->
+    <a href="category.html?id=2" class="category-card">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 9.5V14h2V10.4l1.8-1.5z"/></svg>
+        </div>
+        <div>
+            <h4 class="category-title">movement & space</h4>
+            <p class="category-subtitle">chuyển động & không gian</p>
+        </div>
+    </a>
 
-        <!-- 4. Society & Objects -->
-        <a href="#" class="category-card">
-            <div class="icon-box">
-                <svg viewBox="0 0 24 24"><path d="M12 3L4 9v12h16V9l-8-6zm-2 16h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2v-2h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2v-2h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>
-            </div>
-            <div>
-                <h4 class="category-title">Society & Objects</h4>
-                <p class="category-subtitle">Xã hội & Vật dụng</p>
-            </div>
-        </a>
+    <!-- 4. Society & Objects -->
+    <a href="category.html?id=3" class="category-card">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M12 3L4 9v12h16V9l-8-6zm-2 16h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2v-2h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2v-2h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>
+        </div>
+        <div>
+            <h4 class="category-title">society & objects</h4>
+            <p class="category-subtitle">xã hội & vật dụng</p>
+        </div>
+    </a>
 
-        <!-- 5. Animals & Fauna -->
-        <a href="#" class="category-card">
-            <div class="icon-box">
-                <svg viewBox="0 0 24 24"><path d="M4.5 11C3.12 11 2 12.12 2 13.5s1.12 2.5 2.5 2.5S7 14.88 7 13.5 5.88 11 4.5 11zm15 0c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm-3 4c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm-9 0c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm4.5-4c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-            </div>
-            <div>
-                <h4 class="category-title">Animals & Fauna</h4>
-                <p class="category-subtitle">Động vật</p>
-            </div>
-        </a>
+    <!-- 5. Animals & Fauna -->
+    <a href="category.html?id=4" class="category-card">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M4.5 11C3.12 11 2 12.12 2 13.5s1.12 2.5 2.5 2.5S7 14.88 7 13.5 5.88 11 4.5 11zm15 0c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm-3 4c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm-9 0c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm4.5-4c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        </div>
+        <div>
+            <h4 class="category-title">animals & fauna</h4>
+            <p class="category-subtitle">động vật</p>
+        </div>
+    </a>
 
-        <!-- 6. Tools & Weapons -->
-        <a href="#" class="category-card">
-            <div class="icon-box">
-                <svg viewBox="0 0 24 24"><path d="M14.5 18l-2.5 2.5-2.5-2.5 2.5-2.5 2.5 2.5zM5.5 18L3 20.5 5.5 23 8 20.5 5.5 18zm13-13L21 2.5 18.5 0 16 2.5 18.5 5zm-13 0L3 2.5 5.5 0 8 2.5 5.5 5zM12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-            </div>
-            <div>
-                <h4 class="category-title">Tools & Weapons</h4>
-                <p class="category-subtitle">Công cụ & Vũ khí</p>
-            </div>
-        </a>
+    <!-- 6. Tools & Weapons -->
+   <a href="category.html?id=5" class="category-card">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M14.5 18l-2.5 2.5-2.5-2.5 2.5-2.5 2.5 2.5zM5.5 18L3 20.5 5.5 23 8 20.5 5.5 18zm13-13L21 2.5 18.5 0 16 2.5 18.5 5zm-13 0L3 2.5 5.5 0 8 2.5 5.5 5zM12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        </div>
+        <div>
+            <h4 class="category-title">tools & weapons</h4>
+            <p class="category-subtitle">công cụ & vũ khí</p>
+        </div>
+    </a>
 
-        <!-- 7. Abstract & Forms -->
-        <a href="#" class="category-card">
-            <div class="icon-box">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z"/></svg>
-            </div>
-            <div>
-                <h4 class="category-title">Abstract & Forms</h4>
-                <p class="category-subtitle">Trừu tượng & Hình thức</p>
-            </div>
-        </a>
+    <!-- 7. Abstract & Forms -->
+    <a href="category.html?id=6" class="category-card">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z"/></svg>
+        </div>
+        <div>
+            <h4 class="category-title">abstract & forms</h4>
+            <p class="category-subtitle">trừu tượng & hình thức</p>
+        </div>
+    </a>
 
-    </section>
+</section>
 
     <footer class="mt-16 text-center opacity-30 text-[10px] font-black uppercase tracking-[0.3em] pb-10">
         sumi ai farm • master radicals collection
@@ -410,6 +424,31 @@
         // 5. Cập nhật thuộc tính lang của trang web (Tốt cho iPhone/SEO)
         document.documentElement.lang = lang;
     }
-    </script>
+
+    // 2. Logic điều hướng (ĐÃ SỬA)
+    // Loại bỏ hoàn toàn e.preventDefault() và các hàm render tại chỗ
+    function initNavigation() {
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Chúng ta để trình duyệt tự chuyển hướng theo thuộc tính href
+                // Không dùng e.preventDefault() ở đây nữa
+                
+                // Lưu lại nhóm đang chọn vào máy để trang sau có thể làm nổi bật nếu cần
+                const cat = this.getAttribute('data-cat');
+                localStorage.setItem('selectedCat', cat);
+            });
+        });
+    }
+
+    // Chạy khi trang tải xong
+    window.onload = () => {
+        // Khôi phục ngôn ngữ đã lưu
+        const savedLang = localStorage.getItem('sumiLang') || 'vi';
+        changeLanguage(savedLang);
+        
+        // Kích hoạt điều hướng
+        initNavigation();
+    };
+</script>
 </body>
 </html>

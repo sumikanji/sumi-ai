@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sumi AI - Khu Vườn Bộ Thủ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body { 
+            background-color: #f4f9e9; 
+            background-image: radial-gradient(#d4e5ad 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Inter', sans-serif;
+            text-transform: lowercase;
+        }
+        .garden-header {
+            background-color: #629437; 
+            color: white;
+            border-radius: 0 0 20px 20px;
+        }
+        .radical-card {
+            background: white;
+            border-radius: 15px;
+            border: 2px solid #f9d9a5; 
+            box-shadow: 0 4px 0 #f3c677;
+            display: flex;
+            padding: 15px;
+            align-items: center;
+            gap: 15px;
+        }
+        .radical-icon {
+    /* Tăng kích thước khung to lên */
+    width: 100px; 
+    height: 100px;
+    border: 2px solid #f9d9a5;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #d35400;
+    background: #fffdf9;
+    flex-shrink: 0;
+    /* Đảm bảo nội dung không tràn ra ngoài */
+    overflow: hidden; 
+    padding: 5px;
+}
+
+.radical-text {
+    /* Điều chỉnh font chữ sao cho khít với khung 90px */
+    font-size: 2.5rem; 
+    line-height: 1;
+    font-weight: 900;
+    margin-bottom: 2px;
+}
+/* Container chứa các ví dụ */
+.example-box {
+    background-color: #f8f9fa;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 10px;
+    margin-top: 8px;
+}
+
+.example-label {
+    text-transform: uppercase;
+    font-size: 9px;
+    font-weight: 900;
+    color: #f3c677;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* Từng dòng ví dụ */
+.example-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.example-line:last-child { margin-bottom: 0; }
+
+/* Chữ Kanji ví dụ to và đậm */
+.ex-kanji {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #4e342e;
+    background: #fff;
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid #ffe0b2;
+}
+
+/* Nghĩa của ví dụ */
+.ex-meaning {
+    font-size: 12px;
+    color: #795548;
+    font-weight: 500;
+}
+    </style>
+</head>
+<body class="pb-10">
+
+    <!-- Header điều hướng -->
+    <div class="max-w-4xl mx-auto garden-header p-4 flex justify-between items-center shadow-lg">
+        <!-- ĐÃ SỬA: Quay về đúng file bothu.html -->
+        <a href="bothu.html" class="bg-[#86af49] px-4 py-1 rounded-full text-xs" style="text-decoration: none; color: white;">❮ về vườn</a>
+        <h2 id="cat-title" class="font-bold">khu vườn bộ thủ</h2>
+        <div class="w-16"></div>
+    </div>
+
+    <div class="text-center my-10">
+        <h1 id="cat-main-name" class="text-2xl font-bold text-[#629437] uppercase">nhóm: đang tải...</h1>
+        <p class="text-gray-500 text-sm mt-2 font-medium">cùng tìm hiểu các bộ thủ quan trọng nhất nhé!</p>
+    </div>
+
+    <!-- Danh sách thẻ bài -->
+    <div id="garden-container" class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
+        <!-- Dữ liệu sẽ tự động đổ vào đây -->
+    </div>
+<footer class="mt-16 text-center opacity-30 text-[10px] font-black uppercase tracking-[0.3em] pb-10">
+        sumi ai farm • master radicals collection
+    </footer>
+    <script>
+ async function renderGarden() {
+    const params = new URLSearchParams(window.location.search);
+    const targetId = params.get('id');
+    const lang = localStorage.getItem('sumiLang') || 'vi';
+
+    if (targetId === null) {
+        window.location.href = 'bothu.html';
+        return;
+    }
+
+    try {
+        const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
+        if (!res.ok) throw new Error("404");
+        const data = await res.json();
+        
+        const filtered = data.radicals.filter(r => r.level_id == parseInt(targetId));
+        const container = document.getElementById('garden-container');
+        container.innerHTML = '';
+
+        const categoryNames = {
+            "0": "human & body", "1": "nature & elements", "2": "movement & space",
+            "3": "society & objects", "4": "animals & fauna", "5": "tools & weapons", "6": "abstract & forms"
+        };
+        document.getElementById('cat-main-name').innerText = categoryNames[targetId] || "nhóm bộ thủ";
+
+        filtered.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'radical-card';
+            
+            // --- TÁCH CHUỖI KANJI CHÍNH VÀ PHỤ ---
+            const radicalText = item.radical || "";
+            const spaceIndex = radicalText.indexOf(' ');
+            let mainK = radicalText, subK = "";
+            if (spaceIndex !== -1) {
+                mainK = radicalText.substring(0, spaceIndex);
+                subK = radicalText.substring(spaceIndex + 1);
+            }
+
+            // --- XỬ LÝ VÍ DỤ NẰM TRÊN 1 DÒNG ---
+            let exHTML = '';
+            if (item.examples && item.examples.length > 0) {
+                const valid = item.examples.filter(ex => ex.kanji).map(ex => 
+                    `<span style="display: inline-flex; align-items: center; gap: 3px;">
+                        <b style="font-size: 1.1rem; color: #767574;">${ex.kanji}</b>
+                        <span style="font-size: 13px; color: #795548;">(${ex[lang] || ex.vi})</span>
+                    </span>`
+                );
+                exHTML = valid.join('<span style="margin: 0 6px; opacity: 0.2;">|</span>');
+            }
+
+            card.innerHTML = `
+                <!-- KHUNG ICON: Kanji chính giũa, Kanji phụ cạnh bên -->
+                <div style="width: 100px; height: 100px; border: 2px solid #f9d9a5; border-radius: 18px; background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; flex-shrink: 0; overflow: hidden;">
+                    
+                    <!-- Dòng Kanji: Chính to, Phụ nhỏ nằm cạnh -->
+                    <div style="display: flex; align-items: baseline; gap: 4px; transform: translateY(-5px);">
+                        <span style="font-size: 2.8rem; font-weight: 900; color: #d35400; line-height: 1;">${mainK}</span>
+                        <span style="font-size: 1.3rem; font-weight: 300; color: #d35400; opacity: 0.7;">${subK}</span>
+                    </div>
+
+                    <!-- Hán Việt: Căn giữa ở dưới -->
+                    <span style="font-size: 11px; font-weight: 900; color: #d35400; text-transform: uppercase; position: absolute; bottom: 10px; width: 100%; text-align: center; letter-spacing: 1px;">
+                        ${item.han_viet}
+                    </span>
+                </div>
+
+                <!-- KHỐI THÔNG TIN BÊN PHẢI -->
+                <div class="flex-1 pl-4 flex flex-col justify-center">
+                    <div style="margin-bottom: 2px;">
+                        <h4 style="font-size: 1.25rem; font-weight: 900; color: #629437; text-transform: uppercase; margin: 0; line-height: 1;">BỘ ${item.han_viet}</h4>
+                        <p style="font-size: 15px; color: #8d6e63; font-weight: 700; font-style: italic; margin: 2px 0;">${item.meanings[lang]}</p>
+                    </div>
+                    
+                    <div style="background: #fcfcfc; border: 1px solid #f0f0f0; border-radius: 8px; padding: 4px 8px; display: inline-block; align-self: flex-start;">
+                        <div style="display: flex; align-items: center; white-space: nowrap; gap: 6px;">
+                            <span style="font-size: 8px; font-weight: 900; color: #f3c677; text-transform: uppercase; border-right: 1px solid #eee; padding-right: 6px;">Ví dụ</span>
+                            ${exHTML}
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    } catch (e) {
+        console.error("Lỗi:", e);
+    }
+}
+
+window.onload = renderGarden;
+    </script>
+</body>
+</html>

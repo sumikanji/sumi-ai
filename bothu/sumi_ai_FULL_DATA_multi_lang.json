@@ -1,0 +1,1348 @@
+{
+  "project": "sumi ai",
+  "description": "bản full đầy đủ ví dụ đa ngôn ngữ",
+  "radicals": [
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "人 (亻)",
+      "han_viet": "nhân",
+      "meanings": {
+        "vi": "người",
+        "en": "person"
+      },
+      "examples": [
+        {
+          "kanji": "休",
+          "vi": "nghỉ",
+          "en": "rest"
+        },
+        {
+          "kanji": "体",
+          "vi": "thân thể",
+          "en": "body"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "心 (忄)",
+      "han_viet": "tâm",
+      "meanings": {
+        "vi": "tim, lòng",
+        "en": "heart"
+      },
+      "examples": [
+        {
+          "kanji": "思",
+          "vi": "suy nghĩ",
+          "en": "think"
+        },
+        {
+          "kanji": "忙",
+          "vi": "bận",
+          "en": "busy"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "口",
+      "han_viet": "khẩu",
+      "meanings": {
+        "vi": "miệng",
+        "en": "mouth"
+      },
+      "examples": [
+        {
+          "kanji": "言",
+          "vi": "nói",
+          "en": "say"
+        },
+        {
+          "kanji": "右",
+          "vi": "phải",
+          "en": "right"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "目",
+      "han_viet": "mục",
+      "meanings": {
+        "vi": "mắt",
+        "en": "eye"
+      },
+      "examples": [
+        {
+          "kanji": "見",
+          "vi": "nhìn",
+          "en": "see"
+        },
+        {
+          "kanji": "着",
+          "vi": "mặc",
+          "en": "wear"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "手 (扌)",
+      "han_viet": "thủ",
+      "meanings": {
+        "vi": "tay",
+        "en": "hand"
+      },
+      "examples": [
+        {
+          "kanji": "持",
+          "vi": "cầm",
+          "en": "hold"
+        },
+        {
+          "kanji": "指",
+          "vi": "ngón tay",
+          "en": "finger"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "足",
+      "han_viet": "túc",
+      "meanings": {
+        "vi": "chân",
+        "en": "foot"
+      },
+      "examples": [
+        {
+          "kanji": "路",
+          "vi": "đường",
+          "en": "road"
+        },
+        {
+          "kanji": "踊",
+          "vi": "nhảy",
+          "en": "dance"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "女",
+      "han_viet": "nữ",
+      "meanings": {
+        "vi": "phụ nữ",
+        "en": "woman"
+      },
+      "examples": [
+        {
+          "kanji": "好",
+          "vi": "thích",
+          "en": "like"
+        },
+        {
+          "kanji": "安",
+          "vi": "rẻ",
+          "en": "cheap"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "子",
+      "han_viet": "tử",
+      "meanings": {
+        "vi": "con cái",
+        "en": "child"
+      },
+      "examples": [
+        {
+          "kanji": "学",
+          "vi": "học",
+          "en": "study"
+        },
+        {
+          "kanji": "字",
+          "vi": "chữ",
+          "en": "character"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "力",
+      "han_viet": "lực",
+      "meanings": {
+        "vi": "sức mạnh",
+        "en": "power"
+      },
+      "examples": [
+        {
+          "kanji": "動",
+          "vi": "chuyển động",
+          "en": "move"
+        },
+        {
+          "kanji": "助",
+          "vi": "giúp",
+          "en": "help"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "耳",
+      "han_viet": "nhĩ",
+      "meanings": {
+        "vi": "tai",
+        "en": "ear"
+      },
+      "examples": [
+        {
+          "kanji": "聞",
+          "vi": "nghe",
+          "en": "listen"
+        },
+        {
+          "kanji": "取",
+          "vi": "lấy",
+          "en": "take"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "自",
+      "han_viet": "tự",
+      "meanings": {
+        "vi": "tự mình",
+        "en": "self"
+      },
+      "examples": [
+        {
+          "kanji": "道",
+          "vi": "đường",
+          "en": "road"
+        },
+        {
+          "kanji": "鼻",
+          "vi": "mũi",
+          "en": "nose"
+        }
+      ]
+    },
+    {
+      "level_id": 0,
+      "category": "",
+      "radical": "身",
+      "han_viet": "thân",
+      "meanings": {
+        "vi": "thân thể",
+        "en": "body"
+      },
+      "examples": [
+        {
+          "kanji": "射",
+          "vi": "bắn",
+          "en": "shoot"
+        },
+        {
+          "kanji": "謝",
+          "vi": "cảm ơn",
+          "en": "thank"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "水 (氵)",
+      "han_viet": "thủy",
+      "meanings": {
+        "vi": "nước",
+        "en": "water"
+      },
+      "examples": [
+        {
+          "kanji": "海",
+          "vi": "biển",
+          "en": "sea"
+        },
+        {
+          "kanji": "泳",
+          "vi": "bơi",
+          "en": "swim"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "火 (灬)",
+      "han_viet": "hỏa",
+      "meanings": {
+        "vi": "lửa",
+        "en": "fire"
+      },
+      "examples": [
+        {
+          "kanji": "熱",
+          "vi": "nóng",
+          "en": "hot"
+        },
+        {
+          "kanji": "無",
+          "vi": "không",
+          "en": "nothing"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "木",
+      "han_viet": "mộc",
+      "meanings": {
+        "vi": "cây, gỗ",
+        "en": "tree"
+      },
+      "examples": [
+        {
+          "kanji": "本",
+          "vi": "sách",
+          "en": "book"
+        },
+        {
+          "kanji": "校",
+          "vi": "trường",
+          "en": "school"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "日",
+      "han_viet": "nhật",
+      "meanings": {
+        "vi": "trời, ngày",
+        "en": "sun"
+      },
+      "examples": [
+        {
+          "kanji": "時",
+          "vi": "giờ",
+          "en": "time"
+        },
+        {
+          "kanji": "明",
+          "vi": "sáng",
+          "en": "bright"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "土",
+      "han_viet": "thổ",
+      "meanings": {
+        "vi": "đất",
+        "en": "earth"
+      },
+      "examples": [
+        {
+          "kanji": "地",
+          "vi": "đất",
+          "en": "ground"
+        },
+        {
+          "kanji": "場",
+          "vi": "địa điểm",
+          "en": "place"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "金",
+      "han_viet": "kim",
+      "meanings": {
+        "vi": "vàng, kim loại",
+        "en": "gold"
+      },
+      "examples": [
+        {
+          "kanji": "銀",
+          "vi": "bạc",
+          "en": "silver"
+        },
+        {
+          "kanji": "鉄",
+          "vi": "sắt",
+          "en": "iron"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "艹",
+      "han_viet": "thảo",
+      "meanings": {
+        "vi": "cỏ, hoa",
+        "en": "grass"
+      },
+      "examples": [
+        {
+          "kanji": "花",
+          "vi": "hoa",
+          "en": "flower"
+        },
+        {
+          "kanji": "茶",
+          "vi": "trà",
+          "en": "tea"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "雨",
+      "han_viet": "vũ",
+      "meanings": {
+        "vi": "mưa",
+        "en": "rain"
+      },
+      "examples": [
+        {
+          "kanji": "電",
+          "vi": "điện",
+          "en": "electricity"
+        },
+        {
+          "kanji": "雲",
+          "vi": "mây",
+          "en": "cloud"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "山",
+      "han_viet": "sơn",
+      "meanings": {
+        "vi": "núi",
+        "en": "mountain"
+      },
+      "examples": [
+        {
+          "kanji": "岩",
+          "vi": "đá",
+          "en": "rock"
+        },
+        {
+          "kanji": "島",
+          "vi": "đảo",
+          "en": "island"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "石",
+      "han_viet": "thạch",
+      "meanings": {
+        "vi": "đá",
+        "en": "stone"
+      },
+      "examples": [
+        {
+          "kanji": "砂",
+          "vi": "cát",
+          "en": "sand"
+        },
+        {
+          "kanji": "研",
+          "vi": "nghiên cứu",
+          "en": "study"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "竹",
+      "han_viet": "trúc",
+      "meanings": {
+        "vi": "tre",
+        "en": "bamboo"
+      },
+      "examples": [
+        {
+          "kanji": "答",
+          "vi": "trả lời",
+          "en": "answer"
+        },
+        {
+          "kanji": "算",
+          "vi": "tính toán",
+          "en": "calculate"
+        }
+      ]
+    },
+    {
+      "level_id": 1,
+      "category": "human & body",
+      "radical": "禾",
+      "han_viet": "hòa",
+      "meanings": {
+        "vi": "lúa",
+        "en": "grain"
+      },
+      "examples": [
+        {
+          "kanji": "私",
+          "vi": "tôi",
+          "en": "me"
+        },
+        {
+          "kanji": "秋",
+          "vi": "mùa thu",
+          "en": "autumn"
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "category": "nature & elements",
+      "radical": "辶",
+      "han_viet": "sước",
+      "meanings": {
+        "vi": "đi bộ",
+        "en": "walking"
+      },
+      "examples": [
+        {
+          "kanji": "道",
+          "vi": "đường",
+          "en": "road"
+        },
+        {
+          "kanji": "近",
+          "vi": "gần",
+          "en": "near"
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "category": "nature & elements",
+      "radical": "彳",
+      "han_viet": "xích",
+      "meanings": {
+        "vi": "bước chân",
+        "en": "step"
+      },
+      "examples": [
+        {
+          "kanji": "行",
+          "vi": "đi",
+          "en": "go"
+        },
+        {
+          "kanji": "待",
+          "vi": "đợi",
+          "en": "wait"
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "category": "nature & elements",
+      "radical": "門",
+      "han_viet": "môn",
+      "meanings": {
+        "vi": "cổng",
+        "en": "gate"
+      },
+      "examples": [
+        {
+          "kanji": "開",
+          "vi": "mở",
+          "en": "open"
+        },
+        {
+          "kanji": "問",
+          "vi": "hỏi",
+          "en": "question"
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "category": "nature & elements",
+      "radical": "宀",
+      "han_viet": "miên",
+      "meanings": {
+        "vi": "mái nhà",
+        "en": "roof"
+      },
+      "examples": [
+        {
+          "kanji": "家",
+          "vi": "nhà",
+          "en": "house"
+        },
+        {
+          "kanji": "室",
+          "vi": "phòng",
+          "en": "room"
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "category": "nature & elements",
+      "radical": "車",
+      "han_viet": "xa",
+      "meanings": {
+        "vi": "xe",
+        "en": "car"
+      },
+      "examples": [
+        {
+          "kanji": "転",
+          "vi": "lăn",
+          "en": "roll"
+        },
+        {
+          "kanji": "軽",
+          "vi": "nhẹ",
+          "en": "light"
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "category": "nature & elements",
+      "radical": "广",
+      "han_viet": "quảng",
+      "meanings": {
+        "vi": "mái nhà",
+        "en": "cliff"
+      },
+      "examples": [
+        {
+          "kanji": "店",
+          "vi": "cửa hàng",
+          "en": "shop"
+        },
+        {
+          "kanji": "庭",
+          "vi": "vườn",
+          "en": "garden"
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "category": "nature & elements",
+      "radical": "邑 (阝-phải)",
+      "han_viet": "ấp",
+      "meanings": {
+        "vi": "làng, thành phố",
+        "en": "town"
+      },
+      "examples": [
+        {
+          "kanji": "都",
+          "vi": "đô thị",
+          "en": "city"
+        },
+        {
+          "kanji": "部",
+          "vi": "bộ phận",
+          "en": "part"
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "category": "nature & elements",
+      "radical": "阜 (阝-trái)",
+      "han_viet": "phụ",
+      "meanings": {
+        "vi": "gò đất",
+        "en": "hill"
+      },
+      "examples": [
+        {
+          "kanji": "院",
+          "vi": "viện",
+          "en": "institution"
+        },
+        {
+          "kanji": "険",
+          "vi": "nguy hiểm",
+          "en": "risk"
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "category": "movement & space",
+      "radical": "言",
+      "han_viet": "ngôn",
+      "meanings": {
+        "vi": "nói",
+        "en": "speech"
+      },
+      "examples": [
+        {
+          "kanji": "語",
+          "vi": "ngôn ngữ",
+          "en": "language"
+        },
+        {
+          "kanji": "話",
+          "vi": "nói chuyện",
+          "en": "talk"
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "category": "movement & space",
+      "radical": "貝",
+      "han_viet": "bối",
+      "meanings": {
+        "vi": "tiền, vỏ sò",
+        "en": "money"
+      },
+      "examples": [
+        {
+          "kanji": "買",
+          "vi": "mua",
+          "en": "buy"
+        },
+        {
+          "kanji": "員",
+          "vi": "thành viên",
+          "en": "member"
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "category": "movement & space",
+      "radical": "糸",
+      "han_viet": "mịch",
+      "meanings": {
+        "vi": "sợi chỉ",
+        "en": "thread"
+      },
+      "examples": [
+        {
+          "kanji": "結",
+          "vi": "kết nối",
+          "en": "tie"
+        },
+        {
+          "kanji": "終",
+          "vi": "kết thúc",
+          "en": "end"
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "category": "movement & space",
+      "radical": "衣 (衤)",
+      "han_viet": "y",
+      "meanings": {
+        "vi": "quần áo",
+        "en": "clothes"
+      },
+      "examples": [
+        {
+          "kanji": "初",
+          "vi": "đầu tiên",
+          "en": "first"
+        },
+        {
+          "kanji": "複",
+          "vi": "phức tạp",
+          "en": "complex"
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "category": "movement & space",
+      "radical": "刀 (刂)",
+      "han_viet": "đao",
+      "meanings": {
+        "vi": "dao",
+        "en": "knife"
+      },
+      "examples": [
+        {
+          "kanji": "切",
+          "vi": "cắt",
+          "en": "cut"
+        },
+        {
+          "kanji": "分",
+          "vi": "chia",
+          "en": "divide"
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "category": "movement & space",
+      "radical": "食 (飠)",
+      "han_viet": "thực",
+      "meanings": {
+        "vi": "ăn",
+        "en": "food"
+      },
+      "examples": [
+        {
+          "kanji": "飯",
+          "vi": "cơm",
+          "en": "meal"
+        },
+        {
+          "kanji": "飲",
+          "vi": "uống",
+          "en": "drink"
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "category": "movement & space",
+      "radical": "巾",
+      "han_viet": "cân",
+      "meanings": {
+        "vi": "khăn",
+        "en": "cloth"
+      },
+      "examples": [
+        {
+          "kanji": "布",
+          "vi": "vải",
+          "en": "cloth"
+        },
+        {
+          "kanji": "常",
+          "vi": "thông thường",
+          "en": "usual"
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "category": "movement & space",
+      "radical": "弓",
+      "han_viet": "cung",
+      "meanings": {
+        "vi": "cung tên",
+        "en": "bow"
+      },
+      "examples": [
+        {
+          "kanji": "引",
+          "vi": "kéo",
+          "en": "pull"
+        },
+        {
+          "kanji": "",
+          "vi": "",
+          "en": ""
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "category": "society & objects",
+      "radical": "虫",
+      "han_viet": "trùng",
+      "meanings": {
+        "vi": "sâu bọ, côn trùng",
+        "en": "insect"
+      },
+      "examples": [
+        {
+          "kanji": "虹",
+          "vi": "cầu vồng",
+          "en": "rainbow"
+        },
+        {
+          "kanji": "蚊",
+          "vi": "con muỗi",
+          "en": "mosquito"
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "category": "society & objects",
+      "radical": "犭(犬)",
+      "han_viet": "khuyển",
+      "meanings": {
+        "vi": "con chó",
+        "en": "dog"
+      },
+      "examples": [
+        {
+          "kanji": "猫",
+          "vi": "con mèo",
+          "en": "cat"
+        },
+        {
+          "kanji": "犯",
+          "vi": "tội phạm",
+          "en": "crime"
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "category": "society & objects",
+      "radical": "隹",
+      "han_viet": "truy",
+      "meanings": {
+        "vi": "chim đuôi ngắn",
+        "en": "bird"
+      },
+      "examples": [
+        {
+          "kanji": "進",
+          "vi": "tiến lên",
+          "en": "advance"
+        },
+        {
+          "kanji": "集",
+          "vi": "tập hợp",
+          "en": "collect"
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "category": "society & objects",
+      "radical": "鳥",
+      "han_viet": "điểu",
+      "meanings": {
+        "vi": "con chim",
+        "en": "bird"
+      },
+      "examples": [
+        {
+          "kanji": "鳴",
+          "vi": "hót, kêu",
+          "en": "chirp"
+        },
+        {
+          "kanji": "島",
+          "vi": "hòn đảo",
+          "en": "island"
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "category": "society & objects",
+      "radical": "魚",
+      "han_viet": "ngư",
+      "meanings": {
+        "vi": "con cá",
+        "en": "fish"
+      },
+      "examples": [
+        {
+          "kanji": "鮮",
+          "vi": "tươi sống",
+          "en": "fresh"
+        },
+        {
+          "kanji": "漁",
+          "vi": "đánh cá",
+          "en": "fishing"
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "category": "society & objects",
+      "radical": "馬",
+      "han_viet": "mã",
+      "meanings": {
+        "vi": "con ngựa",
+        "en": "horse"
+      },
+      "examples": [
+        {
+          "kanji": "駅",
+          "vi": "nhà ga",
+          "en": "station"
+        },
+        {
+          "kanji": "験",
+          "vi": "thử nghiệm",
+          "en": "test"
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "category": "society & objects",
+      "radical": "羊",
+      "han_viet": "dương",
+      "meanings": {
+        "vi": "con cừu",
+        "en": "sheep"
+      },
+      "examples": [
+        {
+          "kanji": "着",
+          "vi": "mặc, đến",
+          "en": "wear"
+        },
+        {
+          "kanji": "義",
+          "vi": "nghĩa khí",
+          "en": "justice"
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "category": "society & objects",
+      "radical": "牛",
+      "han_viet": "ngưu",
+      "meanings": {
+        "vi": "con bò",
+        "en": "cow"
+      },
+      "examples": [
+        {
+          "kanji": "物",
+          "vi": "đồ vật",
+          "en": "thing"
+        },
+        {
+          "kanji": "特",
+          "vi": "đặc biệt",
+          "en": "special"
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "category": "animals & fauna",
+      "radical": "工",
+      "han_viet": "công",
+      "meanings": {
+        "vi": "thợ, công việc",
+        "en": "work"
+      },
+      "examples": [
+        {
+          "kanji": "左",
+          "vi": "bên trái",
+          "en": "left"
+        },
+        {
+          "kanji": "差",
+          "vi": "sai khác",
+          "en": "difference"
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "category": "animals & fauna",
+      "radical": "戈",
+      "han_viet": "qua",
+      "meanings": {
+        "vi": "cây mác",
+        "en": "spear"
+      },
+      "examples": [
+        {
+          "kanji": "戦",
+          "vi": "chiến tranh",
+          "en": "war"
+        },
+        {
+          "kanji": "成",
+          "vi": "trở thành",
+          "en": "become"
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "category": "animals & fauna",
+      "radical": "弓",
+      "han_viet": "cung",
+      "meanings": {
+        "vi": "cái cung",
+        "en": "bow"
+      },
+      "examples": [
+        {
+          "kanji": "強",
+          "vi": "mạnh",
+          "en": "strong"
+        },
+        {
+          "kanji": "弱",
+          "vi": "yếu",
+          "en": "weak"
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "category": "animals & fauna",
+      "radical": "斤",
+      "han_viet": "cân",
+      "meanings": {
+        "vi": "cái rìu",
+        "en": "axe"
+      },
+      "examples": [
+        {
+          "kanji": "新",
+          "vi": "mới",
+          "en": "new"
+        },
+        {
+          "kanji": "断",
+          "vi": "từ chối",
+          "en": "refuse"
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "category": "animals & fauna",
+      "radical": "矢",
+      "han_viet": "thỉ",
+      "meanings": {
+        "vi": "mũi tên",
+        "en": "arrow"
+      },
+      "examples": [
+        {
+          "kanji": "知",
+          "vi": "biết",
+          "en": "know"
+        },
+        {
+          "kanji": "短",
+          "vi": "ngắn",
+          "en": "short"
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "category": "animals & fauna",
+      "radical": "車",
+      "han_viet": "xa",
+      "meanings": {
+        "vi": "xe cộ",
+        "en": "car"
+      },
+      "examples": [
+        {
+          "kanji": "転",
+          "vi": "lăn",
+          "en": "roll"
+        },
+        {
+          "kanji": "輸",
+          "vi": "vận chuyển",
+          "en": "export"
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "category": "animals & fauna",
+      "radical": "舟",
+      "han_viet": "chu",
+      "meanings": {
+        "vi": "con thuyền",
+        "en": "boat"
+      },
+      "examples": [
+        {
+          "kanji": "船",
+          "vi": "tàu thủy",
+          "en": "ship"
+        },
+        {
+          "kanji": "航",
+          "vi": "hàng không",
+          "en": "aviation"
+        }
+      ]
+    },
+    {
+      "level_id": 6,
+      "category": "tools & weapons",
+      "radical": "囗",
+      "han_viet": "vi",
+      "meanings": {
+        "vi": "vây quanh",
+        "en": "enclosure"
+      },
+      "examples": [
+        {
+          "kanji": "国",
+          "vi": "quốc gia",
+          "en": "country"
+        },
+        {
+          "kanji": "回",
+          "vi": "lần",
+          "en": "times"
+        }
+      ]
+    },
+    {
+      "level_id": 6,
+      "category": "tools & weapons",
+      "radical": "广",
+      "han_viet": "quảng",
+      "meanings": {
+        "vi": "mái nhà bên sườn núi",
+        "en": "cliff"
+      },
+      "examples": [
+        {
+          "kanji": "店",
+          "vi": "cửa hàng",
+          "en": "shop"
+        },
+        {
+          "kanji": "度",
+          "vi": "mức độ",
+          "en": "degree"
+        }
+      ]
+    },
+    {
+      "level_id": 6,
+      "category": "tools & weapons",
+      "radical": "疒",
+      "han_viet": "nạch",
+      "meanings": {
+        "vi": "bệnh tật",
+        "en": "sickness"
+      },
+      "examples": [
+        {
+          "kanji": "病",
+          "vi": "ốm",
+          "en": "sick"
+        },
+        {
+          "kanji": "痛",
+          "vi": "đau",
+          "en": "pain"
+        }
+      ]
+    },
+    {
+      "level_id": 6,
+      "category": "tools & weapons",
+      "radical": "白",
+      "han_viet": "bạch",
+      "meanings": {
+        "vi": "màu trắng",
+        "en": "white"
+      },
+      "examples": [
+        {
+          "kanji": "的",
+          "vi": "mục tiêu",
+          "en": "target"
+        },
+        {
+          "kanji": "皆",
+          "vi": "tất cả",
+          "en": "everyone"
+        }
+      ]
+    },
+    {
+      "level_id": 6,
+      "category": "tools & weapons",
+      "radical": "立",
+      "han_viet": "lập",
+      "meanings": {
+        "vi": "đứng",
+        "en": "stand"
+      },
+      "examples": [
+        {
+          "kanji": "音",
+          "vi": "âm thanh",
+          "en": "sound"
+        },
+        {
+          "kanji": "親",
+          "vi": "cha mẹ",
+          "en": "parent"
+        }
+      ]
+    },
+    {
+      "level_id": 6,
+      "category": "tools & weapons",
+      "radical": "尸",
+      "han_viet": "thi",
+      "meanings": {
+        "vi": "thây ma, mái nhà",
+        "en": "corpse"
+      },
+      "examples": [
+        {
+          "kanji": "屋",
+          "vi": "cửa hàng",
+          "en": "roof"
+        },
+        {
+          "kanji": "局",
+          "vi": "cục, bộ",
+          "en": "bureau"
+        }
+      ]
+    }
+  ]
+}
