@@ -134,7 +134,7 @@
 .big-node {
     width: 120px;
     height: 120px;
-    background: white;
+    background: #fff9c4;
     border: 4px solid var(--candy-orange);
     border-radius: 40px;
     display: flex;
@@ -148,6 +148,7 @@
     /* Hiệu ứng nhô lên mượt mà */
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
+    
 }
 
 /* HIỆU ỨNG NHÔ LÊN KHI DI CHUỘT */
@@ -218,7 +219,7 @@
 /* Trạm Bậc Thầy với màu cam nhạt hơn */
 .glory-node { 
     /* Gradient từ cam sữa đến cam nhạt */
-    background: linear-gradient(135deg, #ffe0b2, #ffcc80) !important; 
+    background: linear-gradient(135deg, #ffc7b2, #ffaa80) !important; 
     border-color: white !important; 
     /* Bóng đổ cứng màu cam nhạt */
     box-shadow: 0 10px 0px #ffcc80 !important;
@@ -233,6 +234,7 @@
 .glory-node b, .glory-node span.text-white {
     color: #d84315 !important; /* Chữ màu cam đậm để nổi bật trên nền nhạt */
 }
+
 /* CSS CHO BANNER ĐẢO BÊN */
     .hero-island {
         background-color: var(--forest-green);
@@ -443,135 +445,8 @@ header.hero-island {
     margin-top: 100px !important; 
     /* Giữ nguyên các thuộc tính khác của banner */
 }
-/* --- CHẾ ĐỘ MÁY TÍNH: CHẠY DỌC 2 BÊN --- */
-.community-section {
-    position: fixed; /* Cố định để chạy dọc */
-    top: 55%;
-    transform: translateY(-50%);
-    width: 100%;
-    pointer-events: none; /* Để không che mất các nút bấm ở giữa */
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-}
 
-/* --- CHẾ ĐỘ MÁY TÍNH: TỐI ƯU CHIỀU RỘNG --- */
-.community-card {
-    width: 360px; /* Tăng rộng thêm để đọc nội dung sướng hơn */
-    height: 480px; /* Tăng chiều cao để không bị quá lùn so với chiều rộng */
-    background: white;
-    border-radius: 30px; /* Bo tròn mạnh hơn cho nghệ thuật */
-    border: 4px solid var(--forest-green);
-    box-shadow: 0 12px 0px #c5e1a5;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    pointer-events: auto;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
 
-/* Hiệu ứng nhô lên cao hơn một chút vì khung to hơn */
-.community-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 25px 0px #c5e1a5;
-}
-
-/* Chỉnh lại độ rộng khung chứa tổng để tránh bị che mất nội dung ở giữa */
-.community-section {
-    padding: 0 30px; /* Đẩy sát ra mép màn hình hơn một chút */
-}
-
-/* Tinh chỉnh Header bên trong khung cho sang trọng */
-.card-header-v2 {
-    padding: 15px 20px;
-    font-size: 14px;
-    font-weight: 900;
-    letter-spacing: 1px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-}
-
-/* --- CHẾ ĐỘ MOBILE: XẾP CHỒNG TRÊN DƯỚI --- */
-@media (max-width: 1100px) {
-    .community-section {
-        position: relative; /* Trở về vị trí bình thường */
-        top: 0;
-        transform: none;
-        flex-direction: column; /* Xếp chồng dọc */
-        align-items: center;
-        gap: 40px;
-        margin-top: 60px;
-        padding-bottom: 50px;
-    }
-
-    .community-card {
-        width: 100%; /* Giãn bằng chiều rộng màn hình */
-        max-width: 500px;
-        height: 350px;
-    }
-}
-
-/* Khung chung cho cả hai */
-.community-card {
-    background: white;
-    border-radius: 30px;
-    border: 4px solid var(--forest-green);
-    box-shadow: 0 12px 0px #c5e1a5;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 450px; /* Tăng chiều cao để chứa được nhiều nội dung hơn */
-}
-
-/* Biến thể màu cam cho Hội Nông Dân */
-.chat-card {
-    border-color: var(--candy-orange);
-    box-shadow: 0 12px 0px #ffe0b2;
-}
-
-.card-header {
-    padding: 18px 25px;
-    color: white;
-    font-weight: 900;
-    font-size: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.bg-green { background-color: var(--forest-green); }
-.bg-orange { background-color: var(--candy-orange); }
-
-.card-body {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-/* Nội dung Mẹo Member */
-.tip-item-v2 {
-    background: #f9fdf9;
-    padding: 15px;
-    border-radius: 18px;
-    margin-bottom: 15px;
-    border: 1px solid #e0e0e0;
-}
-
-/* Nội dung Chat */
-.chat-bubble-v2 {
-    margin-bottom: 15px;
-}
-
-.user-tag {
-    font-size: 10px;
-    font-weight: 900;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-    display: block;
-}
 /* --- SNS THREADS: BORDER STYLE (XANH FOREST) --- */
 .threads-wrapper {
     max-width: 750px;
@@ -896,47 +771,80 @@ header.hero-island {
     .threads-container > .mt-8 input { width: 100%; text-align: center; }
     .threads-container > .mt-8 button { width: 100%; }
 }
+.search-thread-wrapper {
+    padding: 10px 16px;
+    /* Xóa background-color: white để lấy màu nền của trang */
+    background-color: transparent; 
+    margin-bottom: 24px; /* Khoảng cách rộng rãi với phần thảo luận bên dưới */
+}
 
+.search-thread-box {
+    display: flex;
+    align-items: center;
+    /* Sử dụng màu trắng hoặc màu kem rất nhạt cho bên trong khung */
+    background-color: #fcfaf5; 
+    border: 1.5px solid #ffcc80; /* Viền cam nhạt đồng bộ banner */
+    border-radius: 20px; /* Bo tròn mềm mại hơn */
+    padding: 10px 15px;
+    /* Đổ bóng nhẹ để tạo chiều sâu mà không bị lộ viền trắng */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.search-input-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    font-weight: 700; /* Làm chữ đậm hơn một chút cho rõ */
+    color: #a63d40; /* Sử dụng màu đỏ Muji cho chữ để đồng bộ */
+    margin-left: 10px;
+}
+
+/* Tùy chỉnh màu của chữ placeholder */
+.search-input-field::placeholder {
+    color: #bdc3c7;
+    font-weight: 500;
+}
     </style>
 </head>
 <body>
 
-   <nav class="top-nav-bar">
-    <a href="#" class="logo-wrapper">
-        <div class="logo-icon">🪴</div>
+    <nav class="top-nav-bar">
+    <a href="#" class="logo-wrapper flex items-center gap-2">
+        <div class="logo-icon text-2xl">🪴</div>
         <div class="logo-text">sumi <span>kanji</span></div>
     </a>
-
     <div class="flex items-center gap-4">
-        <button class="btn-util">🌐 Việt Nam</button>
+        <!-- Nút chọn ngôn ngữ với menu thả xuống đơn giản -->
+        <select id="lang-select" onchange="changeLanguage(this.value)" class="btn-util outline-none cursor-pointer">
+            <option value="vi">🇻🇳 Tiếng Việt</option>
+            <option value="en">🇺🇸 English</option>
+        </select>
         <button class="btn-util">🔔</button>
-        <button class="btn-util btn-orange">Đăng nhập</button>
+       <button class="btn-util btn-orange" data-vi="Đăng nhập" data-en="Login">
+    Đăng nhập
+</button>
     </div>
+</nav>
 </nav>
 
     <header class="hero-island">
-    <div class="absolute top-4 left-10 text-white opacity-5 font-black text-9xl pointer-events-none">学</div>
-    
-    <div class="flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
-        
+    <div class="flex flex-col md:flex-row items-center justify-between gap-12 relative z-10 text-left">
         <div class="daily-kanji-card">
-            <div class="kanji-label">Hạt mầm hôm nay</div>
+            <div class="kanji-label" data-vi="Hạt mầm hôm nay" data-en="Today's Seed">Hạt mầm hôm nay</div>
             <div class="kanji-main">木</div>
-            <div class="kanji-meaning">Mộc (Cây)</div>
-            <div class="kanji-info">
-                <span>ON: MOKU</span>
-                <span>KUN: ki</span>
-            </div>
-            <div class="kanji-footer">Kích để học nét vẽ 🖌️</div>
+            <div class="kanji-meaning" data-vi="Mộc (Cây)" data-en="Wood (Tree)">Mộc (Cây)</div>
+            <div class="kanji-footer" data-vi="Kích để học nét vẽ 🖌️" data-en="Click to learn strokes 🖌️">Kích để học nét vẽ 🖌️</div>
         </div>
-
         <div class="text-right flex-1">
-            <h1 class="hero-title-new">Nông Trại Kanji </h1>
-            <p class="hero-desc-new">
-                ĐỪNG HỌC KANJI, HÃY CHĂM SÓC CHÚNG!<br>
-                Mỗi ngày gieo một hạt mầm tri thức, gặt hái rừng cây tri thức vĩ đại cùng Sumi Kanji 
+            <h1 class="hero-title-new" data-vi="Nông Trại Kanji" data-en="Kanji Farm">Nông Trại Kanji</h1>
+            <p class="hero-desc-new" 
+               data-vi="ĐỪNG HỌC KANJI, HÃY CHĂM SÓC CHÚNG!<br>Mỗi ngày gieo một hạt mầm tri thức, gặt hái rừng cây tri thức vĩ đại cùng Sumi AI." 
+               data-en="DON'T JUST LEARN KANJI, NURTURE THEM!<br>Sow a seed of knowledge every day, harvest a great forest of wisdom with Sumi AI.">
+                ĐỪNG HỌC KANJI, HÃY CHĂM SÓC CHÚNG!<br>Mỗi ngày gieo một hạt mầm tri thức.
             </p>
-            <a href="#map" class="btn-start-orange">Khám phá lộ trình</a>
+            <a href="#map" class="btn-start-orange" data-vi="Khám phá lộ trình" data-en="Explore Roadmap">Khám phá lộ trình</a>
         </div>
     </div>
 </header>
@@ -944,227 +852,397 @@ header.hero-island {
     <div class="search-wrapper">
         <div class="search-input-group">
             <span class="search-icon">🔍</span>
-            <input type="text" placeholder="Nhập Kanji hoặc ý nghĩa muốn tra cứu..." class="search-input">
+            <!-- Thêm data-vi và data-en cho placeholder của Input -->
+            <input type="text" 
+                   id="search-input"
+                   class="search-input"
+                   placeholder="Nhập Kanji hoặc ý nghĩa muốn tra cứu..." 
+                   data-vi="Nhập Kanji hoặc ý nghĩa muốn tra cứu..." 
+                   data-en="Enter Kanji or meaning to search...">
         </div>
         <div class="search-actions">
-            <button class="btn-search-main">Tra từ điển</button>
-            <button class="btn-search-stroke">Tra nét vẽ 🖌️</button>
+            <!-- Thêm data-vi và data-en cho các nút bấm -->
+            <button class="btn-search-main" 
+                    data-vi="Tra cứu" 
+                    data-en="Search">
+                    Tra từ điển
+            </button>
+            <button class="btn-search-stroke" 
+                    data-vi="Tra nét vẽ " 
+                    data-en="Stroke order ">
+                    Tra nét vẽ 
+                    
+            </button>
         </div>
     </div>
 </section>
-    <main class="map-section" id="map">
-        <div class="text-center mb-20">
-            <h2 class="text-3xl font-black text-[#558b2f] uppercase tracking-tighter">Con đường gặt hái tri thức</h2>
+<main class="map-section" id="map">
+    <div class="text-center mb-20">
+        <h2 class="text-3xl font-black text-[#558b2f] uppercase tracking-tighter" 
+            data-vi="Con đường gặt hái tri thức" 
+            data-en="Roadmap to Harvest Knowledge">
+            Con đường gặt hái tri thức
+        </h2>
+    </div>
+    
+    <!-- Bước 1: Bộ Thủ -->
+    <div class="trail-step">
+        <div class="big-node node-active">
+        <!-- Đường dẫn trỏ vào thư mục bothu/bothu.html -->
+        <a href="bothu/bothu.html" class="btn-radical-link" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+            <span class="text-5xl">🪴</span>
+            <span class="text-[13px] font-black mt-1 uppercase" 
+                  data-vi="Bộ Thủ" 
+                  data-en="Radicals">
+                  Bộ Thủ
+            </span> 
+        </a>
+    </div>
+        <div class="desc-box">
+            <h3 data-vi="Gốc Rễ Nông Trại" data-en="Farm Roots">Gốc Rễ Nông Trại</h3>
+            <p data-vi="'214 hạt giống nền tảng giúp bạn hiểu sâu mọi chữ Kanji ngay từ khi bắt đầu.'" 
+               data-en="'214 foundational seeds to help you master Kanji from the very beginning.'">
+               "214 hạt giống nền tảng giúp bạn hiểu sâu mọi chữ Kanji ngay từ khi bắt đầu."
+            </p>
         </div>
-        
-        <div class="trail-step">
-            <div class="big-node node-active">
-                <a href="bothu.html" class="btn-radical-link">
-                <span class="text-5xl">🪴</span>
-                <span class="text-[13px] font-black mt-1 uppercase">Bộ Thủ</span> </a>
-            </div>
-            <div class="desc-box">
-                <h3>Gốc Rễ Nông Trại</h3>
-                <p>"214 hạt giống nền tảng giúp bạn hiểu sâu mọi chữ Kanji ngay từ khi bắt đầu."</p>
-            </div>
-            <svg class="line-svg" viewBox="0 0 200 120">
-                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
-            </svg>
-        </div>
+        <svg class="line-svg" viewBox="0 0 200 120">
+            <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+        </svg>
+    </div>
 
-        <div class="trail-step">
-            <div class="big-node node-active">
-                <span class="text-5xl">🌱</span>
-                <span class="text-[13px] font-black mt-1 uppercase">JLPT N5</span>
-            </div>
-            <div class="desc-box">
-                <h3>Mầm Non Đầu Tiên</h3>
-                <p>"100 chữ Kanji căn bản bắt đầu nhú khỏi mặt đất kiến thức."</p>
-            </div>
-            <svg class="line-svg" viewBox="0 0 200 120">
-                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
-            </svg>
+    <!-- Bước 2: N5 -->
+    <div class="trail-step">
+        <div class="big-node node-active">
+            <span class="text-5xl">🌱</span>
+            <span class="text-[13px] font-black mt-1 uppercase" data-vi="JLPT N5" data-en="JLPT N5">JLPT N5</span>
         </div>
+        <div class="desc-box">
+            <h3 data-vi="Mầm Non Đầu Tiên" data-en="First Sprouts">Mầm Non Đầu Tiên</h3>
+            <p data-vi="'100 chữ Kanji căn bản bắt đầu nhú khỏi mặt đất kiến thức.'" 
+               data-en="'100 basic Kanji characters starting to sprout from the ground of knowledge.'">
+               "100 chữ Kanji căn bản bắt đầu nhú khỏi mặt đất kiến thức."
+            </p>
+        </div>
+        <svg class="line-svg" viewBox="0 0 200 120">
+            <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+        </svg>
+    </div>
 
-        <div class="trail-step">
-            <div class="big-node">
-                <span class="text-5xl">🌿</span>
-                <span class="text-[13px] font-black mt-1 uppercase">JLPT N4</span>
-            </div>
-            <div class="desc-box">
-                <h3>Lá Xanh Vươn Mình</h3>
-                <p>"300 chữ Kanji phổ thông giúp bạn làm quen với nhịp sống Nhật Bản."</p>
-            </div>
-            <svg class="line-svg" viewBox="0 0 200 120">
-                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
-            </svg>
+    <!-- Bước 3: N4 -->
+    <div class="trail-step">
+        <div class="big-node">
+            <span class="text-5xl">🌿</span>
+            <span class="text-[13px] font-black mt-1 uppercase" data-vi="JLPT N4" data-en="JLPT N4">JLPT N4</span>
         </div>
+        <div class="desc-box">
+            <h3 data-vi="Lá Xanh Vươn Mình" data-en="Green Leaves Rising">Lá Xanh Vươn Mình</h3>
+            <p data-vi="'300 chữ Kanji phổ thông giúp bạn làm quen với nhịp sống Nhật Bản.'" 
+               data-en="'300 common Kanji characters helping you get used to Japanese life.'">
+               "300 chữ Kanji phổ thông giúp bạn làm quen với nhịp sống Nhật Bản."
+            </p>
+        </div>
+        <svg class="line-svg" viewBox="0 0 200 120">
+            <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+        </svg>
+    </div>
 
-        <div class="trail-step">
-            <div class="big-node">
-                <span class="text-5xl">🌸</span>
-                <span class="text-[13px] font-black mt-1 uppercase">JLPT N3</span>
-            </div>
-            <div class="desc-box">
-                <h3>Vụ Mùa Rực Rỡ</h3>
-                <p>"Chinh phục 650 chữ Kanji trung cấp, nông trại bắt đầu trổ hoa rực rỡ."</p>
-            </div>
-            <svg class="line-svg" viewBox="0 0 200 120">
-                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
-            </svg>
+    <!-- Bước 4: N3 -->
+    <div class="trail-step">
+        <div class="big-node">
+            <span class="text-5xl">🌸</span>
+            <span class="text-[13px] font-black mt-1 uppercase" data-vi="JLPT N3" data-en="JLPT N3">JLPT N3</span>
         </div>
+        <div class="desc-box">
+            <h3 data-vi="Vụ Mùa Rực Rỡ" data-en="Blooming Season">Vụ Mùa Rực Rỡ</h3>
+            <p data-vi="'Chinh phục 650 chữ Kanji trung cấp, nông trại bắt đầu trổ hoa rực rỡ.'" 
+               data-en="'Conquer 650 intermediate Kanji, the farm begins to bloom brilliantly.'">
+               "Chinh phục 650 chữ Kanji trung cấp, nông trại bắt đầu trổ hoa rực rỡ."
+            </p>
+        </div>
+        <svg class="line-svg" viewBox="0 0 200 120">
+            <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+        </svg>
+    </div>
 
-        <div class="trail-step">
-            <div class="big-node">
-                <span class="text-5xl">🍓</span>
-                <span class="text-[13px] font-black mt-1 uppercase">JLPT N2</span>
-            </div>
-            <div class="desc-box">
-                <h3>Trái Ngọt Cao Cấp</h3>
-                <p>"Làm chủ 1000 chữ Kanji để tự tin làm việc trong môi trường chuyên nghiệp."</p>
-            </div>
-            <svg class="line-svg" viewBox="0 0 200 120">
-                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
-            </svg>
+    <!-- Bước 5: N2 -->
+    <div class="trail-step">
+        <div class="big-node">
+            <span class="text-5xl">🍓</span>
+            <span class="text-[13px] font-black mt-1 uppercase" data-vi="JLPT N2" data-en="JLPT N2">JLPT N2</span>
         </div>
+        <div class="desc-box">
+            <h3 data-vi="Trái Ngọt Cao Cấp" data-en="Advanced Sweet Fruits">Trái Ngọt Cao Cấp</h3>
+            <p data-vi="'Làm chủ 1000 chữ Kanji để tự tin làm việc trong môi trường chuyên nghiệp.'" 
+               data-en="'Master 1000 Kanji to work confidently in a professional environment.'">
+               "Làm chủ 1000 chữ Kanji để tự tin làm việc trong môi trường chuyên nghiệp."
+            </p>
+        </div>
+        <svg class="line-svg" viewBox="0 0 200 120">
+            <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+        </svg>
+    </div>
 
-        <div class="trail-step">
-            <div class="big-node">
-                <span class="text-5xl">🍁</span>
-                <span class="text-[13px] font-black mt-1 uppercase">JLPT N1</span>
-            </div>
-            <div class="desc-box">
-                <h3>Rừng Cây Cổ Thụ</h3>
-                <p>"Sở hữu hơn 2000 cây đại thụ tri thức, thông thạo như người bản xứ."</p>
-            </div>
-            <svg class="line-svg" viewBox="0 0 200 120">
-                <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
-            </svg>
+    <!-- Bước 6: N1 -->
+    <div class="trail-step">
+        <div class="big-node">
+            <span class="text-5xl">🍁</span>
+            <span class="text-[13px] font-black mt-1 uppercase" data-vi="JLPT N1" data-en="JLPT N1">JLPT N1</span>
         </div>
+        <div class="desc-box">
+            <h3 data-vi="Rừng Cây Cổ Thụ" data-en="Ancient Forest">Rừng Cây Cổ Thụ</h3>
+            <p data-vi="'Sở hữu hơn 2000 cây đại thụ tri thức, thông thạo như người bản xứ.'" 
+               data-en="'Own more than 2000 giant trees of knowledge, proficient like a native.'">
+               "Sở hữu hơn 2000 cây đại thụ tri thức, thông thạo như người bản xứ."
+            </p>
+        </div>
+        <svg class="line-svg" viewBox="0 0 200 120">
+            <path d="M 40 0 C 40 70, 160 50, 160 120" stroke="#c5e1a5" stroke-width="6" fill="none" stroke-dasharray="12 12" />
+        </svg>
+    </div>
 
-        <div class="trail-step">
-            <div class="big-node glory-node">
-                <span class="text-5xl">⛩️</span>
-                <span class="text-[13px] font-black text-white mt-1 uppercase">Master</span>
-            </div>
-            <div class="desc-box">
-                <h3 class="text-orange-600">Bậc Thầy Kanji</h3>
-                <p class="text-orange-400 font-bold">"Đỉnh vinh quang! Bạn đã hoàn toàn làm chủ mọi kho báu của nông trại Sumi AI."</p>
-            </div>
+    <!-- Bước 7: Master -->
+    <div class="trail-step">
+        <div class="big-node glory-node">
+            <span class="text-5xl">⛩️</span>
+            <span class="text-[13px] font-black text-white mt-1 uppercase" data-vi="Master" data-en="Master">Master</span>
         </div>
-    </main>
+        <div class="desc-box">
+            <h3 class="text-orange-600" data-vi="Bậc Thầy Kanji" data-en="Kanji Master">Bậc Thầy Kanji</h3>
+            <p class="text-orange-400 font-bold" 
+               data-vi="'Đỉnh vinh quang! Bạn đã hoàn toàn làm chủ mọi kho báu của nông trại Sumi AI.'" 
+               data-en="'The peak of glory! You have completely mastered all the treasures of Sumi AI farm.'">
+               "Đỉnh vinh quang! Bạn đã hoàn toàn làm chủ mọi kho báu của nông trại Sumi AI."
+            </p>
+        </div>
+    </div>
+</main>
 
 <section class="threads-container">
     <div class="threads-banner">
-        <span>👨‍🌾</span> hội nông dân thảo luận
+        <span data-vi="👨‍🌾 hội nông dân thảo luận" data-en="👨‍🌾 farmers' discussion">👨‍🌾 hội nông dân thảo luận</span>
     </div>
-<div class="threads-scroll-area">
-    <div class="mb-8">
-        <div class="thread-card">
-            <div class="avatar-circle">🦊</div>
-            <div class="flex-1">
-                <div class="flex justify-between items-center mb-1">
-                    <span class="font-black text-sm text-[#333]">hoa_kanji.master</span>
-                    <span class="text-[10px] font-bold text-gray-400">2 giờ trước</span>
-                </div>
-                <p class="text-sm text-gray-700">
-                    Mẹo nhớ chữ <b>聞 (Vấn - Nghe)</b>: Có tai (耳) đặt trong cửa (門). Muốn hóng chuyện thì phải ghé tai sát cửa nhé các bác!
-                </p>
-                <div class="interaction-bar">
-                    <div class="action-btn">👍 <span>12</span></div>
-                    <div class="action-btn dislike">👎 <span>2</span></div>
-                    <div class="action-btn">💬 <span>phản hồi</span></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="reply-container">
-            <div class="reply-card">
-                <div class="reply-avatar">🧑‍🌾</div>
-                <div class="reply-content">
-                    <h5>minh_nhat.n3</h5>
-                    <p>Bác giải thích hay quá, em vừa thử áp tai vào cửa phòng học và thuộc luôn chữ này rồi! 😂</p>
-                    <div class="flex gap-4 mt-2 opacity-60 text-[10px] font-bold">
-                        <span>thích</span>
-                        <span>trả lời</span>
+    <!-- MỚI: THANH TÌM KIẾM (Đặt ngay sau Banner) -->
+    <!-- THANH TÌM KIẾM ĐỒNG MÀU BANNER -->
+<div class="search-thread-wrapper">
+    <div class="search-thread-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" 
+               id="thread-search-input" 
+               class="search-input-field" 
+               placeholder="tìm kiếm bài đăng..." 
+               data-vi="tìm kiếm bài đăng..." 
+               data-en="search threads..."
+               onkeyup="searchThreads()">
+    </div>
+</div>
+    <div class="threads-scroll-area">
+        <!-- Thread 1 -->
+        <div class="mb-8">
+            <div class="mb-8 thread-item"> <!-- Thêm class thread-item để dễ tìm kiếm -->
+            <div class="thread-card relative"> <!-- Thêm relative để đặt nút lưu -->
+                
+                <!-- MỚI: NÚT LƯU (Bookmark) -->
+                <button onclick="savePost(1)" class="absolute top-2 right-2 p-1">
+                    <svg id="save-1" class="w-4 h-4 text-[#ffcc80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                    </svg>
+                </button>
+                <div class="avatar-circle">🦊</div>
+                <div class="flex-1">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-black text-sm text-[#333]">hoa_kanji.master</span>
+                        <span class="text-[10px] font-bold text-gray-400" data-vi="2 giờ trước" data-en="2 hours ago">2 giờ trước</span>
+                    </div>
+                    <p class="text-sm text-gray-700" 
+                       data-vi="Mẹo nhớ chữ <b>聞 (Vấn - Nghe)</b>: Có tai (耳) đặt trong cửa (門). Muốn hóng chuyện thì phải ghé tai sát cửa nhé các bác!" 
+                       data-en="Tip to remember <b>聞 (Hear)</b>: An ear (耳) inside a gate (門). To eavesdrop, you must put your ear close to the gate!">
+                        Mẹo nhớ chữ <b>聞 (Vấn - Nghe)</b>: Có tai (耳) đặt trong cửa (門). Muốn hóng chuyện thì phải ghé tai sát cửa nhé các bác!
+                    </p>
+                    <div class="interaction-bar">
+                        <div class="action-btn">👍 <span>12</span></div>
+                        <div class="action-btn dislike">👎 <span>2</span></div>
+                        <div class="action-btn" data-vi="💬 phản hồi" data-en="💬 reply">💬 phản hồi</div>
                     </div>
                 </div>
             </div>
 
-            <div class="reply-card">
-                <div class="reply-avatar">🌸</div>
-                <div class="reply-content">
-                    <h5>nhi_jp</h5>
-                    <p>Có thêm hình minh họa cái tai dính vào cửa thì tuyệt bác ạ.</p>
+            <div class="reply-container">
+                <div class="reply-card">
+                    <div class="reply-avatar">🧑‍🌾</div>
+                    <div class="reply-content">
+                        <h5>minh_nhat.n3</h5>
+                        <p data-vi="Bác giải thích hay quá, em vừa thử áp tai vào cửa phòng học và thuộc luôn chữ này rồi! 😂" 
+                           data-en="Great explanation! I just tried putting my ear to the classroom door and memorized it instantly! 😂">
+                            Bác giải thích hay quá, em vừa thử áp tai vào cửa phòng học và thuộc luôn chữ này rồi! 😂
+                        </p>
+                        <div class="flex gap-4 mt-2 opacity-60 text-[10px] font-bold">
+                            <span data-vi="thích" data-en="like">thích</span>
+                            <span data-vi="trả lời" data-en="reply">trả lời</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="quick-reply-input">
-                <input type="text" placeholder="viết phản hồi của bác..." class="lowercase">
-                <button class="bg-[#ffcc80] text-[#a63d40] px-3 py-1 rounded-lg text-[10px] font-black uppercase">gửi</button>
+                <div class="reply-card">
+                    <div class="reply-avatar">🌸</div>
+                    <div class="reply-content">
+                        <h5>nhi_jp</h5>
+                        <p data-vi="Có thêm hình minh họa cái tai dính vào cửa thì tuyệt bác ạ." 
+                           data-en="It would be even better with an illustration of an ear stuck to the door.">
+                            Có thêm hình minh họa cái tai dính vào cửa thì tuyệt bác ạ.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quick-reply-input">
+                    <input type="text" placeholder="viết phản hồi của bác..." class="lowercase" id="reply-input-1">
+                    <button class="bg-[#ffcc80] text-[#a63d40] px-3 py-1 rounded-lg text-[10px] font-black uppercase" data-vi="gửi" data-en="send">gửi</button>
+                </div>
             </div>
         </div>
-    </div>
-<div class="mb-8">
-        <div class="thread-card">
-            <div class="user-avatar-box">🍎</div>
-            <div class="flex-1">
-                <div class="flex justify-between items-center mb-1">
-                    <span class="font-black text-sm text-[#333]">hanh_nông_dân</span>
-                    <span class="text-[10px] font-bold text-gray-400">5 giờ trước</span>
-                </div>
-                <p class="text-sm text-gray-700 leading-relaxed">
-                    Có bác nào để ý chữ <b>休 (Hưu - Nghỉ ngơi)</b> không? Một người (亻) đứng tựa vào cái cây (木). Nhìn cái hình là muốn tắt máy tính đi ngủ ngay lập tức luôn á! 😴
-                </p>
-                <div class="interaction-bar">
-                    <div class="action-btn">👍 <span>25</span></div>
-                    <div class="action-btn dislike">👎 <span>0</span></div>
-                    <div class="action-btn">💬 <span>phản hồi</span></div>
-                </div>
-            </div>
-        </div>
 
-        <div class="reply-container">
-            <div class="reply-card">
-                <div class="reply-avatar">🤖</div>
-                <div class="reply-content">
-                    <h5>sumi_bot</h5>
-                    <p>Đúng rồi bác Hạnh ơi! Đây là một trong những chữ tượng hình dễ nhớ nhất. Học xong nhớ "Hưu" một lát rồi học tiếp nhé! 🪴</p>
-                    <div class="flex gap-4 mt-2 opacity-60 text-[10px] font-bold">
-                        <span>thích</span>
-                        <span>trả lời</span>
+        <!-- Thread 2 -->
+        <div class="mb-8">
+            <div class="thread-card">
+                <div class="user-avatar-box">🍎</div>
+                <div class="flex-1">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-black text-sm text-[#333]">hanh_nông_dân</span>
+                        <span class="text-[10px] font-bold text-gray-400" data-vi="5 giờ trước" data-en="5 hours ago">5 giờ trước</span>
+                    </div>
+                    <p class="text-sm text-gray-700 leading-relaxed" 
+                       data-vi="Có bác nào để ý chữ <b>休 (Hưu - Nghỉ ngơi)</b> không? Một người (亻) đứng tựa vào cái cây (木). Nhìn cái hình là muốn tắt máy tính đi ngủ ngay lập tức luôn á! 😴" 
+                       data-en="Has anyone noticed the character <b>休 (Rest)</b>? A person (亻) leaning against a tree (木). Looking at it makes me want to turn off the computer and sleep right away! 😴">
+                        Có bác nào để ý chữ <b>休 (Hưu - Nghỉ ngơi)</b> không? Một người (亻) đứng tựa vào cái cây (木). Nhìn cái hình là muốn tắt máy tính đi ngủ ngay lập tức luôn á! 😴
+                    </p>
+                    <div class="interaction-bar">
+                        <div class="action-btn">👍 <span>25</span></div>
+                        <div class="action-btn dislike">👎 <span>0</span></div>
+                        <div class="action-btn" data-vi="💬 phản hồi" data-en="💬 reply">💬 phản hồi</div>
                     </div>
                 </div>
             </div>
 
-            <div class="reply-card">
-                <div class="reply-avatar">🚜</div>
-                <div class="reply-content">
-                    <h5>bac_ba_vườn_cam</h5>
-                    <p>Bot nay lại còn biết đùa nữa cơ à. Mà công nhận, nhìn chữ Kanji như đang xem tranh vẽ ấy, không áp lực chút nào.</p>
+            <div class="reply-container">
+                <div class="reply-card">
+                    <div class="reply-avatar">🤖</div>
+                    <div class="reply-content">
+                        <h5>sumi_bot</h5>
+                        <p data-vi="Đúng rồi bác Hạnh ơi! Đây là một trong những chữ tượng hình dễ nhớ nhất. Học xong nhớ 'Hưu' một lát rồi học tiếp nhé! 🪴" 
+                           data-en="That's right, Hanh! This is one of the easiest pictograms to remember. Take a 'Hưu' (rest) and then continue studying! 🪴">
+                            Đúng rồi bác Hạnh ơi! Đây là một trong những chữ tượng hình dễ nhớ nhất. Học xong nhớ "Hưu" một lát rồi học tiếp nhé! 🪴
+                        </p>
+                        <div class="flex gap-4 mt-2 opacity-60 text-[10px] font-bold">
+                            <span data-vi="thích" data-en="like">thích</span>
+                            <span data-vi="trả lời" data-en="reply">trả lời</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="quick-reply-input">
-                <input type="text" placeholder="viết phản hồi của bác..." class="lowercase">
-                <button class="bg-[#ffcc80] text-[#a63d40] px-3 py-1 rounded-lg text-[10px] font-black uppercase">gửi</button>
+                <div class="quick-reply-input">
+    <input type="text" 
+           id="reply-input-2" 
+           class="lowercase" 
+           placeholder="viết phản hồi của bác..." 
+           data-vi="viết phản hồi của bác..." 
+           data-en="write your reply...">
+           
+    <button class="bg-[#ffcc80] text-[#a63d40] px-3 py-1 rounded-lg text-[10px] font-black uppercase" 
+            data-vi="gửi" 
+            data-en="send">
+            gửi
+    </button>
+</div>
             </div>
         </div>
     </div>
-    </div>
+
+    <!-- Main Post Input -->
     <div class="mt-8 flex items-center gap-4 bg-white border-2 border-[#ffcc80] p-4 rounded-3xl">
         <div class="w-10 h-10 rounded-full bg-[#fff3e0] flex items-center justify-center">✍️</div>
-        <input type="text" placeholder="bác nông dân chia sẻ gì không..." class="flex-1 bg-transparent outline-none text-sm font-bold lowercase">
-        <button class="bg-[#558b2f] text-white px-6 py-2 rounded-2xl text-xs font-black uppercase shadow-[0_4px_0_#3d6321]">
+        <input type="text" 
+       id="main-post-input" 
+       class="flex-1 bg-transparent outline-none text-sm font-bold lowercase" 
+       placeholder="bác nông dân chia sẻ gì không..." 
+       data-vi="bác nông dân chia sẻ gì không..." 
+       data-en="any updates from the farm?">
+        <button class="bg-[#558b2f] text-white px-6 py-2 rounded-2xl text-xs font-black uppercase shadow-[0_4px_0_#3d6321]" data-vi="đăng tin" data-en="post">
             đăng tin
         </button>
     </div>
-    
 </section>
+
 
     <footer class="mt-20 text-center text-slate-300 font-bold text-[10px] uppercase tracking-[0.5em] pb-10">
         © 2026 SUMI AI • NATURE & HARMONY STORY
     </footer>
+<script>
+    function changeLanguage(lang) {
+        // 1. Lưu tùy chọn ngôn ngữ vào máy người dùng
+        localStorage.setItem('sumiLang', lang);
+      // 1. Chuyển đổi nội dung văn bản cho Nút bấm, Tiêu đề, Thẻ p
+        document.querySelectorAll('[data-vi]').forEach(el => {
+            const translation = el.getAttribute(`data-${lang}`);
+            if (translation) {
+                el.innerHTML = translation;
+            }
+        });
 
+        // 2. Cập nhật các thẻ văn bản thông thường (Sử dụng innerHTML)
+        document.querySelectorAll('[data-vi]').forEach(el => {
+            const text = el.getAttribute(`data-${lang}`);
+            if (text) {
+                el.innerHTML = text;
+            }
+        });
+
+        // 3. Cập nhật riêng cho các thẻ INPUT (Sử dụng placeholder)
+        document.querySelectorAll('input[data-vi]').forEach(input => {
+            const placeholderText = input.getAttribute(`data-${lang}`);
+            if (placeholderText) {
+                input.placeholder = placeholderText;
+            }
+        });
+
+        // 4. Đồng bộ hóa giá trị của bộ chọn ngôn ngữ (Select box)
+        const langSelect = document.getElementById('lang-select');
+        if (langSelect) {
+            langSelect.value = lang;
+        }
+        
+        // 5. Cập nhật thuộc tính lang của trang web (Tốt cho iPhone/SEO)
+        document.documentElement.lang = lang;
+    }
+// 1. Hàm Tìm kiếm bài đăng
+function searchThreads() {
+    const input = document.getElementById('thread-search-input').value.toLowerCase();
+    const posts = document.querySelectorAll('.thread-item');
+
+    posts.forEach(post => {
+        // Tìm kiếm trong cả tên người dùng và nội dung bài đăng
+        const content = post.innerText.toLowerCase();
+        post.style.display = content.includes(input) ? "block" : "none";
+    });
+}
+
+// 2. Hàm Lưu bài đăng vào Sổ tay
+function savePost(id) {
+    const icon = document.getElementById(`save-${id}`);
+    const isSaved = icon.getAttribute('fill') !== 'none';
+
+    if (isSaved) {
+        icon.setAttribute('fill', 'none');
+        // Logic xóa khỏi localStorage nếu cần
+    } else {
+        icon.setAttribute('fill', '#ffcc80'); // Tô màu cam khi lưu
+        // Logic lưu vào localStorage
+        alert("đã lưu mẹo học này!");
+    }
+}
+    // Tự động chạy khi tải trang để áp dụng ngôn ngữ đã lưu
+    window.onload = () => {
+        const savedLang = localStorage.getItem('sumiLang') || 'vi';
+        changeLanguage(savedLang);
+    };
+</script>
 </body>
 </html>
