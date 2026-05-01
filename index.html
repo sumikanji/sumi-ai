@@ -807,6 +807,80 @@ header.hero-island {
     color: #bdc3c7;
     font-weight: 500;
 }
+/* Khung bao ngoài cùng */
+.main-post-fixed-area {
+    position: sticky; /* Đổi thành sticky để bám sát đáy container */
+    bottom: 0;
+    width: 100%; 
+    background-color: transparent;
+    padding: 12px 15px; 
+    
+    z-index: 1000;
+    
+    /* QUAN TRỌNG: Ép kích thước tính cả padding và border vào bên trong */
+    box-sizing: border-box !important; 
+}
+
+/* Container chứa các nút và ô nhập */
+.post-container-large {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 2px solid #ffcc80;
+    border-radius: 40px; /* Bo tròn theo phong cách Muji */
+    padding: 6px 6px 6px 12px;
+    gap: 8px;
+    width: 100%;
+    
+    /* Khóa chặt chiều ngang không cho lòi ra ngoài */
+    box-sizing: border-box !important;
+}
+
+/* Icon avatar nhỏ */
+.user-avatar-circle {
+    width: 40px; /* To hơn một chút */
+    height: 40px;
+    background-color: #fff3e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Ô nhập liệu văn bản */
+.post-input-field {
+    flex: 1;
+    /* Ngăn input có độ rộng mặc định lớn làm đẩy bung khung */
+    min-width: 0 !important; 
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: lowercase; /* Chữ viết thường theo yêu cầu */
+}
+
+/* Nút Đăng Tin xanh lá */
+.post-submit-btn-green {
+    flex-shrink: 0; /* Tuyệt đối không cho nút bị bóp méo hoặc đẩy ra ngoài */
+    background-color: #558b2f;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 18px;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 4px 0 #3d6321;
+}
+
+.post-submit-btn-green:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #3d6321;
+}
     </style>
 </head>
 <body>
@@ -1042,12 +1116,7 @@ header.hero-island {
             <div class="mb-8 thread-item"> <!-- Thêm class thread-item để dễ tìm kiếm -->
             <div class="thread-card relative"> <!-- Thêm relative để đặt nút lưu -->
                 
-                <!-- MỚI: NÚT LƯU (Bookmark) -->
-                <button onclick="savePost(1)" class="absolute top-2 right-2 p-1">
-                    <svg id="save-1" class="w-4 h-4 text-[#ffcc80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                    </svg>
-                </button>
+                
                 <div class="avatar-circle">🦊</div>
                 <div class="flex-1">
                     <div class="flex justify-between items-center mb-1">
@@ -1063,6 +1132,13 @@ header.hero-island {
                         <div class="action-btn">👍 <span>12</span></div>
                         <div class="action-btn dislike">👎 <span>2</span></div>
                         <div class="action-btn" data-vi="💬 phản hồi" data-en="💬 reply">💬 phản hồi</div>
+                        <!-- NÚT LƯU NẰM Ở ĐÂY -->
+            <div class="action-btn save-post-btn" onclick="savePost(1)">
+                <svg id="save-icon-1" class="w-4 h-4 text-[#ffcc80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                </svg>
+                <span class="ml-1" data-vi="lưu" data-en="save">lưu</span>
+            </div>
                     </div>
                 </div>
             </div>
@@ -1119,6 +1195,13 @@ header.hero-island {
                         <div class="action-btn">👍 <span>25</span></div>
                         <div class="action-btn dislike">👎 <span>0</span></div>
                         <div class="action-btn" data-vi="💬 phản hồi" data-en="💬 reply">💬 phản hồi</div>
+                        <!-- NÚT LƯU NẰM Ở ĐÂY -->
+            <div class="action-btn save-post-btn" onclick="savePost(1)">
+                <svg id="save-icon-1" class="w-4 h-4 text-[#ffcc80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                </svg>
+                <span class="ml-1" data-vi="lưu" data-en="save">lưu</span>
+            </div>
                     </div>
                 </div>
             </div>
@@ -1152,24 +1235,34 @@ header.hero-island {
             data-en="send">
             gửi
     </button>
+    
 </div>
             </div>
         </div>
+        
     </div>
 
-    <!-- Main Post Input -->
-    <div class="mt-8 flex items-center gap-4 bg-white border-2 border-[#ffcc80] p-4 rounded-3xl">
-        <div class="w-10 h-10 rounded-full bg-[#fff3e0] flex items-center justify-center">✍️</div>
+    
+</div>
+<!-- KHUNG ĐĂNG TIN CỐ ĐỊNH Ở ĐÁY -->
+<div class="main-post-fixed-area">
+    <div class="post-container-large">
+        <div class="user-avatar-circle">
+            <span class="emoji">✍️</span>
+        </div>
+        
         <input type="text" 
-       id="main-post-input" 
-       class="flex-1 bg-transparent outline-none text-sm font-bold lowercase" 
-       placeholder="bác nông dân chia sẻ gì không..." 
-       data-vi="bác nông dân chia sẻ gì không..." 
-       data-en="any updates from the farm?">
-        <button class="bg-[#558b2f] text-white px-6 py-2 rounded-2xl text-xs font-black uppercase shadow-[0_4px_0_#3d6321]" data-vi="đăng tin" data-en="post">
+               id="main-post-input"
+               class="post-input-field" 
+               placeholder="bác nông dân chia sẻ gì không..."
+               data-vi="bác nông dân chia sẻ gì không..."
+               data-en="any updates from the farm?">
+        
+        <button class="post-submit-btn-green" data-vi="đăng tin" data-en="post">
             đăng tin
         </button>
     </div>
+</div>
 </section>
 
 
