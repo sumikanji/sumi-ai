@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sumi AI - Kanji Flashcards Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;500;700;900&family=Noto+Sans+JP:wght@300;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #558b2f;
+            --soft-green: #f1f8e9;
+            --candy-orange: #ffb74d;
+            --muji-red: #a63d40;
+            --bg-dot: #c5e1a5;
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-weight: 300;
+            background-color: var(--soft-green);
+            background-image: radial-gradient(var(--bg-dot) 2px, transparent 2px);
+            background-size: 20px 20px;
+            color: #4e342e;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Vùng chứa Kanji: Không cuộn, căn giữa tuyệt đối */
+.kanji-container-wrapper {
+    width: 100%;
+    max-width: 100%; /* Ép không được vượt quá chiều rộng thẻ */
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Cắt bỏ phần thừa nếu lỡ bị tràn */
+    padding: 0 15px;
+    box-sizing: border-box; /* Tính cả padding vào width */
+}
+
+.kanji-display {
+    font-size: 80px;
+    font-weight: 800;
+    color: var(--forest-green);
+    white-space: nowrap; /* Cấm xuống dòng */
+    display: block; /* Đổi sang block để đo width chính xác hơn */
+    text-align: center;
+}
+
+        .flashcard-container {
+            background: white;
+            border: 4px solid var(--forest-green);
+            border-radius: 40px;
+            box-shadow: 0 12px 0px var(--bg-dot);
+            width: 100%;
+            max-width: 420px;
+            min-height: 460px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .input-bar {
+            border: 3px solid #eee;
+            border-radius: 20px;
+            outline: none;
+            transition: all 0.2s;
+            font-size: 1.6rem;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        .input-bar:focus { border-color: var(--candy-orange); }
+        .input-correct { border-color: #4caf50 !important; background-color: #e8f5e9; }
+        .input-wrong { border-color: var(--muji-red) !important; background-color: #ffebee; }
+
+        .btn-jlpt {
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 800;
+            background: white;
+            border: 2px solid var(--bg-dot);
+            transition: all 0.2s;
+        }
+
+        .btn-jlpt.active {
+            background: var(--forest-green);
+            color: white;
+            border-color: var(--forest-green);
+        }
+
+        /* Nút chức năng mới */
+        .btn-mastered {
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 10px 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .btn-mastered:hover {
+            border-color: #2e7d32;
+        }
+
+        .btn-reset {
+            color: #999;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--candy-orange), #ff9800);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .btn-3d {
+    transition: all 0.1s active;
+    position: relative;
+    top: 0;
+}
+.btn-3d:active {
+    top: 4px;
+    box-shadow: 0 0px 0px var(--bg-dot) !important;
+}
+.meaning-hidden {
+    opacity: 0 !important;
+    visibility: hidden;
+    pointer-events: none;
+}
+/* Thêm hiệu ứng cho nút con mắt khi ở trạng thái đóng */
+.eye-closed {
+    color: #ccc !important;
+    background-color: #f5f5f5 !important;
+}
+/* Style cho nút con mắt 3D nhỏ */
+.btn-eye-3d {
+    transition: all 0.1s;
+    box-shadow: 0 4px 0px 0px #ddd;
+}
+.btn-eye-3d:active {
+    transform: translateY(2px);
+    box-shadow: 0 0px 0px 0px #ddd;
+}
+/* Khung chứa nội dung chính (Kanji + Nghĩa) phải có chiều cao cố định */
+.flashcard-content-area {
+    height: 280px; /* Cố định chiều cao phần nội dung chính */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Khung chứa nghĩa có thể cuộn nếu quá dài nhưng không làm giãn khung lớn */
+.meaning-scroll-box {
+    max-height: 80px; /* Chiều cao tối đa cho phần nghĩa */
+    overflow-y: auto;
+    width: 100%;
+    scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
+}
+
+.meaning-scroll-box::-webkit-scrollbar {
+    display: none; /* Ẩn thanh cuộn trên Chrome/Safari */
+}
+/* Khung chứa Nghĩa cố định */
+.meaning-container-wrapper {
+    width: 100%;
+    height: 60px; /* Chiều cao cố định cho phần nghĩa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 15px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+#meaning-text {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 1.2rem; /* Chỉnh lại kích thước cho vừa mắt */
+    font-weight: 500; /* Độ đậm vừa phải để chữ trông mềm */
+    color: #5b5a5a; /* Màu nâu đất nhẹ nhàng thay vì xám đen */
+    text-transform: none !important; /* QUAN TRỌNG: Bỏ viết hoa toàn bộ */
+    font-style: normal; /* Bỏ in nghiêng nếu muốn chữ trông hiện đại, tròn trịa hơn */
+    letter-spacing: 0.2px;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+}
+.btn-round-3d {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: white;
+    transition: all 0.1s;
+    position: relative;
+    top: 0;
+}
+
+/* Nút Gợi ý (Màu cam candy) */
+.btn-hint {
+    border: 2px solid var(--candy-orange);
+    color: var(--candy-orange);
+    box-shadow: 0 3px 0px 0px var(--candy-orange);
+}
+
+/* Nút Làm mới (Màu xám) */
+.btn-reload {
+    border: 2px solid #ddd;
+    color: #999;
+    box-shadow: 0 3px 0px 0px #ddd;
+}
+
+.btn-round-3d:active {
+    top: 2px;
+    box-shadow: 0 0px 0px 0px transparent !important;
+}
+/* Nền mờ phía sau Popup */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: none; /* Ẩn mặc định */
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+/* Khung nội dung Popup */
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 30px;
+    border: 4px solid var(--forest-green);
+    box-shadow: 0 10px 0px var(--bg-dot);
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    transform: scale(0.8);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.active { display: flex; }
+.modal-overlay.active .modal-content { transform: scale(1); }
+
+/* Nút bấm trong Popup */
+.btn-confirm {
+    background: #3f9843;
+    color: white;
+    box-shadow: 0 4px 0px #3f8742;
+}
+.btn-cancel {
+    background: #eee;
+    color: #666;
+    box-shadow: 0 4px 0px #ccc;
+}
+.btn-confirm:active, .btn-cancel:active {
+    transform: translateY(2px);
+    box-shadow: 0 0px 0px transparent;
+}
+/* Nút Ngẫu nhiên dạng chữ - Màu xanh lá */
+.btn-shuffle-text {
+    padding: 0 12px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px; /* Bo tròn kiểu viên thuốc nhỏ */
+    background: white;
+    transition: all 0.1s;
+    position: relative;
+    top: 0;
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--forest-green);
+    color: var(--forest-green);
+    box-shadow: 0 3px 0px 0px var(--forest-green);
+}
+
+.btn-shuffle-text:active {
+    top: 2px;
+    box-shadow: 0 0px 0px 0px transparent !important;
+}
+    </style>
+</head>
+<body>
+
+<nav class="p-6 flex flex-col gap-5 items-center max-w-2xl mx-auto w-full">
+    <div class="flex justify-between items-center w-full">
+        <div class="text-2xl font-black text-[var(--muji-red)] tracking-tighter">sumi <span class="text-[var(--forest-green)] font-light">goi</span></div>
+        <div class="flex gap-3">
+           
+        </div>
+    </div>
+    
+    <div class="flex gap-1.5 justify-center w-full overflow-x-auto">
+        <button onclick="filterLevel('All')" class="btn-jlpt active" id="jlpt-All">ALL</button>
+        <button onclick="filterLevel('N5')" class="btn-jlpt" id="jlpt-N5">N5</button>
+        <button onclick="filterLevel('N4')" class="btn-jlpt" id="jlpt-N4">N4</button>
+        <button onclick="filterLevel('N3')" class="btn-jlpt" id="jlpt-N3">N3</button>
+        <button onclick="filterLevel('N2')" class="btn-jlpt" id="jlpt-N2">N2</button>
+        <button onclick="filterLevel('N1')" class="btn-jlpt" id="jlpt-N1">N1</button>
+    </div>
+</nav>
+
+<main class="flex-1 flex flex-col items-center justify-start p-4">
+    <div class="w-full max-w-[420px]">
+        <!-- Thanh tiến độ -->
+        <div class="mb-4 flex justify-between items-end px-2">
+            <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest" id="counter">Sẵn sàng...</div>
+            <div class="text-lg font-black text-[var(--forest-green)]" id="percent">0%</div>
+        </div>
+        <div class="h-2 w-full bg-white rounded-full overflow-hidden border-2 border-[var(--bg-dot)] mb-8">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+
+        <!-- Khung Flashcard Tích Hợp -->
+        <div id="card" class="flashcard-container p-6 flex flex-col items-center text-center mx-auto">
+            
+            <!-- Hàng trên cùng: Level + Cụm nút 3D tròn -->
+<div class="w-full flex justify-between items-center mb-5">
+    <div id="level-tag" class="text-[14px] font-black bg-gray-100 px-3 py-1 rounded-full text-gray-400 tracking-widest uppercase">LEVEL</div>
+    
+    <div class="flex gap-3">
+       <!-- NÚT NGẪU NHIÊN DẠNG CHỮ -->
+        <button onclick="shufflePool()" class="btn-shuffle-text" title="Trộn ngẫu nhiên">
+            Ngẫu nhiên
+        </button>
+        <!-- Nút Gợi ý (Bóng đèn) -->
+        <button onclick="showHint()" class="btn-round-3d btn-hint" title="Gợi ý">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18h6"></path>
+                <path d="M10 22h4"></path>
+                <path d="M12 2a7 7 0 0 0-7 7c0 2.3 1.1 4.3 2.9 5.6a2.1 2.1 0 0 1 .8 1.6v.8h6.6v-.8c0-.6.3-1.2.8-1.6A7.1 7.1 0 0 0 12 2z"></path>
+            </svg>
+        </button>
+
+        <!-- Nút Làm mới (Mũi tên xoay) -->
+        <button onclick="resetAll()" class="btn-round-3d btn-reload" title="Làm mới">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                <path d="M21 3v5h-5"></path>
+                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                <path d="M3 21v-5h5"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+            
+            <!-- Vùng nội dung chính -->
+            <div class="flashcard-content-area" style="height: 240px; display: flex; flex-direction: column; justify-content: center; width: 100%;">
+                <div class="kanji-container-wrapper mb-2" id="kanji-wrapper">
+                    <div id="kanji-text" class="kanji-display">...</div>
+                </div>
+
+                <div style="min-height: 50px; display: flex; align-items: center; justify-content: center; width: 100%;">
+                    <div id="meaning-text" class="meaning-hidden" style="font-family: 'Be Vietnam Pro', sans-serif; text-transform: lowercase;">
+                        loading...
+                    </div>
+                </div>
+                
+                <button onclick="toggleMeaning()" id="toggle-btn" class="btn-toggle-3d mt-4 bg-white border-2 border-gray-100 rounded-full px-8 py-1.5 text-[9px] font-black text-gray-400 uppercase tracking-widest">
+                    Hiện nghĩa
+                </button>
+            </div>
+
+            <!-- Vùng nhập liệu & Chế độ -->
+            <div class="w-full mt-4">
+                
+
+                <input type="text" id="answer-input" class="input-bar w-full py-4 px-6 shadow-sm" placeholder="Nhập Hiragana ..." autocomplete="off">
+                
+                <!-- Cụm nút 3D Đã thuộc / Bỏ qua -->
+                <div class="w-full flex gap-3 mt-6">
+                    <button onclick="markMastered()" class="btn-3d flex-1 bg-white text-[var(--forest-green)] text-[10px] font-black py-3.5 rounded-2xl border-2 border-[var(--forest-green)] shadow-[0_5px_0px_0px_#558b2f] uppercase active:translate-y-1 active:shadow-none transition-all">
+                        ✔ Đã thuộc
+                    </button>
+                    <button onclick="skipWord()" class="btn-3d flex-1 bg-white text-gray-400 text-[10px] font-black py-3.5 rounded-2xl border-2 border-gray-300 shadow-[0_5px_0px_0px_#ddd] uppercase active:translate-y-1 active:shadow-none transition-all">
+                        ⏭ Bỏ qua
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Popup xác nhận làm mới -->
+<div id="reset-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="text-3xl mb-4"></div>
+        <h3 class="text-lg font-black text-[var(--muji-red)] uppercase mb-2">Học lại từ đầu?</h3>
+        <p class="text-xs text-gray-500 font-medium mb-8 leading-relaxed">Sumi sẽ xóa toàn bộ tiến độ đã thuộc của cậu. Cậu có chắc chắn không?</p>
+        
+        <div class="flex gap-4">
+            <button onclick="closeResetModal()" class="btn-cancel flex-1 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all">
+                Hủy bỏ
+            </button>
+            <button onclick="confirmReset()" class="btn-confirm flex-1 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all">
+                Đồng ý
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    let allVocabulary = [];
+    let currentPool = [];
+    let currentIndex = 0;
+    let currentMode = 'reading';
+
+    const elements = {
+        kanji: document.getElementById('kanji-text'),
+        wrapper: document.getElementById('kanji-wrapper'),
+        meaning: document.getElementById('meaning-text'),
+        input: document.getElementById('answer-input'),
+        counter: document.getElementById('counter'),
+        progress: document.getElementById('progress-fill'),
+        percent: document.getElementById('percent'),
+        tag: document.getElementById('level-tag')
+    };
+
+    // Tự động co chữ Kanji
+    function autoResize() {
+        elements.kanji.style.transform = "scale(1)";
+        const containerWidth = elements.wrapper.offsetWidth;
+        const textWidth = elements.kanji.scrollWidth;
+        if (textWidth > containerWidth) {
+            const ratio = (containerWidth / textWidth) - 0.1;
+            elements.kanji.style.transform = `scale(${ratio})`;
+        }
+    }
+
+    async function init() {
+        try {
+            const response = await fetch('data.json');
+            allVocabulary = await response.json();
+            // Khởi tạo trạng thái learned nếu chưa có
+            allVocabulary = allVocabulary.map(item => ({...item, learned: false}));
+            filterLevel('All');
+        } catch (e) {
+            elements.meaning.innerText = "Lỗi kết nối data.json";
+        }
+    }
+
+    function filterLevel(level) {
+        document.querySelectorAll('.btn-jlpt').forEach(b => b.classList.remove('active'));
+        document.getElementById(`jlpt-${level}`).classList.add('active');
+
+        // Chỉ lấy những từ chưa học (learned = false)
+        currentPool = allVocabulary.filter(item => {
+            const matchLevel = (level === 'All' || item.level === level);
+            return matchLevel && !item.learned;
+        });
+
+        if (currentPool.length > 0) {
+            currentIndex = 0;
+            displayCard();
+        } else {
+            elements.kanji.innerText = "✨";
+            elements.meaning.innerText = "BẠN ĐÃ THUỘC HẾT!";
+            elements.counter.innerText = "0 TỪ CÒN LẠI";
+            elements.progress.style.width = "100%";
+        }
+    }
+
+   function displayCard() {
+    if (currentPool.length === 0) return;
+    const word = currentPool[currentIndex];
+    
+    // 1. Cập nhật nội dung
+    elements.kanji.innerText = word.kanji;
+    elements.meaning.innerText = word.nghia.toLowerCase(); // Chữ thường theo ý bạn
+    elements.tag.innerText = word.level || "JLPT";
+    
+    // 2. Trạng thái hiển thị
+    isMeaningHidden = true; 
+    renderMeaningState();
+    
+    // 3. Reset ô nhập liệu
+    elements.input.value = "";
+    elements.input.placeholder = "Gõ Hiragana...";
+    elements.input.classList.remove('input-correct', 'input-wrong');
+
+    // 4. Co giãn chữ và Focus
+    setTimeout(() => {
+        autoScaleKanji();
+        autoScaleMeaning();
+    }, 10);
+    
+    elements.input.focus();
+
+    // 5. Cập nhật tiến độ
+    elements.counter.innerText = `CÒN LẠI: ${currentPool.length} TỪ`;
+    const prg = (currentIndex / (currentPool.length || 1)) * 100;
+    elements.progress.style.width = `${prg}%`;
+    elements.percent.innerText = `${Math.round(prg)}%`;
+}
+
+    // CHỨC NĂNG ĐÁNH DẤU ĐÃ THUỘC
+    function markMastered() {
+        if (currentPool.length === 0) return;
+        const word = currentPool[currentIndex];
+        
+        // Đánh dấu trong mảng gốc
+        const target = allVocabulary.find(i => i.kanji === word.kanji);
+        if (target) target.learned = true;
+
+        // Xóa khỏi pool hiện tại
+        currentPool.splice(currentIndex, 1);
+
+        if (currentPool.length === 0) {
+            filterLevel('All');
+        } else {
+            if (currentIndex >= currentPool.length) currentIndex = 0;
+            displayCard();
+        }
+    }
+    // Hàm co giãn cho Nghĩa
+function autoScaleMeaning() {
+    const container = document.querySelector('.meaning-container-wrapper');
+    const text = document.getElementById('meaning-text');
+    if (!container || !text) return;
+
+    let fontSize = 18; // Reset về size lớn nhất
+    text.style.fontSize = fontSize + 'px';
+
+    const maxHeight = container.clientHeight;
+    const maxWidth = container.clientWidth - 20;
+
+    // Vòng lặp: Nếu chữ dài quá ngang HOẶC cao quá khung thì giảm size
+    // scrollHeight và scrollWidth giúp đo kích thước thực tế của nội dung bên trong
+    while ((text.scrollHeight > maxHeight || text.scrollWidth > maxWidth) && fontSize > 10) {
+        fontSize -= 1;
+        text.style.fontSize = fontSize + 'px';
+    }
+}
+
+// Cập nhật hàm displayCard để chạy cả hai
+function displayCard() {
+    if (currentPool.length === 0) return;
+    const word = currentPool[currentIndex];
+    
+    // Đổ dữ liệu
+    elements.kanji.innerText = word.kanji;
+    elements.meaning.innerText = word.nghia.toLowerCase();
+    elements.tag.innerText = word.level || "JLPT";
+    
+    // Quan trọng: Đợi một chút để text render rồi mới đo đạc
+    setTimeout(() => {
+        autoScaleKanji();    // Co giãn Kanji
+        autoScaleMeaning();  // Co giãn Nghĩa
+    }, 10);
+
+    // Reset các trạng thái khác
+    isMeaningHidden = true;
+    renderMeaningState();
+    elements.input.placeholder = "Nhập Hiragana ...";
+    elements.input.value = "";
+    elements.input.classList.remove('input-correct', 'input-wrong');
+    
+    elements.input.focus();
+}
+function autoScaleKanji() {
+    const container = document.getElementById('kanji-wrapper');
+    const text = document.getElementById('kanji-text');
+    if (!container || !text) return;
+
+    // Reset về cỡ chữ tối đa trước khi tính toán
+    const maxFontSize = 80; 
+    text.style.fontSize = maxFontSize + 'px';
+
+    const containerWidth = container.offsetWidth - 20; // Trừ padding an toàn
+    const textWidth = text.offsetWidth;
+
+    // Nếu chữ dài hơn khung, tính toán tỷ lệ để co lại vừa khít
+    if (textWidth > containerWidth) {
+        const scaleFactor = containerWidth / textWidth;
+        const newFontSize = Math.floor(maxFontSize * scaleFactor);
+        
+        // Giới hạn không cho nhỏ hơn 24px để vẫn đọc được
+        text.style.fontSize = Math.max(newFontSize, 24) + 'px';
+    }
+}
+    // CHỨC NĂNG LÀM MỚI TOÀN BỘ
+    function resetAll() {
+        if(confirm("Xóa toàn bộ tiến độ và học lại từ đầu?")) {
+            allVocabulary.forEach(item => item.learned = false);
+            filterLevel('All');
+        }
+    }
+
+    function toggleMode(mode) {
+        currentMode = mode;
+        document.getElementById('mode-reading').classList.toggle('text-[var(--forest-green)]', mode === 'reading');
+        document.getElementById('mode-reading').classList.toggle('text-gray-300', mode !== 'reading');
+        document.getElementById('mode-romaji').classList.toggle('text-[var(--forest-green)]', mode === 'romaji');
+        document.getElementById('mode-romaji').classList.toggle('text-gray-300', mode !== 'romaji');
+        elements.input.placeholder = mode === 'reading' ? "Gõ Kana..." : "Gõ Romaji...";
+        elements.input.focus();
+    }
+function shufflePool() {
+    if (currentPool.length <= 1) return;
+
+    for (let i = currentPool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [currentPool[i], currentPool[j]] = [currentPool[j], currentPool[i]];
+    }
+
+    currentIndex = 0;
+    
+    // Hiệu ứng phản hồi trên placeholder
+    elements.input.placeholder = "Đã trộn ngẫu nhiên! ✨";
+    setTimeout(() => { elements.input.placeholder = "Nhập Hiragana ..."; }, 1000);
+
+    displayCard();
+}
+   // Hàm hiển thị gợi ý khi bấm nút bóng đèn
+function showHint() {
+    if (currentPool.length === 0) return;
+    const word = currentPool[currentIndex];
+    
+    // Lấy đáp án dựa trên chế độ đang chọn (KANA hoặc ROMAJI)
+    const hint = word[currentMode];
+    
+    // Hiển thị gợi ý vào placeholder
+    elements.input.placeholder = `Gợi ý: ${hint}`;
+    
+    // Hiệu ứng đổi màu viền tạm thời để báo hiệu đã nhận gợi ý
+    elements.input.style.borderColor = 'var(--candy-orange)';
+    setTimeout(() => {
+        elements.input.style.borderColor = '#eee';
+    }, 500);
+}
+
+let isMeaningHidden = true; // Luôn mặc định ẩn khi khởi tạo
+
+function toggleMeaning() {
+    isMeaningHidden = !isMeaningHidden;
+    renderMeaningState();
+}
+
+function renderMeaningState() {
+    const meaningText = document.getElementById('meaning-text');
+    const toggleBtn = document.getElementById('toggle-btn'); // Cậu đã đổi từ eye-btn sang toggle-btn
+    
+    if (isMeaningHidden) {
+        // Trạng thái: ĐANG ẨN
+        meaningText.classList.add('meaning-hidden');
+        if (toggleBtn) {
+            toggleBtn.innerText = "Hiện nghĩa";
+            toggleBtn.style.color = "#999";
+            toggleBtn.style.borderColor = "#eee";
+        }
+    } else {
+        // Trạng thái: ĐANG HIỆN
+        meaningText.classList.remove('meaning-hidden');
+        if (toggleBtn) {
+            toggleBtn.innerText = "Ẩn nghĩa";
+            toggleBtn.style.color = "var(--forest-green)";
+            toggleBtn.style.borderColor = "var(--forest-green)";
+        }
+    }
+}
+
+// Hàm hiển thị thẻ từ vựng mới
+function displayCard() {
+    if (currentPool.length === 0) return;
+    const word = currentPool[currentIndex];
+    
+    // 1. Đổ dữ liệu từ mới vào khung
+    elements.kanji.innerText = word.kanji;
+    elements.meaning.innerText = word.nghia.toLowerCase(); // Viết thường mềm mại
+    elements.tag.innerText = word.level || "JLPT";
+    
+    // 2. RESET GỢI Ý (QUAN TRỌNG): Đưa placeholder về mặc định mỗi khi sang từ mới
+    elements.input.placeholder = "Nhập Hiragana ..."; 
+
+    // Gọi hàm co giãn ngay sau khi cập nhật chữ
+    requestAnimationFrame(autoScaleKanji);
+    
+    // 3. KHÓA TRẠNG THÁI ẨN NGHĨA: Luôn ẩn khi sang từ mới
+    isMeaningHidden = true; 
+    renderMeaningState();
+
+    // 4. Reset ô nhập liệu và các hiệu ứng đúng/sai
+    elements.input.value = "";
+    elements.input.classList.remove('input-correct', 'input-wrong');
+    
+    // Cập nhật bộ đếm và thanh tiến độ
+    elements.counter.innerText = `CÒN LẠI: ${currentPool.length} TỪ`;
+    const prg = (currentIndex / (currentPool.length - 1 || 1)) * 100;
+    elements.progress.style.width = `${prg}%`;
+    elements.percent.innerText = `${Math.round(prg)}%`;
+
+   // Quan trọng: Đợi một chút để text render rồi mới đo đạc
+    setTimeout(() => {
+        autoScaleKanji();    // Co giãn Kanji
+        autoScaleMeaning();  // Co giãn Nghĩa
+    }, 10);
+    elements.input.focus();
+}
+
+// Hàm SkipWord sẽ gọi displayCard đã được sửa ở trên
+function skipWord() {
+    if (currentPool.length > 0) {
+        currentIndex = (currentIndex + 1) % currentPool.length;
+        displayCard(); // Giờ đây displayCard sẽ tự động ẩn nghĩa
+    }
+}
+// Mở Popup khi bấm nút Làm mới
+function resetAll() {
+    document.getElementById('reset-modal').classList.add('active');
+}
+
+// Đóng Popup khi bấm Hủy
+function closeResetModal() {
+    document.getElementById('reset-modal').classList.remove('active');
+}
+
+// Thực hiện làm mới khi bấm Đồng ý
+function confirmReset() {
+    // 1. Reset logic học tập
+    allVocabulary.forEach(item => item.learned = false);
+    
+    // 2. Quay về Level "All" và hiển thị từ đầu
+    filterLevel('All');
+    
+    // 3. Đóng Popup
+    closeResetModal();
+    
+    // 4. Thông báo nhẹ nhàng qua Sumi Bot
+    typeText("Đã làm mới hoàn toàn! Cùng bắt đầu lại nào 🌸");
+}
+
+// Đóng popup nếu bấm trượt ra ngoài vùng trắng
+window.onclick = function(event) {
+    const modal = document.getElementById('reset-modal');
+    if (event.target == modal) {
+        closeResetModal();
+    }
+}
+// Lắng nghe sự kiện gõ phím để kiểm tra đáp án tự động
+elements.input.addEventListener('input', (e) => {
+    if (currentPool.length === 0) return;
+    
+    const currentWord = currentPool[currentIndex];
+    const userInput = e.target.value.trim(); // Loại bỏ khoảng trắng thừa
+
+    // So khớp trực tiếp với trường 'reading' (Hiragana) trong JSON của bạn
+    if (userInput === currentWord.reading) {
+        
+        // Hiệu ứng đổi màu xanh báo hiệu đúng (Style Muji)
+        elements.input.classList.add('input-correct');
+        
+        // Đợi 150ms để người dùng kịp thấy chữ mình gõ rồi tự chuyển
+        setTimeout(() => {
+            // Chuyển sang từ tiếp theo
+            currentIndex = (currentIndex + 1) % currentPool.length;
+            
+            // Nếu muốn học theo kiểu "thuộc rồi thì mất luôn" 
+            // bạn có thể thay bằng hàm: markMastered(); 
+            
+            displayCard(); 
+        }, 150);
+    }
+});
+    window.onload = init;
+    window.onresize = autoResize;
+</script>
+</body>
+</html>
