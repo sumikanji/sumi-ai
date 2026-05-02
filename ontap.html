@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sumi AI - Kanji Flashcards Master</title>
+    <script src="https://unpkg.com/wanakana"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;500;700;900&family=Noto+Sans+JP:wght@300;900&display=swap" rel="stylesheet">
     <style>
@@ -22,48 +23,13 @@
             background-image: radial-gradient(var(--bg-dot) 2px, transparent 2px);
             background-size: 20px 20px;
             color: #4e342e;
-            height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             margin: 0;
             overflow: hidden;
-            height: 100%;
-    margin: 0;
-    padding: 0;
-    
-    position: fixed;  /* Giữ cố định vị trí */
-    width: 100%;
         }
-/* Khung chứa chính */
-.app-container {
-    height: 100dvh; /* Sử dụng Dynamic Viewport Height để khớp chính xác màn hình */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Đẩy input xuống dưới, card ở trên */
-    padding: 20px 0;
-    box-sizing: border-box;
-}
-.input-section {
-    width: 100%;
-    padding: 10px;
-    background: white;
-    z-index: 10;
-}
 
-#answer-input {
-    width: 100%;
-    height: 50px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 18px;
-}
-.card-area {
-    flex: 1; /* Chiếm không gian còn lại phía trên bàn phím */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
         /* Vùng chứa Kanji: Không cuộn, căn giữa tuyệt đối */
 .kanji-container-wrapper {
     width: 100%;
@@ -87,6 +53,7 @@
 }
 
         .flashcard-container {
+            flex-shrink: 0;
             background: white;
             border: 4px solid var(--forest-green);
             border-radius: 40px;
@@ -339,12 +306,17 @@
 }
 /* Tối ưu cho màn hình rất nhỏ */
 @media (max-width: 480px) {
-    #kanji-wrapper {
-        width: 100%;       /* Full hoàn toàn trên màn hình nhỏ */
-        border-radius: 0;  /* Bỏ bo góc để tạo cảm giác tràn viền */
-        margin: 0;         /* Sát mép màn hình */
+    .flashcard-container {
+        width: 100%;       /* Tràn viền trên điện thoại */
+        border-radius: 20px; /* Bo nhẹ thay vì 40px để tận dụng diện tích */
+        border-left: none;
+        border-right: none;
     }
+    
+    .kanji-display {
+        font-size: 20vw;   /* Kanji lớn theo chiều rộng màn hình[cite: 1] */
     }
+}
     </style>
 </head>
 <body>
@@ -472,6 +444,8 @@
     let currentPool = [];
     let currentIndex = 0;
     let currentMode = 'reading';
+    let isMeaningHidden = true; // Thêm dòng này nếu chưa có
+    let isComposing = false;    // THÊM DÒNG NÀY VÀO ĐÂY
 
     const elements = {
         kanji: document.getElementById('kanji-text'),
@@ -528,38 +502,7 @@
         }
     }
 
-   function displayCard() {
-    if (currentPool.length === 0) return;
-    const word = currentPool[currentIndex];
-    
-    // 1. Cập nhật nội dung
-    elements.kanji.innerText = word.kanji;
-    elements.meaning.innerText = word.nghia.toLowerCase(); // Chữ thường theo ý bạn
-    elements.tag.innerText = word.level || "JLPT";
-    
-    // 2. Trạng thái hiển thị
-    isMeaningHidden = true; 
-    renderMeaningState();
-    
-    // 3. Reset ô nhập liệu
-    elements.input.value = "";
-    elements.input.placeholder = "Gõ Hiragana...";
-    elements.input.classList.remove('input-correct', 'input-wrong');
-
-    // 4. Co giãn chữ và Focus
-    setTimeout(() => {
-        autoScaleKanji();
-        autoScaleMeaning();
-    }, 10);
-    
-    elements.input.focus();
-
-    // 5. Cập nhật tiến độ
-    elements.counter.innerText = `CÒN LẠI: ${currentPool.length} TỪ`;
-    const prg = (currentIndex / (currentPool.length || 1)) * 100;
-    elements.progress.style.width = `${prg}%`;
-    elements.percent.innerText = `${Math.round(prg)}%`;
-}
+   
 
     // CHỨC NĂNG ĐÁNH DẤU ĐÃ THUỘC
     function markMastered() {
@@ -600,31 +543,7 @@ function autoScaleMeaning() {
     }
 }
 
-// Cập nhật hàm displayCard để chạy cả hai
-function displayCard() {
-    if (currentPool.length === 0) return;
-    const word = currentPool[currentIndex];
-    
-    // Đổ dữ liệu
-    elements.kanji.innerText = word.kanji;
-    elements.meaning.innerText = word.nghia.toLowerCase();
-    elements.tag.innerText = word.level || "JLPT";
-    
-    // Quan trọng: Đợi một chút để text render rồi mới đo đạc
-    setTimeout(() => {
-        autoScaleKanji();    // Co giãn Kanji
-        autoScaleMeaning();  // Co giãn Nghĩa
-    }, 10);
 
-    // Reset các trạng thái khác
-    isMeaningHidden = true;
-    renderMeaningState();
-    elements.input.placeholder = "Nhập Hiragana ...";
-    elements.input.value = "";
-    elements.input.classList.remove('input-correct', 'input-wrong');
-    
-    elements.input.focus();
-}
 function autoScaleKanji() {
     const container = document.getElementById('kanji-wrapper');
     const text = document.getElementById('kanji-text');
@@ -697,7 +616,7 @@ function showHint() {
     }, 500);
 }
 
-let isMeaningHidden = true; // Luôn mặc định ẩn khi khởi tạo
+
 
 function toggleMeaning() {
     isMeaningHidden = !isMeaningHidden;
@@ -804,31 +723,50 @@ window.onclick = function(event) {
         closeResetModal();
     }
 }
-// Lắng nghe sự kiện gõ phím để kiểm tra đáp án tự động
+// --- LOGIC NHẬP LIỆU CHUẨN (IME SAFE) ---
+elements.input.addEventListener('compositionstart', () => { 
+    isComposing = true; 
+});
+
+elements.input.addEventListener('compositionend', (e) => { 
+    isComposing = false; 
+    // Đợi 10ms để trình duyệt ghép chữ hoàn tất rồi mới kiểm tra
+    setTimeout(() => handleInputLogic(e.target), 10);
+});
+
 elements.input.addEventListener('input', (e) => {
+    // Nếu đang trong quá trình ghép chữ (ví dụ mới gõ chữ 'n'), không xử lý ngay
+    if (isComposing) return; 
+    handleInputLogic(e.target);
+});
+
+function handleInputLogic(inputElement) {
     if (currentPool.length === 0) return;
+
+    // Sử dụng WanaKana để chuyển đổi trực tiếp chuỗi văn bản
+    // Thêm kiểm tra để đảm bảo không chuyển đổi khi đang gõ dở (tối ưu cho Mobile)
+    const rawValue = inputElement.value;
+    const converted = wanakana.toHiragana(rawValue, { IMEMode: true });
+    
+    // Chỉ cập nhật giá trị nếu có sự thay đổi để tránh làm mất con trỏ chuột
+    if (inputElement.value !== converted) {
+        inputElement.value = converted;
+    }
     
     const currentWord = currentPool[currentIndex];
-    const userInput = e.target.value.trim(); // Loại bỏ khoảng trắng thừa
+    const userInput = inputElement.value.trim();
 
-    // So khớp trực tiếp với trường 'reading' (Hiragana) trong JSON của bạn
+    // So khớp đáp án Hiragana
     if (userInput === currentWord.reading) {
+        inputElement.classList.add('input-correct');
         
-        // Hiệu ứng đổi màu xanh báo hiệu đúng (Style Muji)
-        elements.input.classList.add('input-correct');
-        
-        // Đợi 150ms để người dùng kịp thấy chữ mình gõ rồi tự chuyển
         setTimeout(() => {
-            // Chuyển sang từ tiếp theo
             currentIndex = (currentIndex + 1) % currentPool.length;
-            
-            // Nếu muốn học theo kiểu "thuộc rồi thì mất luôn" 
-            // bạn có thể thay bằng hàm: markMastered(); 
-            
             displayCard(); 
+            inputElement.classList.remove('input-correct');
         }, 150);
     }
-});
+}
     window.onload = init;
     window.onresize = autoResize;
 </script>
