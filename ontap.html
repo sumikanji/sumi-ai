@@ -58,13 +58,15 @@
             border: 4px solid var(--forest-green);
             border-radius: 40px;
             box-shadow: 0 12px 0px var(--bg-dot);
-            width: 100%;
+            width: 95%;
             max-width: 420px;
             min-height: 460px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
+            margin: auto; 
+    transition: all 0.3s ease;
         }
 
         .input-bar {
@@ -767,6 +769,21 @@ function handleInputLogic(inputElement) {
         }, 150);
     }
 }
+// Theo dõi sự thay đổi kích thước màn hình (khi bàn phím hiện/ẩn)
+window.visualViewport.addEventListener('resize', () => {
+    // Ép cuộn về đầu để tránh bị lệch khung trên iOS
+    window.scrollTo(0, 0);
+    
+    // Gọi lại các hàm co giãn để chữ tự thu nhỏ cho vừa khung mới
+    autoScaleText(); 
+    
+    // Nếu bàn phím hiện lên (chiều cao giảm), có thể thu nhỏ bớt Kanji
+    if (window.visualViewport.height < 500) {
+        elements.kanji.style.fontSize = "40px"; // Thu nhỏ tạm thời
+    } else {
+        autoScaleText(); // Trở lại kích thước chuẩn
+    }
+});
     window.onload = init;
     window.onresize = autoResize;
 </script>
