@@ -27,8 +27,43 @@
             flex-direction: column;
             margin: 0;
             overflow: hidden;
+            height: 100%;
+    margin: 0;
+    padding: 0;
+    
+    position: fixed;  /* Giữ cố định vị trí */
+    width: 100%;
         }
+/* Khung chứa chính */
+.app-container {
+    height: 100dvh; /* Sử dụng Dynamic Viewport Height để khớp chính xác màn hình */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Đẩy input xuống dưới, card ở trên */
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+.input-section {
+    width: 100%;
+    padding: 10px;
+    background: white;
+    z-index: 10;
+}
 
+#answer-input {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+}
+.card-area {
+    flex: 1; /* Chiếm không gian còn lại phía trên bàn phím */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
         /* Vùng chứa Kanji: Không cuộn, căn giữa tuyệt đối */
 .kanji-container-wrapper {
     width: 100%;
@@ -302,6 +337,14 @@
     top: 2px;
     box-shadow: 0 0px 0px 0px transparent !important;
 }
+/* Tối ưu cho màn hình rất nhỏ */
+@media (max-width: 480px) {
+    #kanji-wrapper {
+        width: 100%;       /* Full hoàn toàn trên màn hình nhỏ */
+        border-radius: 0;  /* Bỏ bo góc để tạo cảm giác tràn viền */
+        margin: 0;         /* Sát mép màn hình */
+    }
+    }
     </style>
 </head>
 <body>
