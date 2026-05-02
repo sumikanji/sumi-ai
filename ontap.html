@@ -23,14 +23,13 @@
             background-image: radial-gradient(var(--bg-dot) 2px, transparent 2px);
             background-size: 20px 20px;
             color: #4e342e;
-            height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            width: 100%;
-    height: 100%;
-            overflow: hidden;
+            min-height: 100dvh; 
+    overflow-y: auto; 
+    display: flex;
+    flex-direction: column;
+    margin: 0;
         }
+
 
         /* Vùng chứa Kanji: Không cuộn, căn giữa tuyệt đối */
 .kanji-container-wrapper {
@@ -53,45 +52,23 @@
     display: block; /* Đổi sang block để đo width chính xác hơn */
     text-align: center;
 }
-/* KHI BÀN PHÍM HIỆN (Chiều cao màn hình nhỏ hơn 500px) */
-.layout-horizontal {
-    flex-direction: row !important; /* Xoay ngang khung */
-    max-width: 98% !important;
-    height: auto !important;
-    align-items: center;
-    gap: 15px;
-    padding: 10px 20px !important;
-}
 
-.layout-horizontal .flashcard-content-area {
-    flex: 1; /* Kanji và nghĩa nằm bên trái */
-    height: auto !important;
-}
-
-.layout-horizontal .input-section-wrapper {
-    flex: 1.2; /* Ô nhập liệu và nút nằm bên phải */
-}
-
-/* Thu nhỏ Kanji khi nằm ngang để không chiếm chỗ */
-.layout-horizontal .kanji-display {
-    font-size: 45px !important;
-}
         .flashcard-container {
-            flex-shrink: 0;
-            background: white;
-            border: 4px solid var(--forest-green);
-            border-radius: 40px;
-            box-shadow: 0 12px 0px var(--bg-dot);
-            width: 95%;
-            max-width: 420px;
-            min-height: 460px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            margin: auto; 
+    flex-shrink: 0;
+    background: white;
+    border: 4px solid var(--forest-green);
+    border-radius: 40px;
+    box-shadow: 0 12px 0px var(--bg-dot);
+    width: 95%;
+    max-width: 420px;
+    min-height: 460px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    margin: 20px auto; /* Thêm margin trên dưới để khi cuộn không dính sát mép */
     transition: all 0.3s ease;
-        }
+}
 
         .input-bar {
             border: 3px solid #eee;
@@ -437,10 +414,6 @@
                     <div id="meaning-text" class="meaning-hidden" style="font-family: 'Be Vietnam Pro', sans-serif; text-transform: lowercase;">
                         loading...
                     </div>
-                    <!-- Dòng thông báo nằm giữa Input và Buttons -->
-    <div id="feedback-toast" class="h-10 flex items-center justify-center text-xl font-black uppercase tracking-widest opacity-0 transition-all duration-200 pointer-events-none mt-2">
-        CHÍNH XÁC
-    </div>
                 </div>
                 
                 <button onclick="toggleMeaning()" id="toggle-btn" class="btn-toggle-3d mt-4 bg-white border-2 border-gray-100 rounded-full px-8 py-1.5 text-[9px] font-black text-gray-400 uppercase tracking-widest">
@@ -454,8 +427,11 @@
 
                 <input type="text" id="answer-input" class="input-bar w-full py-4 px-6 shadow-sm" placeholder="Nhập Romaji ..." autocomplete="off">
                 <!-- Dán đoạn này vào ngay trên phần ô nhập liệu answer-input -->
-
-
+<!-- Dòng thông báo gõ đúng to rõ -->
+<!-- Dòng thông báo nằm giữa Input và Buttons -->
+    <div id="feedback-toast" class="h-10 flex items-center justify-center text-xl font-black uppercase tracking-widest opacity-0 transition-all duration-200 pointer-events-none mt-2">
+        CHÍNH XÁC
+    </div>
                 <!-- Cụm nút 3D Đã thuộc / Bỏ qua -->
                 <div class="w-full flex gap-3 mt-6">
                     <button onclick="markMastered()" class="btn-3d flex-1 bg-white text-[var(--forest-green)] text-[10px] font-black py-3.5 rounded-2xl border-2 border-[var(--forest-green)] shadow-[0_5px_0px_0px_#558b2f] uppercase active:translate-y-1 active:shadow-none transition-all">
@@ -537,29 +513,6 @@
     } catch (e) {
         elements.meaning.innerText = "Lỗi kết nối dữ liệu";
     }
-}
-// --- 2. TỰ ĐỘNG XOAY NGANG KHI HIỆN BÀN PHÍM ---
-if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', () => {
-        const card = document.getElementById('card');
-        const viewHeight = window.visualViewport.height;
-
-        // Ép trình duyệt không được cuộn bậy
-        window.scrollTo(0, 0);
-
-        if (viewHeight < 500) {
-            // TRẠNG THÁI NGANG: Bàn phím hiện
-            card.classList.add('layout-horizontal');
-            card.style.top = "5px";
-            card.style.transform = "translate(-50%, 0)";
-        } else {
-            // TRẠNG THÁI DỌC: Bàn phím ẩn
-            card.classList.remove('layout-horizontal');
-            card.style.top = "50%";
-            card.style.transform = "translate(-50%, -50%)";
-        }
-        autoScaleText();
-    });
 }
 function saveProgress() {
     localStorage.setItem('sumi_progress', JSON.stringify(allVocabulary)); // Lưu mảng từ vựng
@@ -874,6 +827,7 @@ function handleInputLogic(inputElement) {
 
 // Theo dõi sự thay đổi kích thước màn hình (khi bàn phím hiện/ẩn)
 window.visualViewport.addEventListener('resize', () => {
+// window.scrollTo(0, 0); <--- XÓA HOẶC COMMENT DÒNG NÀY
     // Ép cuộn về đầu để tránh bị lệch khung trên iOS
     window.scrollTo(0, 0);
     
