@@ -307,17 +307,35 @@
     box-shadow: 0 0px 0px 0px transparent !important;
 }
 /* Tối ưu cho màn hình rất nhỏ */
-@media (max-width: 480px) {
+/* Khi màn hình bị ép xuống (Bàn phím hiện) */
+@media (max-height: 500px) {
     .flashcard-container {
-        width: 100%;       /* Tràn viền trên điện thoại */
-        border-radius: 20px; /* Bo nhẹ thay vì 40px để tận dụng diện tích */
-        border-left: none;
-        border-right: none;
+        flex-direction: row; /* Chuyển sang khung ngang */
+        max-width: 100%;
+        height: 90%;
+        border-radius: 15px;
+        padding: 10px;
     }
     
-    .kanji-display {
-        font-size: 20vw;   /* Kanji lớn theo chiều rộng màn hình[cite: 1] */
+    .flashcard-content-area {
+        flex: 1;
+        height: auto !important;
     }
+    
+    .kanji-container-wrapper {
+        height: 100px !important;
+    }
+
+}
+#feedback-toast {
+    color: transparent; /* Ẩn chữ khi bình thường */
+}
+
+.toast-active {
+    opacity: 1 !important;
+    color: #4caf50 !important;
+    transform: scale(1.1); /* Phóng to nhẹ để tạo điểm nhấn */
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
     </style>
 </head>
@@ -407,7 +425,12 @@
                 
 
                 <input type="text" id="answer-input" class="input-bar w-full py-4 px-6 shadow-sm" placeholder="Nhập Romaji ..." autocomplete="off">
-                
+                <!-- Dán đoạn này vào ngay trên phần ô nhập liệu answer-input -->
+<!-- Dòng thông báo gõ đúng to rõ -->
+<!-- Dòng thông báo nằm giữa Input và Buttons -->
+    <div id="feedback-toast" class="h-10 flex items-center justify-center text-xl font-black uppercase tracking-widest opacity-0 transition-all duration-200 pointer-events-none mt-2">
+        CHÍNH XÁC
+    </div>
                 <!-- Cụm nút 3D Đã thuộc / Bỏ qua -->
                 <div class="w-full flex gap-3 mt-6">
                     <button onclick="markMastered()" class="btn-3d flex-1 bg-white text-[var(--forest-green)] text-[10px] font-black py-3.5 rounded-2xl border-2 border-[var(--forest-green)] shadow-[0_5px_0px_0px_#558b2f] uppercase active:translate-y-1 active:shadow-none transition-all">
@@ -472,16 +495,31 @@
     }
 
     async function init() {
-        try {
+    try {
+        const savedData = localStorage.getItem('sumi_progress'); // Kiểm tra dữ liệu đã lưu
+        
+        if (savedData) {
+            allVocabulary = JSON.parse(savedData); // Nếu có thì dùng lại
+        } else {
             const response = await fetch('data.json');
             allVocabulary = await response.json();
-            // Khởi tạo trạng thái learned nếu chưa có
             allVocabulary = allVocabulary.map(item => ({...item, learned: false}));
-            filterLevel('All');
-        } catch (e) {
-            elements.meaning.innerText = "Lỗi kết nối data.json";
         }
+        
+        // Khôi phục level đang học từ lần trước
+        const lastLevel = localStorage.getItem('sumi_level') || 'All';
+        filterLevel(lastLevel);
+    } catch (e) {
+        elements.meaning.innerText = "Lỗi kết nối dữ liệu";
     }
+}
+function saveProgress() {
+    localStorage.setItem('sumi_progress', JSON.stringify(allVocabulary)); // Lưu mảng từ vựng
+    const activeBtn = document.querySelector('.btn-jlpt.active');
+    if (activeBtn) {
+        localStorage.setItem('sumi_level', activeBtn.innerText); // Lưu Level đang chọn
+    }
+}
 
     function filterLevel(level) {
         document.querySelectorAll('.btn-jlpt').forEach(b => b.classList.remove('active'));
@@ -517,7 +555,7 @@
 
         // Xóa khỏi pool hiện tại
         currentPool.splice(currentIndex, 1);
-
+saveProgress();
         if (currentPool.length === 0) {
             filterLevel('All');
         } else {
@@ -710,7 +748,7 @@ function confirmReset() {
     
     // 2. Quay về Level "All" và hiển thị từ đầu
     filterLevel('All');
-    
+    localStorage.removeItem('sumi_progress');
     // 3. Đóng Popup
     closeResetModal();
     
@@ -732,43 +770,60 @@ elements.input.addEventListener('compositionstart', () => {
 
 elements.input.addEventListener('compositionend', (e) => { 
     isComposing = false; 
-    // Đợi 10ms để trình duyệt ghép chữ hoàn tất rồi mới kiểm tra
     setTimeout(() => handleInputLogic(e.target), 10);
 });
 
 elements.input.addEventListener('input', (e) => {
-    // Nếu đang trong quá trình ghép chữ (ví dụ mới gõ chữ 'n'), không xử lý ngay
     if (isComposing) return; 
     handleInputLogic(e.target);
 });
 
+// Lắng nghe sự kiện phím Space để hiện/ẩn nghĩa
+elements.input.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && elements.input.value.trim() === "") {
+        e.preventDefault(); 
+        toggleMeaning();    
+    }
+});
+
+// Hàm gộp để co giãn toàn bộ văn bản
+function autoScaleText() {
+    autoScaleKanji();
+    autoScaleMeaning();
+}
+
 function handleInputLogic(inputElement) {
     if (currentPool.length === 0) return;
 
-    // Sử dụng WanaKana để chuyển đổi trực tiếp chuỗi văn bản
-    // Thêm kiểm tra để đảm bảo không chuyển đổi khi đang gõ dở (tối ưu cho Mobile)
-    const rawValue = inputElement.value;
-    const converted = wanakana.toHiragana(rawValue, { IMEMode: true });
-    
-    // Chỉ cập nhật giá trị nếu có sự thay đổi để tránh làm mất con trỏ chuột
-    if (inputElement.value !== converted) {
-        inputElement.value = converted;
-    }
+    inputElement.value = wanakana.toHiragana(inputElement.value, { IMEMode: true });
     
     const currentWord = currentPool[currentIndex];
     const userInput = inputElement.value.trim();
+    const toast = document.getElementById('feedback-toast');
 
-    // So khớp đáp án Hiragana
     if (userInput === currentWord.reading) {
         inputElement.classList.add('input-correct');
+        
+        // Hiện thông báo XUẤT SẮC ngay giữa khung
+        toast.classList.add('toast-active');
         
         setTimeout(() => {
             currentIndex = (currentIndex + 1) % currentPool.length;
             displayCard(); 
+            // Reset trạng thái sau khi chuyển từ
             inputElement.classList.remove('input-correct');
-        }, 150);
+            toast.classList.remove('toast-active');
+        }, 500); 
+    } 
+    else if (userInput !== "" && !currentWord.reading.startsWith(userInput)) {
+        inputElement.classList.add('input-wrong');
+    } 
+    else {
+        inputElement.classList.remove('input-wrong');
     }
 }
+
+
 // Theo dõi sự thay đổi kích thước màn hình (khi bàn phím hiện/ẩn)
 window.visualViewport.addEventListener('resize', () => {
     // Ép cuộn về đầu để tránh bị lệch khung trên iOS
