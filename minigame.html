@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumi AI - Thử Thách Nối Bộ Thủ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Be+Vietnam+Pro:wght@100;300;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #558b2f;
+            --soft-green: #f1f8e9;
+            --candy-orange: #ffb74d;
+            --deep-orange: #e67e22;
+            --bg-dot: #c5e1a5;
+        }
+
+        body {
+            background-color: var(--soft-green);
+            background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-transform: lowercase;
+            margin: 0;
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        .game-header {
+            background-color: var(--forest-green);
+            color: white; padding: 20px 40px;
+            border-radius: 0 0 35px 35px; border: 3px solid white;
+            text-align: center; box-shadow: 0 10px 30px rgba(85, 139, 47, 0.15);
+            margin-bottom: 25px;
+        }
+
+        /* LƯỚI THẺ */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px; width: 95%; max-width: 800px; padding: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .game-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .match-card {
+            background: white; border-radius: 20px; height: 100px;
+            display: flex; align-items: center; justify-content: center;
+            border: 3px solid #f9d9a5; box-shadow: 0 6px 0 #f3c677;
+            cursor: pointer; transition: all 0.2s; padding: 10px;
+        }
+
+        .match-card.selected {
+            background: var(--candy-orange); color: white;
+            border-color: white; transform: translateY(3px);
+            box-shadow: 0 3px 0 var(--deep-orange);
+        }
+
+        .match-card.matched { visibility: hidden; opacity: 0; pointer-events: none; }
+
+        .kanji-text { font-size: 2.5rem; font-weight: 700; color: var(--forest-green); }
+        .meaning-text { font-size: 0.9rem; font-weight: 700; color: #8d6e63; text-transform: uppercase; line-height: 1.2; }
+        .selected .kanji-text, .selected .meaning-text { color: white; }
+
+        /* THANH CHỌN TRANG */
+        .pagination-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+
+        .page-btn {
+            background: white;
+            border: 2px solid #f9d9a5;
+            color: #8d6e63;
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            box-shadow: 0 3px 0 #f3c677;
+        }
+
+        .page-btn.active {
+            background: var(--candy-orange);
+            color: white;
+            border-color: white;
+            box-shadow: 0 3px 0 var(--deep-orange);
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="game-header">
+        <h1 style="font-family: 'Montserrat'; font-weight: 900; font-size: 18px; text-transform: uppercase;">thử thách nối cặp</h1>
+        <p id="game-status" style="font-size: 11px; opacity: 0.8; margin-top: 5px; font-weight: 700;">chọn trang để bắt đầu luyện tập</p>
+    </header>
+
+    <!-- Khu vực chọn trang -->
+    <div class="pagination-container" id="pagination">
+        <!-- Các nút trang 1, 2, 3... render ở đây -->
+    </div>
+
+    <!-- Khu vực chơi game -->
+    <div class="game-grid" id="game-grid">
+        <!-- 6 cặp của trang đã chọn render ở đây -->
+    </div>
+
+    <div class="mt-8 flex flex-col items-center gap-4 pb-16">
+        <a href="javascript:history.back()" style="color: var(--forest-green); font-weight: 700; text-decoration: none; font-size: 12px; opacity: 0.5; text-transform: uppercase;">❮ quay lại lộ trình</a>
+    </div>
+
+    <script>
+        let allRadicals = [];
+        let selectedCards = [];
+        let matchedPairs = 0;
+        let currentSubsetSize = 0;
+        const lang = localStorage.getItem('sumiLang') || 'vi';
+
+        async function initGame() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const targetId = params.get('id') || "0";
+                
+                const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
+                const data = await res.json();
+                
+                // Lọc dữ liệu nhóm bộ thủ
+                allRadicals = data.radicals.filter(r => r.level_id == parseInt(targetId));
+                
+                renderPagination();
+                loadPage(0); // Mặc định vào trang 1
+            } catch (e) { console.error("Lỗi:", e); }
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(allRadicals.length / 6);
+            
+            pagination.innerHTML = '';
+            for (let i = 0; i < totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'page-btn';
+                btn.innerText = `trang ${i + 1}`;
+                btn.onclick = () => loadPage(i);
+                btn.id = `page-btn-${i}`;
+                pagination.appendChild(btn);
+            }
+        }
+
+        function loadPage(pageIndex) {
+            // Cập nhật trạng thái nút bấm
+            document.querySelectorAll('.page-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`page-btn-${pageIndex}`).classList.add('active');
+
+            // Lấy 6 bộ thủ của trang đó
+            const start = pageIndex * 6;
+            const subset = allRadicals.slice(start, start + 6);
+            currentSubsetSize = subset.length;
+            matchedPairs = 0;
+            selectedCards = [];
+
+            document.getElementById('game-status').innerText = `đang chơi trang ${pageIndex + 1} (${subset.length} cặp)`;
+
+            // Tạo danh sách thẻ chữ và nghĩa
+            let gameCards = [];
+            subset.forEach(item => {
+                gameCards.push({ id: item.radical, type: 'kanji', content: item.radical.split(' ')[0] });
+                gameCards.push({ id: item.radical, type: 'meaning', content: item.meanings[lang] });
+            });
+
+            // Xáo trộn vị trí
+            gameCards.sort(() => 0.5 - Math.random());
+            renderGrid(gameCards);
+        }
+
+        function renderGrid(cards) {
+            const grid = document.getElementById('game-grid');
+            grid.innerHTML = '';
+            cards.forEach(cardData => {
+                const card = document.createElement('div');
+                card.className = 'match-card';
+                card.dataset.id = cardData.id;
+                card.dataset.type = cardData.type;
+                
+                const contentClass = cardData.type === 'kanji' ? 'kanji-text' : 'meaning-text';
+                card.innerHTML = `<span class="${contentClass}">${cardData.content}</span>`;
+                
+                card.addEventListener('click', selectCard);
+                grid.appendChild(card);
+            });
+        }
+
+        function selectCard() {
+            if (this.classList.contains('selected') || this.classList.contains('matched')) return;
+            this.classList.add('selected');
+            selectedCards.push(this);
+
+            if (selectedCards.length === 2) {
+                const [c1, c2] = selectedCards;
+                if (c1.dataset.id === c2.dataset.id && c1.dataset.type !== c2.dataset.type) {
+                    setTimeout(() => {
+                        c1.classList.add('matched');
+                        c2.classList.add('matched');
+                        matchedPairs++;
+                        if (matchedPairs === currentSubsetSize) {
+                            document.getElementById('game-status').innerText = "🎉 hoàn thành trang này! hãy chọn trang khác nhé.";
+                        }
+                        selectedCards = [];
+                    }, 300);
+                } else {
+                    setTimeout(() => {
+                        c1.classList.remove('selected');
+                        c2.classList.remove('selected');
+                        selectedCards = [];
+                    }, 400);
+                }
+            }
+        }
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>
