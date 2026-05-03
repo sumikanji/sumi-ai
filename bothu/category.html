@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Be+Vietnam+Pro:wght@100;300;400;700&display=swap" rel="stylesheet">
     <title>Sumi AI - Khu Vườn Bộ Thủ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -163,6 +164,43 @@
             max-width: 1024px;
             margin: 0 auto;
         }
+        
+.practice-btn {
+    background-color: var(--candy-orange);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 18px 40px;
+    border-radius: 50px;
+    box-shadow: 0 8px 0 var(--deep-orange);
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.practice-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 var(--deep-orange);
+}
+
+.btn-icon {
+    font-size: 22px;
+}
+
+@media (max-width: 767px) {
+    .practice-btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 14px;
+        padding: 15px 20px;
+    }
+}
     </style>
 </head>
 <body class="pb-10">
@@ -184,7 +222,13 @@
 <div id="garden-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 pt-6">
     <!-- Dữ liệu -->
 </div>
-
+<!-- NÚT BẮT ĐẦU LUYỆN TẬP -->
+<div class="flex justify-center mt-12 mb-10 px-4">
+    <a href="practice-modes.html" class="practice-btn" id="btn-start-practice">
+        <span class="btn-icon">🔥</span>
+        bắt đầu luyện tập thôi nào
+    </a>
+</div>
 <footer class="mt-16 text-center opacity-30 text-[10px] font-black uppercase tracking-[0.3em] pb-10">
     sumi ai farm • master radicals collection
 </footer>
@@ -199,6 +243,14 @@ async function renderGarden() {
         window.location.href = 'bothu.html';
         return;
     }
+
+    // --- ĐOẠN THÊM MỚI ĐỂ SỬA LỖI ---
+    // Cập nhật link cho nút bắt đầu luyện tập kèm theo ID
+    const startBtn = document.getElementById('btn-start-practice');
+    if (startBtn) {
+        startBtn.href = `practice-modes.html?id=${targetId}`;
+    }
+    // --------------------------------
 
     try {
         const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
@@ -262,7 +314,37 @@ async function renderGarden() {
         });
     } catch (e) { console.error("Lỗi:", e); }
 }
+function renderModes() {
+    const params = new URLSearchParams(window.location.search);
+    const targetId = params.get('id') || "0"; // Lấy ID nhóm bộ thủ từ URL
+    const lang = localStorage.getItem('sumiLang') || 'vi';
+    const data = langData[lang];
 
+    // Cập nhật danh sách bước và truyền ID vào link
+    const container = document.getElementById('steps-container');
+    const icons = ["📇", "🎮", "📝", "⚡"];
+    // Thêm ?id=${targetId} vào sau các đường dẫn
+    const links = [
+        `flashcard.html?id=${targetId}`, 
+        `minigame.html?id=${targetId}`, 
+        `quiz.html?id=${targetId}`, 
+        `race.html?id=${targetId}`
+    ];
+    
+    container.innerHTML = data.steps.map((text, i) => `
+        <div class="step-row">
+            <a href="${links[i]}" class="mode-card" id="step${i+1}">
+                <div class="mode-icon">${icons[i]}</div>
+                <div class="mode-title">
+                    <span class="step-number">${data.stepLabel} 0${i+1}</span>
+                    ${text}
+                </div>
+            </a>
+        </div>
+    `).join('');
+
+    setTimeout(drawCurve, 150);
+}
 function updateTitles(targetId, lang) {
     const mainNames = {
         "0": "human & body", "1": "nature & elements", "2": "movement & space",

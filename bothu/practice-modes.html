@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumi AI - Lộ Trình Luyện Tập</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Be+Vietnam+Pro:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #558b2f;
+            --soft-green: #f1f8e9;
+            --candy-orange: #ffb74d;
+            --deep-orange: #e67e22;
+            --bg-dot: #c5e1a5;
+        }
+
+        body {
+            background-color: var(--soft-green);
+            background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-transform: lowercase;
+            margin: 0;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        .header-section {
+            background-color: var(--forest-green);
+            color: white;
+            text-align: center;
+            padding: 45px 20px;
+            border-radius: 40px;
+            border: 4px solid white;
+            max-width: 900px;
+            margin: 30px auto 60px;
+            width: 95%;
+            box-shadow: 0 12px 40px rgba(85, 139, 47, 0.15);
+            position: relative;
+            z-index: 10;
+        }
+
+        .practice-roadmap {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            min-height: 500px;
+        }
+
+        .roadmap-svg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        .step-row {
+            display: flex;
+            width: 100%;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .step-row:nth-child(odd) { justify-content: flex-start; }
+        .step-row:nth-child(even) { justify-content: flex-end; }
+
+        .mode-card {
+            background: white;
+            border-radius: 30px;
+            padding: 20px 35px;
+            width: 320px;
+            border: 3px solid #f9d9a5;
+            box-shadow: 0 8px 0 #f3c677;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 5;
+        }
+
+        @media (min-width: 768px) {
+            .step-row:nth-child(even) .mode-card { flex-direction: row-reverse; text-align: right; }
+        }
+
+        .mode-card:active { transform: translateY(4px); box-shadow: 0 4px 0 #f3c677; }
+
+        .mode-icon {
+            font-size: 32px;
+            background: #fff;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            border: 1px solid #f5f5f5;
+        }
+
+        .mode-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            color: var(--forest-green);
+            font-size: 15px;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .step-number { font-size: 10px; opacity: 0.4; display: block; margin-bottom: 2px; }
+
+        @media (max-width: 767px) {
+            .roadmap-svg { display: none; }
+            .header-section { border-radius: 0 0 40px 40px; margin: 0 auto 40px; width: 100%; border: none; }
+            .step-row { justify-content: center !important; margin-bottom: 30px; }
+            .mode-card { width: 100%; max-width: 350px; }
+            .practice-roadmap { padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-section">
+        <h1 id="main-title" style="font-family: 'Montserrat'; font-weight: 900; font-size: 28px; text-transform: uppercase;">
+            lộ trình rèn luyện
+        </h1>
+        <p id="sub-title" style="opacity: 0.8; font-weight: 300; font-size: 15px; margin-top: 5px;">
+            hoàn thành các bước để làm chủ bộ thủ cùng sumi ai
+        </p>
+    </header>
+
+    <div class="practice-roadmap" id="roadmap">
+        <svg class="roadmap-svg" id="svg-canvas">
+            <path id="curve-path" d="" fill="transparent" stroke="#558b2f" stroke-width="5" stroke-dasharray="15,15" opacity="0.15" stroke-linecap="round"/>
+        </svg>
+        <div id="steps-container"></div>
+    </div>
+
+    <div class="text-center mt-12">
+        <a href="javascript:history.back()" id="back-link" style="color: var(--forest-green); font-weight: 700; text-decoration: none; font-size: 13px; opacity: 0.5; text-transform: uppercase;">
+            ❮ quay lại khu vườn
+        </a>
+    </div>
+
+    <script>
+        const langData = {
+            vi: {
+                title: "lộ trình rèn luyện",
+                sub: "hoàn thành các bước để làm chủ bộ thủ cùng sumi ai",
+                back: "❮ quay lại khu vườn",
+                steps: ["ôn tập flashcard", "trò chơi mini game", "câu hỏi ôn tập", "chạy đua thời gian"],
+                stepLabel: "bước"
+            },
+            en: {
+                title: "practice roadmap",
+                sub: "complete the steps to master radicals with sumi ai",
+                back: "❮ back to garden",
+                steps: ["flashcard review", "mini game play", "quiz practice", "time race"],
+                stepLabel: "step"
+            }
+        };
+
+        function renderModes() {
+            const params = new URLSearchParams(window.location.search);
+            const targetId = params.get('id') || "0"; 
+            const lang = localStorage.getItem('sumiLang') || 'vi';
+            const data = langData[lang];
+
+            document.getElementById('main-title').innerText = data.title;
+            document.getElementById('sub-title').innerText = data.sub;
+            document.getElementById('back-link').innerText = data.back;
+
+            const container = document.getElementById('steps-container');
+            const icons = ["📇", "🎮", "📝", "⚡"];
+            const links = ["flashcard.html", "minigame.html", "quiz.html", "race.html"];
+            
+            container.innerHTML = data.steps.map((text, i) => `
+                <div class="step-row">
+                    <a href="${links[i]}?id=${targetId}" class="mode-card" id="step${i+1}">
+                        <div class="mode-icon">${icons[i]}</div>
+                        <div class="mode-title">
+                            <span class="step-number">${data.stepLabel} 0${i+1}</span>
+                            ${text}
+                        </div>
+                    </a>
+                </div>
+            `).join('');
+
+            // Chờ HTML render xong mới vẽ đường cong
+            setTimeout(drawCurve, 100);
+        }
+
+        function drawCurve() {
+            const path = document.getElementById('curve-path');
+            const roadmap = document.getElementById('roadmap');
+            const steps = [
+                document.getElementById('step1'),
+                document.getElementById('step2'),
+                document.getElementById('step3'),
+                document.getElementById('step4')
+            ];
+
+            if(!steps[0]) return;
+
+            let d = "";
+            for (let i = 0; i < steps.length - 1; i++) {
+                const start = steps[i].getBoundingClientRect();
+                const end = steps[i+1].getBoundingClientRect();
+                const container = roadmap.getBoundingClientRect();
+
+                const x1 = (start.left + start.right) / 2 - container.left;
+                const y1 = (start.top + start.bottom) / 2 - container.top;
+                const x2 = (end.left + end.right) / 2 - container.left;
+                const y2 = (end.top + end.bottom) / 2 - container.top;
+
+                if (i === 0) d += `M ${x1} ${y1} `;
+                const cpY = y1 + (y2 - y1) / 2;
+                d += `C ${x1} ${cpY}, ${x2} ${cpY}, ${x2} ${y2} `;
+            }
+            path.setAttribute('d', d);
+        }
+
+        // Đảm bảo hàm chạy ngay khi DOM sẵn sàng
+        document.addEventListener('DOMContentLoaded', renderModes);
+        window.addEventListener('resize', drawCurve);
+    </script>
+</body>
+</html>

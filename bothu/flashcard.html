@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumi AI - Flashcard Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Be+Vietnam+Pro:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #558b2f;
+            --soft-green: #f1f8e9;
+            --candy-orange: #ffb74d;
+            --deep-orange: #e67e22;
+            --bg-dot: #c5e1a5;
+        }
+
+        body {
+            background-color: var(--soft-green);
+            background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-transform: lowercase;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .header-card {
+            background-color: var(--forest-green);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 0 0 30px 30px;
+            border: 3px solid white;
+            border-top: none;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 50px;
+            width: fit-content;
+        }
+
+        .flashcard-container {
+            perspective: 1000px;
+            width: 320px;
+            height: 420px;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+
+        .card-face {
+            position: absolute;
+            width: 100%; height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 40px;
+            background: white;
+            border: 4px solid #f9d9a5;
+            box-shadow: 0 15px 0 #f3c677;
+            padding: 30px;
+        }
+
+        .card-back { transform: rotateY(180deg); }
+
+        #kanji-main {
+            font-size: 8rem; 
+            font-weight: 700 !important; 
+            color: var(--forest-green); 
+            line-height: 1;
+        }
+
+        #han-viet {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            color: var(--forest-green);
+            text-transform: uppercase;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        #meaning-text {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #8d6e63;
+        }
+
+        .control-btn {
+            background: white;
+            border: 2px solid #eee;
+            width: 60px; height: 60px;
+            border-radius: 20px;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+            box-shadow: 0 4px 0 #eee;
+        }
+
+        .control-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-card">
+        <h1 style="font-family: 'Montserrat'; font-weight: 900; font-size: 18px; text-transform: uppercase;">
+            ôn tập flashcard
+        </h1>
+        <p id="progress-text" style="font-size: 10px; opacity: 0.7; margin-top: 5px; font-weight: 700; letter-spacing: 1px;">đang tải...</p>
+    </header>
+
+    <div class="flashcard-container" onclick="flipCard()">
+        <div class="flashcard" id="card-inner">
+            <div class="card-face card-front">
+                <div id="kanji-main">...</div>
+            </div>
+            <div class="card-face card-back">
+                <div id="han-viet">...</div>
+                <div id="meaning-text">...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex gap-8 mt-12">
+        <button class="control-btn" onclick="event.stopPropagation(); prevCard();">❮</button>
+        <button class="control-btn" style="background: var(--candy-orange); border-color: white; color: white; box-shadow: 0 4px 0 var(--deep-orange);" onclick="event.stopPropagation(); nextCard();">❯</button>
+    </div>
+
+    <a href="javascript:history.back()" style="margin-top: 40px; color: var(--forest-green); font-weight: 700; text-decoration: none; font-size: 12px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px;">
+        ❮ thoát luyện tập
+    </a>
+
+    <script>
+        let radicals = [];
+        let currentIndex = 0;
+        const lang = localStorage.getItem('sumiLang') || 'vi';
+
+        async function loadData() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const targetId = params.get('id') || "0"; 
+                
+                const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
+                const data = await res.json();
+                
+                // Lọc dữ liệu dựa trên level_id
+                radicals = data.radicals.filter(r => r.level_id == parseInt(targetId));
+                
+                if (radicals.length > 0) {
+                    currentIndex = 0;
+                    renderCard();
+                } else {
+                    document.getElementById('progress-text').innerText = "không tìm thấy dữ liệu";
+                }
+            } catch (e) { 
+                console.error("Lỗi liên kết dữ liệu:", e); 
+            }
+        }
+
+        function renderCard() {
+            const item = radicals[currentIndex];
+            const cardInner = document.getElementById('card-inner');
+            cardInner.classList.remove('is-flipped');
+
+            document.getElementById('kanji-main').innerText = item.radical.split(' ')[0];
+            document.getElementById('han-viet').innerText = item.han_viet;
+            document.getElementById('meaning-text').innerText = item.meanings[lang];
+
+            const label = lang === 'en' ? 'card' : 'thẻ';
+            document.getElementById('progress-text').innerText = `${label} ${currentIndex + 1} / ${radicals.length}`;
+        }
+
+        function flipCard() {
+            document.getElementById('card-inner').classList.toggle('is-flipped');
+        }
+
+        function nextCard() {
+            if (currentIndex < radicals.length - 1) {
+                currentIndex++;
+                renderCard();
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+        }
+
+        // QUAN TRỌNG: Gọi hàm loadData khi trang đã sẵn sàng
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
