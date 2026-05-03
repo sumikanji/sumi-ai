@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sumi AI - Khu Vườn Bộ Thủ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #558b2f;
+            --soft-green: #f1f8e9;
+            --candy-orange: #ffb74d;
+            --deep-orange: #e67e22;
+            --bg-dot: #c5e1a5;
+        }
+
+        body { 
+            background-color: var(--soft-green); 
+            background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-transform: lowercase;
+            margin: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* BANNER TỐI ƯU MOBILE */
+        .garden-header {
+            background-color: var(--forest-green); 
+            color: white;
+            border-radius: 0 0 40px 40px; /* Chỉ bo tròn dưới trên mobile */
+            padding: 30px 15px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(85, 139, 47, 0.15);
+            border: none;
+            max-width: 100%;
+            margin: 0 0 30px 0;
+            width: 100%;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .garden-header {
+                border-radius: 40px;
+                max-width: 1024px;
+                margin: 20px auto 40px;
+                width: 95%;
+                border: 4px solid white;
+            }
+        }
+
+        .btn-back-mini {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+        }
+
+        /* SUB PHỤ NỔI BẬT */
+        #cat-subtitle-name {
+            display: inline-block;
+            background-color: var(--candy-orange);
+            color: white;
+            font-size: 13px; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 18px;
+            border-radius: 50px;
+            box-shadow: 0 4px 0px var(--deep-orange);
+            margin-top: 10px;
+            border: 2px solid white;
+        }
+
+        /* CARD TỐI ƯU MOBILE: CHUYỂN DỌC KHI MÀN HÌNH QUÁ NHỎ */
+        .radical-card {
+            background: white;
+            border-radius: 25px;
+            border: 3px solid #f9d9a5; 
+            box-shadow: 0 6px 0 #f3c677;
+            display: flex;
+            padding: 15px;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+        }
+
+        @media (max-width: 380px) {
+            .radical-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .radical-card .flex-1 {
+                padding-left: 0 !important;
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        /* KHUNG ICON KANJI */
+        .radical-icon-box {
+            width: 85px; 
+            height: 85px;
+            border: 2px solid #f9d9a5;
+            border-radius: 18px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        #garden-container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        .example-pill {
+    background: #fcfcfc; 
+    border: 1px solid #f0f0f0; 
+    border-radius: 12px; /* Tăng độ bo góc nhẹ */
+    padding: 6px 12px; /* Tăng khoảng cách đệm bên trong */
+    display: inline-flex; 
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Tăng khoảng cách giữa các ví dụ */
+    justify-content: left;
+    width: 100%; /* Ép khung rộng hết cỡ trên mobile */
+}
+
+/* Làm cho chữ Kanji ví dụ to và đậm hơn */
+.example-pill b {
+    font-size: 1.3rem; /* Tăng từ 1.1rem lên 1.3rem */
+    color: #696868; /* Đổi sang màu nâu đậm cho rõ nét */
+    line-height: 1;
+}
+
+/* Nghĩa của ví dụ cũng to hơn một chút */
+.example-pill span.text-gray-400 {
+    font-size: 13px !important; 
+    color: #a8a7a7 !important;
+    font-weight: 500;
+}
+    </style>
+</head>
+<body class="pb-10">
+
+<header class="garden-header">
+    <a href="bothu.html" class="btn-back-mini">
+        ❮ <span data-vi="vườn" data-en="garden">quay lại vườn</span>
+    </a>
+    
+    <div class="flex flex-col items-center">
+        <h1 id="cat-main-name" class="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-2">
+            đang tải...
+        </h1>
+        <p id="cat-subtitle-name">đang tải...</p>
+    </div>
+</header>
+
+<div id="garden-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4">
+    <!-- Dữ liệu -->
+</div>
+
+<footer class="mt-16 text-center opacity-30 text-[10px] font-black uppercase tracking-[0.3em] pb-10">
+    sumi ai farm • master radicals collection
+</footer>
+
+<script>
+async function renderGarden() {
+    const params = new URLSearchParams(window.location.search);
+    const targetId = params.get('id');
+    const lang = localStorage.getItem('sumiLang') || 'vi';
+
+    if (targetId === null) {
+        window.location.href = 'bothu.html';
+        return;
+    }
+
+    try {
+        const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
+        const data = await res.json();
+        const filtered = data.radicals.filter(r => r.level_id == parseInt(targetId));
+        const container = document.getElementById('garden-container');
+        container.innerHTML = '';
+
+        updateTitles(targetId, lang);
+
+        filtered.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'radical-card';
+            
+            const radicalText = item.radical || "";
+            const spaceIndex = radicalText.indexOf(' ');
+            let mainK = radicalText, subK = "";
+            if (spaceIndex !== -1) {
+                mainK = radicalText.substring(0, spaceIndex);
+                subK = radicalText.substring(spaceIndex + 1);
+            }
+
+            let exHTML = '';
+            if (item.examples && item.examples.length > 0) {
+                exHTML = item.examples.slice(0, 3).map(ex => 
+                    `<span class="flex items-center gap-1">
+                        <b class="text-lg text-gray-700">${ex.kanji}</b>
+                        <span class="text-[11px] text-gray-400 font-bold">(${ex[lang] || ex.vi})</span>
+                    </span>`
+                ).join('<span class="opacity-20">|</span>');
+            }
+
+            card.innerHTML = `
+                <div class="radical-icon-box">
+                    <div class="flex items-baseline gap-1 -translate-y-1">
+                        <span class="text-4xl font-black text-[#d35400]">${mainK}</span>
+                        <span class="text-lg font-light text-[#d35400] opacity-60">${subK}</span>
+                    </div>
+                    <span class="absolute bottom-2 w-full text-center text-[9px] font-black uppercase text-[#d35400] tracking-wider">
+                        ${item.han_viet}
+                    </span>
+                </div>
+
+                <div class="flex-1 pl-2">
+                    <h4 class="text-lg font-black text-[#558b2f] uppercase leading-none">BỘ ${item.han_viet}</h4>
+                    <p class="text-[14px] font-bold text-[#8d6e63] italic mt-1 mb-2">${item.meanings[lang]}</p>
+                    
+                    <div class="example-pill">
+                        <span class="text-[8px] font-black text-[#f3c677] uppercase border-r pr-2 border-gray-200">Ví dụ</span>
+                        <div class="flex items-center gap-2">${exHTML}</div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    } catch (e) { console.error("Lỗi:", e); }
+}
+
+function updateTitles(targetId, lang) {
+    const mainNames = {
+        "0": "human & body", "1": "nature & elements", "2": "movement & space",
+        "3": "society & objects", "4": "animals & fauna", "5": "tools & weapons", "6": "abstract & forms"
+    };
+    const subNames = {
+        "vi": {
+            "0": "con người & cơ thể", "1": "thiên nhiên & yếu tố", "2": "chuyển động & không gian",
+            "3": "xã hội & vật dụng", "4": "động vật", "5": "công cụ & vũ khí", "6": "trừu tượng & hình thức"
+        },
+        "en": {
+            "0": "human & body", "1": "nature & elements", "2": "movement & space",
+            "3": "society & objects", "4": "animals & fauna", "5": "tools & weapons", "6": "abstract & forms"
+        }
+    };
+    document.getElementById('cat-main-name').innerText = mainNames[targetId] || "group";
+    document.getElementById('cat-subtitle-name').innerText = subNames[lang][targetId] || "";
+}
+
+function changeLanguage(lang) {
+    localStorage.setItem('sumiLang', lang);
+    renderGarden(); 
+}
+
+window.onload = () => {
+    const savedLang = localStorage.getItem('sumiLang') || 'vi';
+    changeLanguage(savedLang); 
+};
+</script>
+</body>
+</html>
