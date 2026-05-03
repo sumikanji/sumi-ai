@@ -136,18 +136,28 @@
             overflow-x: auto;
             white-space: nowrap;
         }
+/* Container chứa danh sách ví dụ - Cho phép xuống dòng */
+    .ex-list-container {
+        display: flex;
+        flex-wrap: wrap; /* TỰ ĐỘNG XUỐNG DÒNG KHI HẾT CHỖ */
+        gap: 8px 12px; /* Khoảng cách giữa các dòng và các mục */
+        align-items: center;
+        flex: 1; /* Chiếm hết diện tích còn lại */
+    }
+        /* Kanji ví dụ: Mảnh và dễ nhìn */
+    .ex-kanji-text {
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-size: 1.3rem; 
+        font-weight: 500; 
+        color: #6b6a6a;
+        line-height: 1.2;
+    }
 
-        .example-pill b {
-            font-size: 1.3rem;
-            color: #6f6f6f;
-            line-height: 1;
-        }
-
-        .example-pill span {
-            font-size: 13px;
-            color: #9e9e9d;
-            font-weight: 500;
-        }
+    .ex-meaning-text {
+        font-size: 13px;
+        color: #a8a7a7;
+        font-weight: 500;
+    }
 
         #garden-container {
             max-width: 1024px;
@@ -214,13 +224,18 @@ async function renderGarden() {
 
             let exHTML = '';
             if (item.examples && item.examples.length > 0) {
-                exHTML = item.examples.slice(0, 3).map(ex => 
-                    `<span class="flex items-center gap-1">
-                        <b class="font-black">${ex.kanji}</b>
-                        <span>(${ex[lang] || ex.vi})</span>
-                    </span>`
-                ).join('<span class="opacity-20 mx-1">|</span>');
-            }
+    const exItems = item.examples.slice(0, 3).map(ex => {
+        const meaning = lang === 'en' ? (ex.en || ex.vi) : (ex.vi || ex.en);
+        return `
+            <div style="display: flex; align-items: center; gap: 4px; white-space: nowrap;">
+                <span class="ex-kanji-text">${ex.kanji}</span>
+                <span class="ex-meaning-text">(${meaning})</span>
+            </div>`;
+    }).join('<span style="opacity: 0.1; margin: 0 2px;">|</span>');
+
+    // Container giờ đây có flex-wrap để tự động xuống dòng
+    exHTML = `<div class="ex-list-container">${exItems}</div>`;
+}
 
             card.innerHTML = `
                 <div class="radical-icon-box">
