@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumi AI - Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Be+Vietnam+Pro:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-green: #558b2f;
+            --soft-green: #f1f8e9;
+            --candy-orange: #ffb74d;
+            --deep-orange: #e67e22;
+            --bg-dot: #c5e1a5;
+        }
+
+        body {
+            background-color: var(--soft-green);
+            background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            text-transform: lowercase; margin: 0; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* BANNER GỌN GÀNG */
+        .header-quiz {
+            background-color: var(--forest-green); color: white;
+            padding: 15px 30px; border-radius: 0 0 30px 30px;
+            border: 3px solid white; border-top: none; text-align: center;
+            box-shadow: 0 10px 30px rgba(85, 139, 47, 0.1);
+            width: fit-content; min-width: 260px;
+            position: relative; z-index: 20;
+        }
+
+        /* THANH DÒNG CHẢY MÀU CAM - KHÔNG BÓNG NƯỚC */
+        .outer-progress-container {
+            width: 85%; max-width: 400px;
+            height: 14px; background: white;
+            border-radius: 50px; margin: 30px 0 20px;
+            position: relative; border: 2px solid var(--candy-orange);
+            overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .progress-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--candy-orange), var(--deep-orange));
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50px;
+        }
+
+        /* KHUNG CÂU HỎI */
+        .quiz-card {
+            background: white; border-radius: 40px;
+            width: 90%; max-width: 500px; padding: 40px 20px;
+            border: 4px solid #f9d9a5; box-shadow: 0 15px 0 #f3c677;
+            text-align: center; margin-bottom: 25px;
+            min-height: 280px; display: flex; flex-direction: column; justify-content: center;
+        }
+
+        #kanji-question {
+            font-size: 7rem; font-weight: 700 !important;
+            color: var(--forest-green); line-height: 1; margin-bottom: 10px;
+        }
+
+        /* NÚT ĐÁP ÁN */
+        .answer-btn {
+            background: white; border: 2px solid #eee;
+            padding: 18px; border-radius: 20px;
+            font-weight: 700; color: #8d6e63; width: 100%;
+            font-size: 1.1rem; transition: all 0.2s;
+            box-shadow: 0 5px 0 #eee; cursor: pointer; margin-bottom: 12px;
+            text-align: center; display: block;
+        }
+
+        .answer-btn.correct { background: var(--forest-green) !important; color: white !important; box-shadow: 0 5px 0 #33691e !important; border-color: white !important; }
+        .answer-btn.wrong { background: #e74c3c !important; color: white !important; box-shadow: 0 5px 0 #c0392b !important; border-color: white !important; }
+
+        .btn-restart {
+            background-color: var(--forest-green); color: white;
+            padding: 16px 32px; border-radius: 50px;
+            font-weight: 900; text-transform: uppercase;
+            box-shadow: 0 6px 0 #33691e; border: 2px solid white;
+            cursor: pointer; margin-top: 20px; display: inline-block; font-size: 14px;
+        }
+
+        .btn-restart:active { transform: translateY(4px); box-shadow: 0 2px 0 #33691e; }
+    </style>
+</head>
+<body>
+
+    <header class="header-quiz">
+        <h1 style="font-family: 'Montserrat'; font-weight: 900; font-size: 16px; text-transform: uppercase;">trắc nghiệm ý nghĩa</h1>
+        <p id="quiz-progress" style="font-size: 10px; opacity: 0.6; margin-top: 2px; font-weight: 700;">đang nạp...</p>
+    </header>
+
+    <div class="outer-progress-container" id="p-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div class="quiz-card" id="quiz-main-card">
+        <div id="kanji-question-container">
+            <div id="kanji-question">...</div>
+            <p id="question-text" style="color: #a8a7a7; font-weight: 700; font-size: 13px;">bộ này có nghĩa là gì?</p>
+        </div>
+    </div>
+
+    <div id="answer-options" style="width: 90%; max-width: 500px;"></div>
+
+    <div class="mt-6 mb-10">
+        <a href="javascript:history.back()" style="color: var(--forest-green); font-weight: 700; text-decoration: none; font-size: 11px; opacity: 0.4; text-transform: uppercase;">❮ quay lại lộ trình</a>
+    </div>
+
+    <script>
+        let quizData = [];
+        let allMeanings = [];
+        let currentIndex = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        const lang = localStorage.getItem('sumiLang') || 'vi';
+
+        async function initQuiz() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const targetId = params.get('id') || "0";
+                
+                const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                
+                const filtered = data.radicals.filter(r => parseInt(r.level_id) === parseInt(targetId));
+                if (filtered.length === 0) {
+                    document.getElementById('quiz-progress').innerText = "không có dữ liệu";
+                    return;
+                }
+
+                quizData = filtered.sort(() => 0.5 - Math.random());
+                allMeanings = data.radicals.map(r => r.meanings[lang] || r.meanings['vi']);
+                renderQuestion();
+            } catch (e) {
+                document.getElementById('quiz-progress').innerText = "lỗi nạp dữ liệu!";
+            }
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar && quizData.length > 0) {
+                const percentage = (currentIndex / quizData.length) * 100;
+                progressBar.style.width = percentage + "%";
+            }
+        }
+
+        function renderQuestion() {
+            updateProgressBar();
+            if (currentIndex >= quizData.length) {
+                showResult();
+                return;
+            }
+
+            const currentItem = quizData[currentIndex];
+            document.getElementById('kanji-question').innerText = currentItem.radical.split(' ')[0];
+            document.getElementById('quiz-progress').innerText = `câu ${currentIndex + 1} / ${quizData.length}`;
+
+            const correct = currentItem.meanings[lang] || currentItem.meanings['vi'];
+            let options = [correct];
+            while (options.length < 4) {
+                const random = allMeanings[Math.floor(Math.random() * allMeanings.length)];
+                if (!options.includes(random)) options.push(random);
+            }
+            options.sort(() => 0.5 - Math.random());
+
+            const container = document.getElementById('answer-options');
+            container.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt, correct, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected, correct, btn) {
+            const btns = document.querySelectorAll('.answer-btn');
+            btns.forEach(b => b.style.pointerEvents = 'none');
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                correctCount++;
+            } else {
+                btn.classList.add('wrong');
+                wrongCount++;
+                btns.forEach(b => { if (b.innerText === correct) b.classList.add('correct'); });
+            }
+
+            setTimeout(() => {
+                currentIndex++;
+                renderQuestion();
+            }, 1000);
+        }
+
+        function showResult() {
+            const accuracy = Math.round((correctCount / quizData.length) * 100);
+            document.getElementById('answer-options').innerHTML = '';
+            document.getElementById('quiz-progress').innerText = "hoàn thành";
+            document.getElementById('p-container').style.display = 'none';
+            
+            document.getElementById('quiz-main-card').innerHTML = `
+                <div class="py-2">
+                    <h2 style="font-family: 'Montserrat'; font-weight: 900; font-size: 20px; color: var(--forest-green); text-transform: uppercase;">kết quả</h2>
+                    <div class="flex justify-around my-6 bg-soft-green p-6 rounded-3xl border-2 border-dashed border-[#c5e1a5]">
+                        <div class="text-center"><p class="text-[9px] font-black opacity-40 uppercase">đúng</p><p class="text-2xl font-black text-forest-green">${correctCount}</p></div>
+                        <div class="text-center border-x border-gray-200 px-6"><p class="text-[9px] font-black opacity-40 uppercase">tỉ lệ</p><p class="text-2xl font-black text-candy-orange">${accuracy}%</p></div>
+                        <div class="text-center"><p class="text-[9px] font-black opacity-40 uppercase">sai</p><p class="text-2xl font-black text-[#e74c3c]">${wrongCount}</p></div>
+                    </div>
+                    <div class="flex flex-col gap-3 items-center">
+                        <button onclick="restartQuiz()" class="btn-restart">ôn tập lại nhóm này</button>
+                        <a href="javascript:history.back()" class="mt-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">thoát</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function restartQuiz() {
+            currentIndex = 0; correctCount = 0; wrongCount = 0;
+            quizData.sort(() => 0.5 - Math.random());
+            document.getElementById('p-container').style.display = 'block';
+            document.getElementById('quiz-main-card').innerHTML = `
+                <div id="kanji-question-container">
+                    <div id="kanji-question">...</div>
+                    <p id="question-text" style="color: #a8a7a7; font-weight: 700; font-size: 13px;">bộ này có nghĩa là gì?</p>
+                </div>
+            `;
+            renderQuestion();
+        }
+
+        document.addEventListener('DOMContentLoaded', initQuiz);
+    </script>
+</body>
+</html>
