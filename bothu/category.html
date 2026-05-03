@@ -25,19 +25,21 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* BANNER TỐI ƯU MOBILE */
+        /* BANNER TỐI ƯU: KHÔNG CHỒNG CHỮ */
         .garden-header {
             background-color: var(--forest-green); 
             color: white;
-            border-radius: 0 0 40px 40px; /* Chỉ bo tròn dưới trên mobile */
-            padding: 30px 15px 40px;
+            border-radius: 0 0 40px 40px; 
+            padding: 20px 15px 35px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(85, 139, 47, 0.15);
-            border: none;
             max-width: 100%;
-            margin: 0 0 30px 0;
+            margin: 0;
             width: 100%;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; /* Khoảng cách an toàn giữa nút và tiêu đề */
         }
 
         @media (min-width: 768px) {
@@ -50,71 +52,60 @@
             }
         }
 
+        /* Nút quay lại linh hoạt */
         .btn-back-mini {
-            position: absolute;
-            left: 15px;
-            top: 15px;
-            z-index: 10;
+            display: inline-block;
             background: rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 10px;
+            padding: 8px 16px;
+            border-radius: 15px;
+            font-size: 11px;
             font-weight: 900;
             text-transform: uppercase;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             text-decoration: none;
+            transition: all 0.2s;
         }
 
-        /* SUB PHỤ NỔI BẬT */
+        /* SUB PHỤ NỀN CAM GIỐNG IMG_8916_2.jpg */
         #cat-subtitle-name {
             display: inline-block;
             background-color: var(--candy-orange);
             color: white;
-            font-size: 13px; 
+            font-size: 14px; 
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 6px 18px;
+            padding: 8px 25px;
             border-radius: 50px;
             box-shadow: 0 4px 0px var(--deep-orange);
-            margin-top: 10px;
-            border: 2px solid white;
+            border: 2.5px solid white;
+            margin-top: 5px;
         }
 
-        /* CARD TỐI ƯU MOBILE: CHUYỂN DỌC KHI MÀN HÌNH QUÁ NHỎ */
+        /* KHÓA GIAO DIỆN NGANG CHO THẺ */
         .radical-card {
             background: white;
             border-radius: 25px;
             border: 3px solid #f9d9a5; 
             box-shadow: 0 6px 0 #f3c677;
             display: flex;
+            flex-direction: row !important; /* Luôn nằm ngang */
             padding: 15px;
             align-items: center;
             gap: 15px;
-            transition: transform 0.2s;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        @media (max-width: 380px) {
-            .radical-card {
-                flex-direction: column;
-                text-align: center;
-            }
-            .radical-card .flex-1 {
-                padding-left: 0 !important;
-                align-items: center;
-                display: flex;
-                flex-direction: column;
-            }
-        }
-
-        /* KHUNG ICON KANJI */
+        /* KHUNG ICON KANJI CỐ ĐỊNH */
         .radical-icon-box {
-            width: 85px; 
-            height: 85px;
+            width: 90px; 
+            height: 90px;
             border: 2px solid #f9d9a5;
-            border-radius: 18px;
+            border-radius: 20px;
             background: #fff;
             display: flex;
             flex-direction: column;
@@ -125,55 +116,62 @@
             overflow: hidden;
         }
 
+        .card-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* KHUNG VÍ DỤ TO RÕ */
+        .example-pill {
+            background: #fcfcfc; 
+            border: 1px solid #f0f0f0; 
+            border-radius: 12px;
+            padding: 6px 12px;
+            display: flex; 
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .example-pill b {
+            font-size: 1.3rem;
+            color: #6f6f6f;
+            line-height: 1;
+        }
+
+        .example-pill span {
+            font-size: 13px;
+            color: #9e9e9d;
+            font-weight: 500;
+        }
+
         #garden-container {
             max-width: 1024px;
             margin: 0 auto;
         }
-
-        .example-pill {
-    background: #fcfcfc; 
-    border: 1px solid #f0f0f0; 
-    border-radius: 12px; /* Tăng độ bo góc nhẹ */
-    padding: 6px 12px; /* Tăng khoảng cách đệm bên trong */
-    display: inline-flex; 
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px; /* Tăng khoảng cách giữa các ví dụ */
-    justify-content: left;
-    width: 100%; /* Ép khung rộng hết cỡ trên mobile */
-}
-
-/* Làm cho chữ Kanji ví dụ to và đậm hơn */
-.example-pill b {
-    font-size: 1.3rem; /* Tăng từ 1.1rem lên 1.3rem */
-    color: #696868; /* Đổi sang màu nâu đậm cho rõ nét */
-    line-height: 1;
-}
-
-/* Nghĩa của ví dụ cũng to hơn một chút */
-.example-pill span.text-gray-400 {
-    font-size: 13px !important; 
-    color: #a8a7a7 !important;
-    font-weight: 500;
-}
     </style>
 </head>
 <body class="pb-10">
 
 <header class="garden-header">
+    <!-- Nút quay lại đã sửa để không chồng chữ -->
     <a href="bothu.html" class="btn-back-mini">
-        ❮ <span data-vi="vườn" data-en="garden">quay lại vườn</span>
+        ❮ quay lại vườn
     </a>
     
     <div class="flex flex-col items-center">
-        <h1 id="cat-main-name" class="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-2">
+        <h1 id="cat-main-name" class="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none">
             đang tải...
         </h1>
         <p id="cat-subtitle-name">đang tải...</p>
     </div>
 </header>
 
-<div id="garden-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4">
+<div id="garden-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 pt-6">
     <!-- Dữ liệu -->
 </div>
 
@@ -205,6 +203,7 @@ async function renderGarden() {
             const card = document.createElement('div');
             card.className = 'radical-card';
             
+            
             const radicalText = item.radical || "";
             const spaceIndex = radicalText.indexOf(' ');
             let mainK = radicalText, subK = "";
@@ -217,10 +216,10 @@ async function renderGarden() {
             if (item.examples && item.examples.length > 0) {
                 exHTML = item.examples.slice(0, 3).map(ex => 
                     `<span class="flex items-center gap-1">
-                        <b class="text-lg text-gray-700">${ex.kanji}</b>
-                        <span class="text-[11px] text-gray-400 font-bold">(${ex[lang] || ex.vi})</span>
+                        <b class="font-black">${ex.kanji}</b>
+                        <span>(${ex[lang] || ex.vi})</span>
                     </span>`
-                ).join('<span class="opacity-20">|</span>');
+                ).join('<span class="opacity-20 mx-1">|</span>');
             }
 
             card.innerHTML = `
@@ -229,14 +228,14 @@ async function renderGarden() {
                         <span class="text-4xl font-black text-[#d35400]">${mainK}</span>
                         <span class="text-lg font-light text-[#d35400] opacity-60">${subK}</span>
                     </div>
-                    <span class="absolute bottom-2 w-full text-center text-[9px] font-black uppercase text-[#d35400] tracking-wider">
+                    <span class="absolute bottom-2 w-full text-center text-[10px] font-black uppercase text-[#d35400] tracking-wider">
                         ${item.han_viet}
                     </span>
                 </div>
 
-                <div class="flex-1 pl-2">
+                <div class="card-content pl-2">
                     <h4 class="text-lg font-black text-[#558b2f] uppercase leading-none">BỘ ${item.han_viet}</h4>
-                    <p class="text-[14px] font-bold text-[#8d6e63] italic mt-1 mb-2">${item.meanings[lang]}</p>
+                    <p class="text-[14px] font-bold text-[#8d6e63] italic mt-1">${item.meanings[lang]}</p>
                     
                     <div class="example-pill">
                         <span class="text-[8px] font-black text-[#f3c677] uppercase border-r pr-2 border-gray-200">Ví dụ</span>
