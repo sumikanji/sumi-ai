@@ -121,11 +121,9 @@
 <body>
 
     <header class="header-card">
-    <h1 id="header-title" style="font-family: 'Montserrat'; font-weight: 900; font-size: 18px; text-transform: uppercase;">
-        <!-- Chữ sẽ được chèn qua JS -->
-    </h1>
-    <p id="progress-text" style="font-size: 10px; opacity: 0.7; margin-top: 5px; font-weight: 700; letter-spacing: 1px;">đang tải...</p>
-</header>
+        <h1 id="header-title" style="font-family: 'Montserrat'; font-weight: 900; font-size: 18px; text-transform: uppercase;"></h1>
+        <p id="progress-text" style="font-size: 10px; opacity: 0.7; margin-top: 5px; font-weight: 700; letter-spacing: 1px;">đang tải...</p>
+    </header>
 
     <div class="flashcard-container" onclick="flipCard()">
         <div class="flashcard" id="card-inner">
@@ -145,124 +143,101 @@
     </div>
 
     <a href="javascript:history.back()" id="exit-btn" style="margin-top: 40px; color: var(--forest-green); font-weight: 700; text-decoration: none; font-size: 12px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px;">
-    ❮ <span>đang tải...</span>
-</a>
-<!-- OVERLAY HOÀN THÀNH -->
-<div id="finish-overlay" class="fixed inset-0 bg-white/90 backdrop-blur-md z-50 hidden flex flex-col justify-center items-center text-center p-6">
-    <div class="text-6xl mb-6">🌱</div>
-    <h2 id="finish-title" class="text-3xl font-black text-[#558b2f] uppercase mb-2">tuyệt vời!</h2>
-    <p id="finish-desc" class="text-[#8d6e63] font-medium mb-8">bạn đã hoàn thành danh sách này.</p>
-    
-    <div class="flex flex-col gap-4 w-full max-w-xs">
-        <button onclick="location.reload()" class="bg-[#ffb74d] text-white py-4 rounded-2xl font-black uppercase shadow-[0_6px_0_#e67e22] border-2 border-white active:translate-y-1 active:shadow-none transition-all">
-            ôn tập lại
-        </button>
-        <button onclick="history.back()" class="text-[#558b2f] font-bold uppercase tracking-widest text-xs opacity-60">
-            quay lại vườn
-        </button>
+        ❮ <span>đang tải...</span>
+    </a>
+
+    <div id="finish-overlay" class="fixed inset-0 bg-white/90 backdrop-blur-md z-50 hidden flex flex-col justify-center items-center text-center p-6">
+        <div class="text-6xl mb-6">🌱</div>
+        <h2 id="finish-title" class="text-3xl font-black text-[#558b2f] uppercase mb-2"></h2>
+        <p id="finish-desc" class="text-[#8d6e63] font-medium mb-8"></p>
+        <div class="flex flex-col gap-4 w-full max-w-xs">
+            <button onclick="location.reload()" id="btn-again" class="bg-[#ffb74d] text-white py-4 rounded-2xl font-black uppercase shadow-[0_6px_0_#e67e22] border-2 border-white active:translate-y-1 active:shadow-none transition-all"></button>
+            <button onclick="history.back()" id="btn-back" class="text-[#558b2f] font-bold uppercase tracking-widest text-xs opacity-60"></button>
+        </div>
     </div>
-</div>
+
     <script>
         let radicals = [];
         let currentIndex = 0;
         const lang = localStorage.getItem('sumiLang') || 'vi';
 
+        const labels = {
+            "vi": {
+                "header": "ôn tập flashcard",
+                "exit": "thoát luyện tập",
+                "title": "tuyệt vời!",
+                "desc": "bạn đã hoàn thành danh sách này.",
+                "again": "ôn tập lại",
+                "back": "quay lại vườn",
+                "label": "thẻ"
+            },
+            "en": {
+                "header": "flashcard review",
+                "exit": "exit practice",
+                "title": "excellent!",
+                "desc": "you have completed this list.",
+                "again": "review again",
+                "back": "back to garden",
+                "label": "card"
+            }
+        };
+
         async function loadData() {
             try {
                 const params = new URLSearchParams(window.location.search);
                 const targetId = params.get('id') || "0"; 
-                
                 const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
                 const data = await res.json();
-                
-                // Lọc dữ liệu dựa trên level_id
                 radicals = data.radicals.filter(r => r.level_id == parseInt(targetId));
                 
                 if (radicals.length > 0) {
-                    currentIndex = 0;
-                    renderCard();
+                    renderCard(true); // render lần đầu không cần delay
                 } else {
                     document.getElementById('progress-text').innerText = "không tìm thấy dữ liệu";
                 }
-            } catch (e) { 
-                console.error("Lỗi liên kết dữ liệu:", e); 
-            }
+            } catch (e) { console.error(e); }
         }
 
-        function renderCard() {
+        // Cập nhật quan trọng: Thêm tham số skipDelay
+        function renderCard(skipDelay = false) {
             const item = radicals[currentIndex];
             const cardInner = document.getElementById('card-inner');
+            
+            // Nếu thẻ đang lật, hãy lật nó lại trước
+            const wasFlipped = cardInner.classList.contains('is-flipped');
             cardInner.classList.remove('is-flipped');
 
-            document.getElementById('kanji-main').innerText = item.radical.split(' ')[0];
-            document.getElementById('han-viet').innerText = item.han_viet;
-            document.getElementById('meaning-text').innerText = item.meanings[lang];
+            // Logic: Nếu vừa lật lại, đợi 300ms (nửa thời gian transition) rồi mới thay chữ
+            const delay = (wasFlipped && !skipDelay) ? 300 : 0;
 
-            const label = lang === 'en' ? 'card' : 'thẻ';
-            document.getElementById('progress-text').innerText = `${label} ${currentIndex + 1} / ${radicals.length}`;
+            setTimeout(() => {
+                document.getElementById('kanji-main').innerText = item.radical.split(' ')[0];
+                document.getElementById('han-viet').innerText = item.han_viet;
+                document.getElementById('meaning-text').innerText = item.meanings[lang];
+                
+                const label = labels[lang].label;
+                document.getElementById('progress-text').innerText = `${label} ${currentIndex + 1} / ${radicals.length}`;
+            }, delay);
         }
 
         function flipCard() {
             document.getElementById('card-inner').classList.toggle('is-flipped');
         }
 
-        // Thêm dữ liệu ngôn ngữ cho thông báo
-const labels = {
-    "vi": {
-        "header": "ôn tập flashcard",
-        "exit": "thoát luyện tập",
-        "title": "tuyệt vời!",
-        "desc": "bạn đã hoàn thành danh sách này.",
-        "again": "ôn tập lại",
-        "back": "quay lại vườn"
-    },
-    "en": {
-        "header": "flashcard review",
-        "exit": "exit practice",
-        "title": "excellent!",
-        "desc": "you have completed this list.",
-        "again": "review again",
-        "back": "back to garden"
-    }
-};
-// Hàm cập nhật các văn bản cố định trên trang
-function updateStaticText() {
-    const lang = localStorage.getItem('sumiLang') || 'vi';
-    
-    // Cập nhật tiêu đề Banner
-    document.getElementById('header-title').innerText = labels[lang].header;
-    
-    // Cập nhật chữ của nút thoát
-    const exitBtnSpan = document.querySelector('#exit-btn span');
-    if (exitBtnSpan) {
-        exitBtnSpan.innerText = labels[lang].exit;
-    }
-}
-function nextCard() {
-    if (currentIndex < radicals.length - 1) {
-        currentIndex++;
-        renderCard();
-    } else {
-        // Nếu đang ở thẻ cuối cùng và bấm Next -> Hiện thông báo
-        showFinishOverlay();
-    }
-}
+        function updateStaticText() {
+            const t = labels[lang];
+            document.getElementById('header-title').innerText = t.header;
+            document.querySelector('#exit-btn span').innerText = t.exit;
+        }
 
-function showFinishOverlay() {
-    const overlay = document.getElementById('finish-overlay');
-    const lang = localStorage.getItem('sumiLang') || 'vi';
-    
-    // Cập nhật nội dung theo ngôn ngữ
-    document.getElementById('finish-title').innerText = labels[lang].title;
-    document.getElementById('finish-desc').innerText = labels[lang].desc;
-    
-    // Cập nhật text cho các nút trong overlay
-    const buttons = overlay.querySelectorAll('button');
-    buttons[0].innerText = labels[lang].again;
-    buttons[1].innerText = labels[lang].back;
-
-    overlay.classList.remove('hidden');
-}
+        function nextCard() {
+            if (currentIndex < radicals.length - 1) {
+                currentIndex++;
+                renderCard();
+            } else {
+                showFinishOverlay();
+            }
+        }
 
         function prevCard() {
             if (currentIndex > 0) {
@@ -271,12 +246,20 @@ function showFinishOverlay() {
             }
         }
 
-        // QUAN TRỌNG: Gọi hàm loadData khi trang đã sẵn sàng
+        function showFinishOverlay() {
+            const overlay = document.getElementById('finish-overlay');
+            const t = labels[lang];
+            document.getElementById('finish-title').innerText = t.title;
+            document.getElementById('finish-desc').innerText = t.desc;
+            document.getElementById('btn-again').innerText = t.again;
+            document.getElementById('btn-back').innerText = t.back;
+            overlay.classList.remove('hidden');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-    updateStaticText(); // Cập nhật ngôn ngữ tĩnh
-    loadData();        // Tải dữ liệu động
-});
-        
+            updateStaticText();
+            loadData();
+        });
     </script>
 </body>
 </html>
