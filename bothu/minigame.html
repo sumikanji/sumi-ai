@@ -94,14 +94,48 @@
             box-shadow: 0 3px 0 var(--deep-orange);
             transform: translateY(2px);
         }
+        .mode-btn-small {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 8px 16px;
+    border-radius: 15px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    opacity: 0.8;
+}
+
+/* khi nút được chọn - chuyển sang màu cam candy */
+.mode-btn-small.active {
+    background-color: var(--candy-orange);
+    color: white;
+    opacity: 1;
+    border-color: white;
+    box-shadow: 0 4px 0px var(--deep-orange);
+    transform: translateY(-2px);
+}
+
+/* hiệu ứng khi nhấn nút */
+.mode-btn-small:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 0px var(--deep-orange);
+}
     </style>
 </head>
 <body>
 
     <header class="game-header">
-        <h1 style="font-family: 'Montserrat'; font-weight: 900; font-size: 18px; text-transform: uppercase;">thử thách nối cặp</h1>
-        <p id="game-status" style="font-size: 11px; opacity: 0.8; margin-top: 5px; font-weight: 700;">chọn trang để bắt đầu luyện tập</p>
-    </header>
+    <h1 id="header-title" style="font-family: 'Montserrat'; font-weight: 900; font-size: 25px; text-transform: uppercase;"></h1>
+    <p id="game-status" style="font-size: 14px; opacity: 0.8; margin-top: 5px; font-weight: 700;"></p>
+    
+    <!-- BỘ CHỌN CHẾ ĐỘ CHƠI -->
+    <div class="flex justify-center gap-2 mt-4">
+        <button id="mode-han-btn" onclick="switchMode('han')" class="mode-btn-small">kanji + hán tự</button>
+        <button id="mode-mean-btn" onclick="switchMode('mean')" class="mode-btn-small">kanji + nghĩa</button>
+    </div>
+</header>
 
     <!-- Khu vực chọn trang -->
     <div class="pagination-container" id="pagination">
@@ -114,118 +148,210 @@
     </div>
 
     <div class="mt-8 flex flex-col items-center gap-4 pb-16">
-        <a href="javascript:history.back()" style="color: var(--forest-green); font-weight: 700; text-decoration: none; font-size: 12px; opacity: 0.5; text-transform: uppercase;">❮ quay lại lộ trình</a>
+    <a href="javascript:history.back()" id="exit-btn" style="color: var(--forest-green); font-weight: 700; text-decoration: none; font-size: 12px; opacity: 0.5; text-transform: uppercase;">
+        ❮ <span id="exit-text">đang tải...</span>
+    </a>
+</div>
+<!-- OVERLAY TỔNG KẾT -->
+<div id="finish-overlay" class="fixed inset-0 bg-white/90 backdrop-blur-md z-50 hidden flex flex-col justify-center items-center text-center p-6">
+    <div class="text-6xl mb-6">🏆</div>
+    <h2 id="finish-title" class="text-3xl font-black text-[#558b2f] uppercase mb-2">hoàn thành!</h2>
+    <p id="finish-desc" class="text-[#8d6e63] font-medium mb-8">bạn đã chinh phục tất cả các bộ thủ trong nhóm này.</p>
+    
+    <div class="flex flex-col gap-4 w-full max-w-xs">
+        <button onclick="location.reload()" id="restart-btn" class="bg-[#ffb74d] text-white py-4 rounded-2xl font-black uppercase shadow-[0_6px_0_#e67e22] border-2 border-white active:translate-y-1 active:shadow-none transition-all">
+            chơi lại từ đầu
+        </button>
+        <button onclick="history.back()" id="back-garden-btn" class="text-[#558b2f] font-bold uppercase tracking-widest text-xs opacity-60">
+            quay lại vườn
+        </button>
     </div>
-
+</div>
     <script>
-        let allRadicals = [];
-        let selectedCards = [];
-        let matchedPairs = 0;
-        let currentSubsetSize = 0;
-        const lang = localStorage.getItem('sumiLang') || 'vi';
+        let gameMode = 'han'; // Mặc định là kanji + hán tự
+let allRadicals = [];
+let globalMatchedIds = new Set();
+let selectedCards = [];
+let currentPageCards = [];
+const lang = localStorage.getItem('sumiLang') || 'vi';
 
-        async function initGame() {
-            try {
-                const params = new URLSearchParams(window.location.search);
-                const targetId = params.get('id') || "0";
-                
-                const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
-                const data = await res.json();
-                
-                // Lọc dữ liệu nhóm bộ thủ
-                allRadicals = data.radicals.filter(r => r.level_id == parseInt(targetId));
-                
-                renderPagination();
-                loadPage(0); // Mặc định vào trang 1
-            } catch (e) { console.error("Lỗi:", e); }
+const labels = {
+    "vi": {
+        "mode_han": "kanji + hán tự",
+        "mode_mean": "kanji + nghĩa",
+        "header": "thử thách nối cặp",
+        "initStatus": "chọn trang để bắt đầu",
+        "playing": "đang chơi trang",
+        "pairs": "cặp",
+        "complete": "🎉 trang này đã xong!",
+        "page": "trang",
+        "exit": "quay lại lộ trình",
+        "f_title": "tuyệt vời!",
+        "f_desc": "bạn đã chinh phục toàn bộ bộ thủ nhóm này.",
+        "f_again": "chơi lại từ đầu",
+        "f_back": "quay lại vườn"
+    },
+    "en": {
+        "mode_han": "kanji + sino",
+        "mode_mean": "kanji + meaning",
+        "header": "matching challenge",
+        "initStatus": "select a page to start",
+        "playing": "playing page",
+        "pairs": "pairs",
+        "complete": "🎉 page completed!",
+        "page": "page",
+        "exit": "back to path",
+        "f_title": "congratulations!",
+        "f_desc": "you mastered all radicals in this group.",
+        "f_again": "play again",
+        "f_back": "back to garden"
+    }
+};
+function switchMode(mode) {
+    if (gameMode === mode) return;
+    gameMode = mode;
+    
+    // Cập nhật giao diện nút
+    document.getElementById('mode-han-btn').classList.toggle('active', mode === 'han');
+    document.getElementById('mode-mean-btn').classList.toggle('active', mode === 'mean');
+    
+    // Reset tiến trình khi đổi chế độ (hoặc giữ lại tùy bạn, ở đây tôi reset để thử thách mới)
+    globalMatchedIds.clear();
+    
+    // Load lại trang hiện tại với chế độ mới
+    const activePage = parseInt(document.querySelector('.page-btn.active').id.replace('page-btn-', ''));
+    loadPage(activePage);
+}
+async function initGame() {
+    document.getElementById('header-title').innerText = labels[lang].header;
+    document.getElementById('game-status').innerText = labels[lang].initStatus;
+    document.getElementById('exit-text').innerText = labels[lang].exit;
+    document.getElementById('mode-han-btn').innerText = labels[lang].mode_han;
+    document.getElementById('mode-mean-btn').innerText = labels[lang].mode_mean;
+    document.getElementById('mode-han-btn').classList.add('active');
+
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const targetId = params.get('id') || "0";
+        const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
+        const data = await res.json();
+        
+        allRadicals = data.radicals.filter(r => r.level_id == parseInt(targetId));
+        
+        renderPagination();
+        loadPage(0);
+    } catch (e) { console.error("Lỗi:", e); }
+}
+
+function renderPagination() {
+    const pagination = document.getElementById('pagination');
+    const totalPages = Math.ceil(allRadicals.length / 6);
+    pagination.innerHTML = '';
+    for (let i = 0; i < totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'page-btn';
+        btn.innerText = `${labels[lang].page} ${i + 1}`;
+        btn.onclick = () => loadPage(i);
+        btn.id = `page-btn-${i}`;
+        pagination.appendChild(btn);
+    }
+}
+
+function loadPage(pageIndex) {
+    document.querySelectorAll('.page-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`page-btn-${pageIndex}`).classList.add('active');
+
+    const start = pageIndex * 6;
+    const subset = allRadicals.slice(start, start + 6);
+    selectedCards = [];
+
+    document.getElementById('game-status').innerText = 
+        `${labels[lang].playing} ${pageIndex + 1} (${subset.length} ${labels[lang].pairs})`;
+
+    currentPageCards = [];
+    subset.forEach(item => {
+        // Thẻ 1 luôn là Kanji
+        currentPageCards.push({ id: item.radical, type: 'kanji', content: item.radical.split(' ')[0] });
+        
+        // Thẻ 2 thay đổi theo chế độ chơi
+        const secondContent = (gameMode === 'han') ? item.han_viet : item.meanings[lang];
+        currentPageCards.push({ id: item.radical, type: 'second', content: secondContent });
+    });
+
+    currentPageCards.sort(() => 0.5 - Math.random());
+    renderGrid();
+    checkPageComplete(subset);
+}
+
+function renderGrid() {
+    const grid = document.getElementById('game-grid');
+    grid.innerHTML = '';
+    currentPageCards.forEach(cardData => {
+        const card = document.createElement('div');
+        card.className = 'match-card';
+        // Nếu ID đã nằm trong danh sách globalMatchedIds thì ẩn thẻ đi
+        if (globalMatchedIds.has(cardData.id)) {
+            card.classList.add('matched');
         }
+        
+        card.dataset.id = cardData.id;
+        card.dataset.type = cardData.type;
+        const contentClass = cardData.type === 'kanji' ? 'kanji-text' : 'meaning-text';
+        card.innerHTML = `<span class="${contentClass}">${cardData.content}</span>`;
+        card.addEventListener('click', selectCard);
+        grid.appendChild(card);
+    });
+}
 
-        function renderPagination() {
-            const pagination = document.getElementById('pagination');
-            const totalPages = Math.ceil(allRadicals.length / 6);
-            
-            pagination.innerHTML = '';
-            for (let i = 0; i < totalPages; i++) {
-                const btn = document.createElement('button');
-                btn.className = 'page-btn';
-                btn.innerText = `trang ${i + 1}`;
-                btn.onclick = () => loadPage(i);
-                btn.id = `page-btn-${i}`;
-                pagination.appendChild(btn);
-            }
-        }
+function selectCard() {
+    if (this.classList.contains('selected') || this.classList.contains('matched')) return;
+    this.classList.add('selected');
+    selectedCards.push(this);
 
-        function loadPage(pageIndex) {
-            // Cập nhật trạng thái nút bấm
-            document.querySelectorAll('.page-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`page-btn-${pageIndex}`).classList.add('active');
-
-            // Lấy 6 bộ thủ của trang đó
-            const start = pageIndex * 6;
-            const subset = allRadicals.slice(start, start + 6);
-            currentSubsetSize = subset.length;
-            matchedPairs = 0;
-            selectedCards = [];
-
-            document.getElementById('game-status').innerText = `đang chơi trang ${pageIndex + 1} (${subset.length} cặp)`;
-
-            // Tạo danh sách thẻ chữ và nghĩa
-            let gameCards = [];
-            subset.forEach(item => {
-                gameCards.push({ id: item.radical, type: 'kanji', content: item.radical.split(' ')[0] });
-                gameCards.push({ id: item.radical, type: 'meaning', content: item.meanings[lang] });
-            });
-
-            // Xáo trộn vị trí
-            gameCards.sort(() => 0.5 - Math.random());
-            renderGrid(gameCards);
-        }
-
-        function renderGrid(cards) {
-            const grid = document.getElementById('game-grid');
-            grid.innerHTML = '';
-            cards.forEach(cardData => {
-                const card = document.createElement('div');
-                card.className = 'match-card';
-                card.dataset.id = cardData.id;
-                card.dataset.type = cardData.type;
+    if (selectedCards.length === 2) {
+        const [c1, c2] = selectedCards;
+        if (c1.dataset.id === c2.dataset.id && c1.dataset.type !== c2.dataset.type) {
+            setTimeout(() => {
+                c1.classList.add('matched');
+                c2.classList.add('matched');
+                globalMatchedIds.add(c1.dataset.id); // Lưu vào bộ nhớ chung
                 
-                const contentClass = cardData.type === 'kanji' ? 'kanji-text' : 'meaning-text';
-                card.innerHTML = `<span class="${contentClass}">${cardData.content}</span>`;
-                
-                card.addEventListener('click', selectCard);
-                grid.appendChild(card);
-            });
+                checkFinish();
+                selectedCards = [];
+            }, 300);
+        } else {
+            setTimeout(() => {
+                c1.classList.remove('selected');
+                c2.classList.remove('selected');
+                selectedCards = [];
+            }, 400);
         }
+    }
+}
 
-        function selectCard() {
-            if (this.classList.contains('selected') || this.classList.contains('matched')) return;
-            this.classList.add('selected');
-            selectedCards.push(this);
+function checkPageComplete(subset) {
+    const isAllMatched = subset.every(item => globalMatchedIds.has(item.radical));
+    if (isAllMatched) {
+        document.getElementById('game-status').innerText = labels[lang].complete;
+    }
+}
 
-            if (selectedCards.length === 2) {
-                const [c1, c2] = selectedCards;
-                if (c1.dataset.id === c2.dataset.id && c1.dataset.type !== c2.dataset.type) {
-                    setTimeout(() => {
-                        c1.classList.add('matched');
-                        c2.classList.add('matched');
-                        matchedPairs++;
-                        if (matchedPairs === currentSubsetSize) {
-                            document.getElementById('game-status').innerText = "🎉 hoàn thành trang này! hãy chọn trang khác nhé.";
-                        }
-                        selectedCards = [];
-                    }, 300);
-                } else {
-                    setTimeout(() => {
-                        c1.classList.remove('selected');
-                        c2.classList.remove('selected');
-                        selectedCards = [];
-                    }, 400);
-                }
-            }
-        }
+function checkFinish() {
+    if (globalMatchedIds.size === allRadicals.length) {
+        showFinishOverlay();
+    }
+}
 
-        window.onload = initGame;
+function showFinishOverlay() {
+    const overlay = document.getElementById('finish-overlay');
+    document.getElementById('finish-title').innerText = labels[lang].f_title;
+    document.getElementById('finish-desc').innerText = labels[lang].f_desc;
+    document.getElementById('restart-btn').innerText = labels[lang].f_again;
+    document.getElementById('back-garden-btn').innerText = labels[lang].f_back;
+    overlay.classList.remove('hidden');
+}
+
+window.onload = initGame;
     </script>
 </body>
 </html>

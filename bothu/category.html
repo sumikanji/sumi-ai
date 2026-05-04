@@ -208,14 +208,17 @@
 <header class="garden-header">
     <!-- Nút quay lại đã sửa để không chồng chữ -->
     <a href="bothu.html" class="btn-back-mini">
-        ❮ quay lại vườn
-    </a>
+    ❮ <span id="back-btn-text">đang tải...</span>
+</a>
     
     <div class="flex flex-col items-center">
         <h1 id="cat-main-name" class="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none">
             đang tải...
         </h1>
         <p id="cat-subtitle-name">đang tải...</p>
+<!-- Tăng margin-top (mt-4) để tạo khoảng cách thoáng hơn -->
+<p id="total-radicals" class="text-[12px] opacity-70 font-bold mt-4 tracking-widest uppercase"></p>
+        
     </div>
 </header>
 
@@ -226,7 +229,7 @@
 <div class="flex justify-center mt-12 mb-10 px-4">
     <a href="practice-modes.html" class="practice-btn" id="btn-start-practice">
         <span class="btn-icon">🔥</span>
-        bắt đầu luyện tập thôi nào
+        <span id="practice-text">đang tải...</span>
     </a>
 </div>
 <footer class="mt-16 text-center opacity-30 text-[10px] font-black uppercase tracking-[0.3em] pb-10">
@@ -256,6 +259,11 @@ async function renderGarden() {
         const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
         const data = await res.json();
         const filtered = data.radicals.filter(r => r.level_id == parseInt(targetId));
+        // đếm số lượng và hiển thị
+const totalElem = document.getElementById('total-radicals');
+if (totalElem) {
+    totalElem.innerText = lang === 'vi' ? `có ${filtered.length} bộ thủ` : `${filtered.length} radicals total`;
+}
         const container = document.getElementById('garden-container');
         container.innerHTML = '';
 
@@ -301,7 +309,7 @@ async function renderGarden() {
                 </div>
 
                 <div class="card-content pl-2">
-                    <h4 class="text-lg font-black text-[#558b2f] uppercase leading-none">BỘ ${item.han_viet}</h4>
+                    <h4 class="text-lg font-black text-[#558b2f] uppercase leading-none">${item.han_viet}</h4>
                     <p class="text-[14px] font-bold text-[#8d6e63] italic mt-1">${item.meanings[lang]}</p>
                     
                     <div class="example-pill">
@@ -350,6 +358,22 @@ function updateTitles(targetId, lang) {
         "0": "human & body", "1": "nature & elements", "2": "movement & space",
         "3": "society & objects", "4": "animals & fauna", "5": "tools & weapons", "6": "abstract & forms"
     };
+    // định nghĩa nội dung nút luyện tập theo ngôn ngữ
+    const practiceLabels = {
+        "vi": "bắt đầu luyện tập thôi nào",
+        "en": "let's start practicing"
+    };
+    // định nghĩa nội dung cho nút quay lại và nút luyện tập
+    const labels = {
+        "vi": {
+            "back": "quay lại vườn",
+            "practice": "bắt đầu luyện tập thôi nào"
+        },
+        "en": {
+            "back": "back to garden",
+            "practice": "let's start practicing"
+        }
+    };
     const subNames = {
         "vi": {
             "0": "con người & cơ thể", "1": "thiên nhiên & yếu tố", "2": "chuyển động & không gian",
@@ -362,6 +386,17 @@ function updateTitles(targetId, lang) {
     };
     document.getElementById('cat-main-name').innerText = mainNames[targetId] || "group";
     document.getElementById('cat-subtitle-name').innerText = subNames[lang][targetId] || "";
+    // Cập nhật chữ nút quay lại
+    const backBtnElem = document.getElementById('back-btn-text');
+    if (backBtnElem) {
+        backBtnElem.innerText = labels[lang].back;
+    }
+    // cập nhật văn bản cho nút luyện tập dựa trên lang
+    const practiceTextElem = document.getElementById('practice-text');
+    if (practiceTextElem) {
+        practiceTextElem.innerText = practiceLabels[lang] || practiceLabels["vi"];
+    }
+
 }
 
 function changeLanguage(lang) {

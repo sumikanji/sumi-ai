@@ -2,10 +2,10 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumi AI - Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sumi AI - Quiz Challenge</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Be+Vietnam+Pro:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Be+Vietnam+Pro:wght@100;300;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --forest-green: #558b2f;
@@ -22,77 +22,96 @@
             font-family: 'Be Vietnam Pro', sans-serif;
             text-transform: lowercase; margin: 0; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
         }
 
-        /* BANNER GỌN GÀNG */
         .header-quiz {
             background-color: var(--forest-green); color: white;
-            padding: 15px 30px; border-radius: 0 0 30px 30px;
+            padding: 20px 25px; border-radius: 0 0 35px 35px;
             border: 3px solid white; border-top: none; text-align: center;
-            box-shadow: 0 10px 30px rgba(85, 139, 47, 0.1);
-            width: fit-content; min-width: 260px;
-            position: relative; z-index: 20;
+            box-shadow: 0 10px 30px rgba(85, 139, 47, 0.2);
+            width: 100%; max-width: 1024px;
         }
 
-        /* THANH DÒNG CHẢY MÀU CAM - KHÔNG BÓNG NƯỚC */
+        /* NÚT CHẾ ĐỘ MÀU CAM */
+        .mode-btn-small {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white; font-size: 10px; font-weight: 900;
+            padding: 8px 14px; border-radius: 15px;
+            text-transform: uppercase; transition: all 0.2s;
+            opacity: 0.8;
+        }
+
+        .mode-btn-small.active {
+            background-color: var(--candy-orange);
+            color: white; opacity: 1;
+            box-shadow: 0 4px 0px var(--deep-orange);
+            transform: translateY(-2px);
+        }
+
+        /* PROGRESS BAR */
         .outer-progress-container {
             width: 85%; max-width: 400px;
-            height: 14px; background: white;
-            border-radius: 50px; margin: 30px 0 20px;
-            position: relative; border: 2px solid var(--candy-orange);
-            overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            height: 10px; background: white;
+            border-radius: 50px; margin: 25px 0 15px;
+            border: 2px solid var(--candy-orange);
+            overflow: hidden;
         }
 
         .progress-bar {
             height: 100%; width: 0%;
             background: linear-gradient(90deg, var(--candy-orange), var(--deep-orange));
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 50px;
+            transition: width 0.4s ease;
         }
 
-        /* KHUNG CÂU HỎI */
+        /* CARD CÂU HỎI */
         .quiz-card {
-            background: white; border-radius: 40px;
-            width: 90%; max-width: 500px; padding: 40px 20px;
-            border: 4px solid #f9d9a5; box-shadow: 0 15px 0 #f3c677;
-            text-align: center; margin-bottom: 25px;
-            min-height: 280px; display: flex; flex-direction: column; justify-content: center;
+            background: white; border-radius: 35px;
+            width: 90%; max-width: 450px; padding: 30px 15px;
+            border: 3px solid #f9d9a5; box-shadow: 0 12px 0 #f3c677;
+            text-align: center; margin-bottom: 20px;
+            min-height: 220px; display: flex; flex-direction: column; justify-content: center;
         }
 
         #kanji-question {
-            font-size: 7rem; font-weight: 700 !important;
-            color: var(--forest-green); line-height: 1; margin-bottom: 10px;
+            font-size: 5.5rem; font-weight: 900;
+            color: var(--forest-green); line-height: 1;
         }
 
         /* NÚT ĐÁP ÁN */
         .answer-btn {
-            background: white; border: 2px solid #eee;
-            padding: 18px; border-radius: 20px;
+            background: white; border: 2px solid #f0f0f0;
+            padding: 16px; border-radius: 20px;
             font-weight: 700; color: #8d6e63; width: 100%;
-            font-size: 1.1rem; transition: all 0.2s;
-            box-shadow: 0 5px 0 #eee; cursor: pointer; margin-bottom: 12px;
-            text-align: center; display: block;
+            font-size: 1rem; transition: all 0.2s;
+            box-shadow: 0 5px 0 #f0f0f0; cursor: pointer; margin-bottom: 10px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .answer-btn.correct { background: var(--forest-green) !important; color: white !important; box-shadow: 0 5px 0 #33691e !important; border-color: white !important; }
         .answer-btn.wrong { background: #e74c3c !important; color: white !important; box-shadow: 0 5px 0 #c0392b !important; border-color: white !important; }
 
         .btn-restart {
-            background-color: var(--forest-green); color: white;
-            padding: 16px 32px; border-radius: 50px;
+            background-color: var(--candy-orange); color: white;
+            padding: 14px 28px; border-radius: 50px;
             font-weight: 900; text-transform: uppercase;
-            box-shadow: 0 6px 0 #33691e; border: 2px solid white;
-            cursor: pointer; margin-top: 20px; display: inline-block; font-size: 14px;
+            box-shadow: 0 6px 0 var(--deep-orange); border: 2px solid white;
+            font-size: 13px;
         }
-
-        .btn-restart:active { transform: translateY(4px); box-shadow: 0 2px 0 #33691e; }
     </style>
 </head>
 <body>
 
     <header class="header-quiz">
-        <h1 style="font-family: 'Montserrat'; font-weight: 900; font-size: 16px; text-transform: uppercase;">trắc nghiệm ý nghĩa</h1>
-        <p id="quiz-progress" style="font-size: 10px; opacity: 0.6; margin-top: 2px; font-weight: 700;">đang nạp...</p>
+        <h1 id="label-title" class="font-black text-[25px] uppercase tracking-tighter"></h1>
+        <p id="quiz-progress" class="text-[13px] font-black opacity-60 mt-1 uppercase"></p>
+        
+        <!-- CHỌN CHẾ ĐỘ -->
+        <div class="flex justify-center gap-2 mt-5">
+            <button id="mode-han-btn" onclick="switchMode('han')" class="mode-btn-small active"></button>
+            <button id="mode-mean-btn" onclick="switchMode('mean')" class="mode-btn-small"></button>
+        </div>
     </header>
 
     <div class="outer-progress-container" id="p-container">
@@ -100,73 +119,153 @@
     </div>
 
     <div class="quiz-card" id="quiz-main-card">
-        <div id="kanji-question-container">
+        <div id="quiz-content">
             <div id="kanji-question">...</div>
-            <p id="question-text" style="color: #a8a7a7; font-weight: 700; font-size: 13px;">bộ này có nghĩa là gì?</p>
+            <p id="label-question" class="text-[#a8a7a7] font-bold text-[12px] mt-2"></p>
         </div>
     </div>
 
-    <div id="answer-options" style="width: 90%; max-width: 500px;"></div>
+    <div id="answer-options" class="w-[90%] max-w-[450px]"></div>
 
     <div class="mt-6 mb-10">
-        <a href="javascript:history.back()" style="color: var(--forest-green); font-weight: 700; text-decoration: none; font-size: 11px; opacity: 0.4; text-transform: uppercase;">❮ quay lại lộ trình</a>
+        <a href="javascript:history.back()" id="label-back" class="text-[#558b2f] font-black text-[11px] opacity-40 uppercase no-underline tracking-widest"></a>
+    </div>
+
+    <!-- OVERLAY KẾT QUẢ -->
+    <div id="finish-overlay" class="fixed inset-0 bg-white/95 backdrop-blur-md z-50 hidden flex flex-col justify-center items-center text-center p-8">
+        <div class="text-7xl mb-6">🌱</div>
+        <h2 id="f-title" class="text-3xl font-black text-[#558b2f] uppercase mb-2"></h2>
+        <div class="flex justify-around bg-[#f1f8e9] p-5 rounded-3xl border-2 border-dashed border-[#c5e1a5] w-full max-w-xs my-6">
+            <div><p id="l-correct" class="text-[9px] font-black opacity-40 uppercase"></p><p id="res-correct" class="text-2xl font-black text-forest-green"></p></div>
+            <div class="border-x border-gray-200 px-6"><p id="l-rate" class="text-[9px] font-black opacity-40 uppercase"></p><p id="res-rate" class="text-2xl font-black text-[#e67e22]"></p></div>
+            <div><p id="l-wrong" class="text-[9px] font-black opacity-40 uppercase"></p><p id="res-wrong" class="text-2xl font-black text-[#e74c3c]"></p></div>
+        </div>
+        <div class="flex flex-col gap-4 w-full max-w-xs">
+            <button onclick="location.reload()" id="f-again" class="btn-restart"></button>
+            <button onclick="history.back()" id="f-back" class="text-[#558b2f] font-bold uppercase tracking-widest text-[11px] opacity-60"></button>
+        </div>
     </div>
 
     <script>
         let quizData = [];
-        let allMeanings = [];
+        let allOptionsPool = [];
         let currentIndex = 0;
         let correctCount = 0;
         let wrongCount = 0;
+        let gameMode = 'han'; // 'han' hoặc 'mean'
         const lang = localStorage.getItem('sumiLang') || 'vi';
 
+        const i18n = {
+            vi: {
+                title: "trắc nghiệm bộ thủ",
+                q_han: "hán việt của bộ này là gì?",
+                q_mean: "ý nghĩa của bộ này là gì?",
+                back: "❮ quay lại lộ trình",
+                mode_han: "hán việt",
+                mode_mean: "ý nghĩa",
+                loading: "đang nạp...",
+                empty: "không có dữ liệu",
+                result: "kết quả",
+                correct: "đúng",
+                wrong: "sai",
+                rate: "tỉ lệ",
+                again: "ôn tập lại",
+                exit: "thoát",
+                step: "câu"
+            },
+            en: {
+                title: "radical quiz",
+                q_han: "what is the sino-viet reading?",
+                q_mean: "what is the meaning?",
+                back: "❮ back to path",
+                mode_han: "sino-viet",
+                mode_mean: "meaning",
+                loading: "loading...",
+                empty: "no data",
+                result: "result",
+                correct: "correct",
+                wrong: "wrong",
+                rate: "rate",
+                again: "try again",
+                exit: "exit",
+                step: "step"
+            }
+        };
+
+        const t = i18n[lang];
+
         async function initQuiz() {
+            document.getElementById('label-title').innerText = t.title;
+            document.getElementById('label-back').innerText = t.back;
+            document.getElementById('mode-han-btn').innerText = t.mode_han;
+            document.getElementById('mode-mean-btn').innerText = t.mode_mean;
+            document.getElementById('quiz-progress').innerText = t.loading;
+
             try {
                 const params = new URLSearchParams(window.location.search);
                 const targetId = params.get('id') || "0";
-                
                 const res = await fetch('sumi_ai_FULL_DATA_multi_lang.json');
-                if (!res.ok) throw new Error();
                 const data = await res.json();
                 
                 const filtered = data.radicals.filter(r => parseInt(r.level_id) === parseInt(targetId));
                 if (filtered.length === 0) {
-                    document.getElementById('quiz-progress').innerText = "không có dữ liệu";
+                    document.getElementById('quiz-progress').innerText = t.empty;
                     return;
                 }
 
                 quizData = filtered.sort(() => 0.5 - Math.random());
-                allMeanings = data.radicals.map(r => r.meanings[lang] || r.meanings['vi']);
+                // Tạo pool đáp án dựa trên chế độ
+                updateOptionsPool(data.radicals);
                 renderQuestion();
-            } catch (e) {
-                document.getElementById('quiz-progress').innerText = "lỗi nạp dữ liệu!";
+            } catch (e) { console.error(e); }
+        }
+
+        function updateOptionsPool(allData) {
+            if (gameMode === 'han') {
+                allOptionsPool = allData.map(r => r.han_viet);
+                document.getElementById('label-question').innerText = t.q_han;
+            } else {
+                allOptionsPool = allData.map(r => r.meanings[lang] || r.meanings['vi']);
+                document.getElementById('label-question').innerText = t.q_mean;
             }
         }
 
-        function updateProgressBar() {
-            const progressBar = document.getElementById('progress-bar');
-            if (progressBar && quizData.length > 0) {
-                const percentage = (currentIndex / quizData.length) * 100;
-                progressBar.style.width = percentage + "%";
-            }
+        function switchMode(mode) {
+            if (gameMode === mode) return;
+            gameMode = mode;
+            document.getElementById('mode-han-btn').classList.toggle('active', mode === 'han');
+            document.getElementById('mode-mean-btn').classList.toggle('active', mode === 'mean');
+            
+            // Reset game khi đổi chế độ
+            currentIndex = 0; correctCount = 0; wrongCount = 0;
+            quizData.sort(() => 0.5 - Math.random());
+            
+            // Cập nhật lại pool đáp án và render
+            fetch('sumi_ai_FULL_DATA_multi_lang.json').then(res => res.json()).then(data => {
+                updateOptionsPool(data.radicals);
+                renderQuestion();
+            });
         }
 
         function renderQuestion() {
-            updateProgressBar();
+            const percentage = (currentIndex / quizData.length) * 100;
+            document.getElementById('progress-bar').style.width = percentage + "%";
+
             if (currentIndex >= quizData.length) {
                 showResult();
                 return;
             }
 
-            const currentItem = quizData[currentIndex];
-            document.getElementById('kanji-question').innerText = currentItem.radical.split(' ')[0];
-            document.getElementById('quiz-progress').innerText = `câu ${currentIndex + 1} / ${quizData.length}`;
+            const item = quizData[currentIndex];
+            document.getElementById('kanji-question').innerText = item.radical.split(' ')[0];
+            document.getElementById('quiz-progress').innerText = `${t.step} ${currentIndex + 1} / ${quizData.length}`;
 
-            const correct = currentItem.meanings[lang] || currentItem.meanings['vi'];
+            const correct = (gameMode === 'han') ? item.han_viet : (item.meanings[lang] || item.meanings['vi']);
+            
             let options = [correct];
             while (options.length < 4) {
-                const random = allMeanings[Math.floor(Math.random() * allMeanings.length)];
-                if (!options.includes(random)) options.push(random);
+                const random = allOptionsPool[Math.floor(Math.random() * allOptionsPool.length)];
+                if (!options.includes(random) && random !== "") options.push(random);
             }
             options.sort(() => 0.5 - Math.random());
 
@@ -197,42 +296,24 @@
             setTimeout(() => {
                 currentIndex++;
                 renderQuestion();
-            }, 1000);
+            }, 800);
         }
 
         function showResult() {
+            const overlay = document.getElementById('finish-overlay');
             const accuracy = Math.round((correctCount / quizData.length) * 100);
-            document.getElementById('answer-options').innerHTML = '';
-            document.getElementById('quiz-progress').innerText = "hoàn thành";
-            document.getElementById('p-container').style.display = 'none';
             
-            document.getElementById('quiz-main-card').innerHTML = `
-                <div class="py-2">
-                    <h2 style="font-family: 'Montserrat'; font-weight: 900; font-size: 20px; color: var(--forest-green); text-transform: uppercase;">kết quả</h2>
-                    <div class="flex justify-around my-6 bg-soft-green p-6 rounded-3xl border-2 border-dashed border-[#c5e1a5]">
-                        <div class="text-center"><p class="text-[9px] font-black opacity-40 uppercase">đúng</p><p class="text-2xl font-black text-forest-green">${correctCount}</p></div>
-                        <div class="text-center border-x border-gray-200 px-6"><p class="text-[9px] font-black opacity-40 uppercase">tỉ lệ</p><p class="text-2xl font-black text-candy-orange">${accuracy}%</p></div>
-                        <div class="text-center"><p class="text-[9px] font-black opacity-40 uppercase">sai</p><p class="text-2xl font-black text-[#e74c3c]">${wrongCount}</p></div>
-                    </div>
-                    <div class="flex flex-col gap-3 items-center">
-                        <button onclick="restartQuiz()" class="btn-restart">ôn tập lại nhóm này</button>
-                        <a href="javascript:history.back()" class="mt-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">thoát</a>
-                    </div>
-                </div>
-            `;
-        }
+            document.getElementById('f-title').innerText = t.result;
+            document.getElementById('l-correct').innerText = t.correct;
+            document.getElementById('res-correct').innerText = correctCount;
+            document.getElementById('l-rate').innerText = t.rate;
+            document.getElementById('res-rate').innerText = `${accuracy}%`;
+            document.getElementById('l-wrong').innerText = t.wrong;
+            document.getElementById('res-wrong').innerText = wrongCount;
+            document.getElementById('f-again').innerText = t.again;
+            document.getElementById('f-back').innerText = t.exit;
 
-        function restartQuiz() {
-            currentIndex = 0; correctCount = 0; wrongCount = 0;
-            quizData.sort(() => 0.5 - Math.random());
-            document.getElementById('p-container').style.display = 'block';
-            document.getElementById('quiz-main-card').innerHTML = `
-                <div id="kanji-question-container">
-                    <div id="kanji-question">...</div>
-                    <p id="question-text" style="color: #a8a7a7; font-weight: 700; font-size: 13px;">bộ này có nghĩa là gì?</p>
-                </div>
-            `;
-            renderQuestion();
+            overlay.classList.remove('hidden');
         }
 
         document.addEventListener('DOMContentLoaded', initQuiz);

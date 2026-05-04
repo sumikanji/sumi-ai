@@ -293,17 +293,19 @@
                 <br><span class="opacity-80">👉 Một người tựa lưng vào gốc cây để nghỉ ngơi.</span>
             </p>
         </div>
+        
     </div>
 
     <button class="btn-start" 
-            data-vi="Bắt đầu gieo hạt ngay! 🚀" 
-            data-en="Start sowing seeds now! 🚀">
-        Bắt đầu gieo hạt ngay! 🚀
-    </button>
+        onclick="scrollToRadicals()"
+        data-vi="Bắt đầu gieo hạt ngay! " 
+        data-en="Start sowing seeds now! ">
+    Bắt đầu gieo hạt ngay! 
+</button>
 </header>
 
     <!-- DANH SÁCH THẺ SVG -->
-    <section class="radicals-grid">
+   <section id="radicals-list" class="radicals-grid">
         
     <!-- 1. Human & Body -->
     <a href="category.html?id=0" class="category-card">
@@ -385,7 +387,7 @@
 </section>
 
     <footer class="mt-16 text-center opacity-30 text-[10px] font-black uppercase tracking-[0.3em] pb-10">
-        sumi ai farm • master radicals collection
+        sumi kanji farm • master radicals collection
     </footer>
 <script>
     function changeLanguage(lang) {
@@ -439,6 +441,15 @@
             });
         });
     }
+    function scrollToRadicals() {
+    const target = document.getElementById('radicals-list');
+    if (target) {
+        target.scrollIntoView({ 
+            behavior: 'smooth', // Cuộn mượt mà
+            block: 'start'      // Bắt đầu từ đầu vùng danh sách
+        });
+    }
+}
 
     // Chạy khi trang tải xong
     window.onload = () => {

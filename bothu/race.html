@@ -2,20 +2,18 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumi Rhythm - Final Finish</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sumi Rhythm - Perfect or Miss</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Be+Vietnam+Pro:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Be+Vietnam+Pro:wght@300;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --forest-green: #558b2f;
             --soft-green: #f1f8e9;
-            --neon-cyan: #00e5ff;
             --perfect-red: #ff1744;
-            --great-green: #2ecc71;
-            --cool-light-blue: #4fc3f7;
-            --bad-deep-pink: #d81b60;
-            --finish-gold: #ffd600;
+            --miss-gray: #757575;
+            --candy-orange: #ffb74d;
+            --deep-orange: #e67e22;
         }
 
         body {
@@ -25,86 +23,86 @@
             font-family: 'Be Vietnam Pro', sans-serif;
             text-transform: lowercase; margin: 0; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
         }
 
-        /* HIỆU ỨNG FINISH MOVE */
-        .finish-mode-card {
-            animation: finishGlow 0.6s infinite alternate;
-            border-color: var(--finish-gold) !important;
-            box-shadow: 0 0 40px var(--finish-gold) !important;
+        .game-header {
+            background-color: var(--forest-green);
+            color: white; padding: 20px;
+            border-radius: 0 0 40px 40px; border: 3px solid white;
+            text-align: center; box-shadow: 0 10px 30px rgba(85, 139, 47, 0.2);
+            width: 100%; max-width: 1024px; margin-bottom: 15px;
         }
 
-        @keyframes finishGlow {
-            from { transform: scale(1); filter: brightness(1); }
-            to { transform: scale(1.02); filter: brightness(1.2); }
+        .mode-btn-small {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white; font-size: 10px; font-weight: 900;
+            padding: 6px 14px; border-radius: 12px;
+            text-transform: uppercase; transition: all 0.2s;
         }
 
-        /* THÔNG BÁO FINISH LỚN */
-        #finish-alert {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-family: 'Montserrat'; font-weight: 900; font-size: 5rem;
-            color: var(--finish-gold); text-shadow: 0 0 20px rgba(0,0,0,0.5);
-            z-index: 100; display: none; white-space: nowrap;
-            pointer-events: none;
+        .mode-btn-small.active {
+            background-color: var(--candy-orange);
+            box-shadow: 0 4px 0px var(--deep-orange);
+            transform: translateY(-2px);
+            opacity: 1;
         }
 
-        .alert-pop { animation: alertPop 1s ease-out forwards; }
-        @keyframes alertPop {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            30% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
-            70% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -150%) scale(0.8); }
+        .time-bar-container {
+            width: 90%; max-width: 450px; height: 12px; background: white;
+            border-radius: 50px; margin: 20px 0; border: 2px solid var(--forest-green);
+            overflow: hidden;
         }
 
-        /* UI CƠ BẢN */
-        .difficulty-wrapper {
+        .time-bar-fill {
+            height: 100%; width: 100%;
+            background: var(--candy-orange);
+            transition: width linear;
+        }
+
+        .difficulty-container {
             background: white; padding: 4px; border-radius: 50px;
-            border: 2px solid var(--forest-green); display: flex; gap: 5px; margin-top: 30px;
+            border: 2px solid var(--forest-green); display: flex; gap: 4px;
         }
+
         .diff-btn {
-            padding: 8px 24px; border-radius: 40px; font-size: 11px; font-weight: 900;
-            text-transform: uppercase; color: var(--forest-green); border: none;
-            background: transparent; cursor: pointer; transition: 0.2s;
+            padding: 6px 20px; border-radius: 40px; font-size: 10px; font-weight: 900;
+            text-transform: uppercase; color: var(--forest-green); background: transparent;
+            border: none; cursor: pointer; transition: all 0.2s;
         }
+
         .diff-btn.active { background: var(--forest-green); color: white; }
 
-        .rhythm-bar {
-            width: 90%; max-width: 450px; height: 35px; background: #1a1a1a;
-            border-radius: 50px; position: relative; margin: 25px 0; overflow: hidden; border: 3px solid #333;
-        }
-        .hit-zone { position: absolute; right: 10%; width: 50px; height: 100%; border-left: 2px solid var(--neon-cyan); }
-        .perfect-glow { position: absolute; right: calc(10% + 22px); width: 4px; height: 100%; background: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); }
-        .runner-ball { position: absolute; left: 0; width: 20px; height: 20px; background: white; border-radius: 50%; top: 50%; transform: translateY(-50%); box-shadow: 0 0 10px white; z-index: 10; }
+        .rank-combo-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; height: 70px; }
+        .rank-label { font-family: 'Montserrat'; font-weight: 900; font-size: 3rem; opacity: 0; }
+        #combo-label { font-family: 'Montserrat'; font-weight: 900; font-size: 2.2rem; color: #ff5722; text-shadow: 2px 2px 0 white; opacity: 0; }
 
-        .rank-combo-wrapper { display: flex; align-items: center; justify-content: center; gap: 20px; height: 100px; }
-        .rank-label { font-family: 'Montserrat'; font-weight: 900; font-size: 3.8rem; opacity: 0; }
-        #combo-label { font-family: 'Montserrat'; font-weight: 900; font-size: 3.2rem; color: #ff5722; text-shadow: 3px 3px 0 white; opacity: 0; }
-
-        .float-up-animation { animation: floatUp 0.9s ease-out forwards; }
+        .float-up-animation { animation: floatUp 0.7s ease-out forwards; }
         @keyframes floatUp {
-            0% { opacity: 0; transform: scale(0.6) translateY(40px); }
+            0% { opacity: 0; transform: scale(0.6) translateY(15px); }
             20% { opacity: 1; transform: scale(1.1) translateY(0); }
-            70% { opacity: 1; transform: scale(1) translateY(-15px); }
-            100% { opacity: 0; transform: translateY(-50px); }
+            100% { opacity: 0; transform: translateY(-30px); }
         }
 
         .quiz-card {
-            background: white; border-radius: 40px; width: 90%; max-width: 500px;
-            padding: 40px 20px; border: 4px solid #f9d9a5; box-shadow: 0 15px 0 #f3c677;
-            text-align: center; margin-bottom: 25px; min-height: 280px; display: flex; flex-direction: column; justify-content: center;
+            background: white; border-radius: 35px; width: 92%; max-width: 450px;
+            padding: 25px 15px; border: 3px solid #f9d9a5; box-shadow: 0 12px 0 #f3c677;
+            text-align: center; margin-bottom: 20px; min-height: 200px; display: flex; flex-direction: column; justify-content: center;
         }
-        #kanji-main { font-size: 7rem; font-weight: 700; color: var(--forest-green); line-height: 1; }
+        #kanji-main { font-size: 5.5rem; font-weight: 900; color: var(--forest-green); line-height: 1; }
 
-        .answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 90%; max-width: 500px; }
-        .btn-rhythm { background: white; border: 2px solid #eee; padding: 20px; border-radius: 20px; box-shadow: 0 5px 0 #eee; cursor: pointer; }
-        .btn-meaning { font-size: 1.1rem; font-weight: 700; color: #8d6e63; }
-        .btn-rhythm:active { transform: translateY(3px); box-shadow: none; }
+        .answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 92%; max-width: 450px; }
+        .btn-rhythm {
+            background: white; border: 2px solid #eee; padding: 18px 10px; border-radius: 20px;
+            box-shadow: 0 5px 0 #eee; cursor: pointer; -webkit-tap-highlight-color: transparent;
+        }
+        .btn-meaning { font-size: 1rem; font-weight: 700; color: #8d6e63; display: block; }
 
-        /* BẢNG KẾT QUẢ */
-        .res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; margin: 20px 0; }
-        .res-item { display: flex; flex-direction: column; align-items: center; background: white; padding: 12px 5px; border-radius: 20px; border: 1px solid #f0f0f0; }
-        .res-label { font-family: 'Montserrat'; font-weight: 900; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.4; color: black; }
-        .res-count { font-family: 'Montserrat'; font-weight: 900; font-size: 1.8rem; line-height: 1; margin-top: 5px; }
+        .res-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; margin: 15px 0; }
+        .res-item { display: flex; flex-direction: column; align-items: center; background: #f9f9f9; padding: 15px 5px; border-radius: 15px; border: 1px solid #f0f0f0; }
+        .res-label { font-family: 'Montserrat'; font-weight: 900; font-size: 0.7rem; text-transform: uppercase; opacity: 0.4; color: black; }
+        .res-count { font-family: 'Montserrat'; font-weight: 900; font-size: 2rem; line-height: 1; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -112,18 +110,25 @@
     <audio id="snd-perfect" src="https://actions.google.com/sounds/v1/cartoon/clink_glasses.ogg"></audio>
     <audio id="snd-miss" src="https://actions.google.com/sounds/v1/cartoon/boing.ogg"></audio>
 
-    <div id="finish-alert">FINISH MOVE</div>
+    <header class="game-header">
+        <div class="flex flex-col items-center mb-4">
+            <h1 id="header-main-title" class="font-black text-[22px] uppercase tracking-tighter leading-none">sumi rhythm</h1>
+            <p id="header-sub-title" class="text-[12px] font-black opacity-80 mt-1 uppercase tracking-widest">speed challenge</p>
+        </div>
+        <div class="flex justify-center gap-2">
+            <button id="mode-han-btn" onclick="switchMode('han')" class="mode-btn-small active"></button>
+            <button id="mode-mean-btn" onclick="switchMode('mean')" class="mode-btn-small"></button>
+        </div>
+    </header>
 
-    <div class="difficulty-wrapper" id="diff-wrap">
-        <button class="diff-btn" onclick="updateSpeed(3000, this)">chậm</button>
-        <button class="diff-btn active" onclick="updateSpeed(2000, this)">vừa</button>
-        <button class="diff-btn" onclick="updateSpeed(1200, this)">nhanh</button>
+    <div class="difficulty-container" id="diff-wrap">
+        <button class="diff-btn" onclick="updateSpeed(4000, this)" id="btn-slow"></button>
+        <button class="diff-btn active" onclick="updateSpeed(3000, this)" id="btn-mid"></button>
+        <button class="diff-btn" onclick="updateSpeed(1500, this)" id="btn-fast"></button>
     </div>
 
-    <div class="rhythm-bar" id="bar-wrap">
-        <div class="hit-zone"></div>
-        <div class="perfect-glow"></div>
-        <div id="runner" class="runner-ball"></div>
+    <div class="time-bar-container" id="time-bar-wrap">
+        <div id="time-fill" class="time-bar-fill"></div>
     </div>
 
     <div class="rank-combo-wrapper" id="rank-wrap">
@@ -133,7 +138,7 @@
 
     <div class="quiz-card" id="quiz-main-card">
         <div id="kanji-main">...</div>
-        <p id="quiz-progress" style="color: #a8a7a7; font-weight: 700; font-size: 13px; margin-top: 10px;">chạm đúng nhịp Perfect!</p>
+        <p id="quiz-status" class="text-[#a8a7a7] font-black text-[11px] mt-2"></p>
     </div>
 
     <div id="answer-options" class="answer-grid"></div>
@@ -142,18 +147,44 @@
         let quizData = [];
         let allPool = [];
         let currentIndex = 0;
-        let speed = 2000;
+        let speed = 3000;
         let combo = 0;
         let maxCombo = 0;
-        let isFinishTime = false;
-
-        const stats = { PERFECT: 0, GREAT: 0, COOL: 0, BAD: 0, MISS: 0 };
-
-        let startTime;
-        let timer;
+        let gameMode = 'han'; 
+        const stats = { PERFECT: 0, MISS: 0 };
+        
         const lang = localStorage.getItem('sumiLang') || 'vi';
+        const i18n = {
+            vi: {
+                status: "trả lời đúng trước khi hết thời gian!",
+                han: "hán việt", mean: "ý nghĩa",
+                slow: "dễ", mid: "vừa", fast: "khó",
+                res_title: "kết quả thử thách",
+                again: "ôn tập lại", back: "quay lại",
+                perfect: "hoàn hảo", miss: "trượt",
+                accuracy: "chính xác"
+            },
+            en: {
+                status: "answer before time runs out!",
+                han: "sino-viet", mean: "meaning",
+                slow: "easy", mid: "mid", fast: "hard",
+                res_title: "challenge result",
+                again: "retry", back: "back",
+                perfect: "perfect", miss: "miss",
+                accuracy: "accuracy"
+            }
+        };
+
+        const t = i18n[lang];
 
         async function init() {
+            document.getElementById('mode-han-btn').innerText = t.han;
+            document.getElementById('mode-mean-btn').innerText = t.mean;
+            document.getElementById('btn-slow').innerText = t.slow;
+            document.getElementById('btn-mid').innerText = t.mid;
+            document.getElementById('btn-fast').innerText = t.fast;
+            document.getElementById('quiz-status').innerText = t.status;
+
             try {
                 const params = new URLSearchParams(window.location.search);
                 const targetId = params.get('id') || "0";
@@ -161,112 +192,79 @@
                 const data = await res.json();
                 allPool = data.radicals;
                 quizData = data.radicals.filter(r => parseInt(r.level_id) === parseInt(targetId));
-                
-                if (quizData.length === 0) {
-                    document.getElementById('quiz-progress').innerText = "không có dữ liệu";
-                    return;
-                }
-
                 quizData.sort(() => 0.5 - Math.random());
                 play();
-            } catch (e) { document.getElementById('quiz-progress').innerText = "lỗi nạp dữ liệu"; }
+            } catch (e) { console.error("Lỗi dữ liệu"); }
         }
 
-        function updateSpeed(ms, btn) {
-            speed = ms; combo = 0; maxCombo = 0; currentIndex = 0;
-            Object.keys(stats).forEach(k => stats[k] = 0);
-            document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        function switchMode(mode) {
+            gameMode = mode;
+            document.getElementById('mode-han-btn').classList.toggle('active', mode === 'han');
+            document.getElementById('mode-mean-btn').classList.toggle('active', mode === 'mean');
+            resetGame();
             play();
         }
 
-        async function play() {
+        function updateSpeed(ms, btn) {
+            speed = ms;
+            document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            resetGame();
+            play();
+        }
+
+        function resetGame() {
+            currentIndex = 0; combo = 0; maxCombo = 0;
+            stats.PERFECT = 0; stats.MISS = 0;
+        }
+
+        function play() {
             if (currentIndex >= quizData.length) {
                 showFinalResult();
                 return;
             }
-
-            const card = document.getElementById('quiz-main-card');
-            const progress = document.getElementById('quiz-progress');
-
-            // KIỂM TRA CÂU HỎI CUỐI CÙNG
-            if (currentIndex === quizData.length - 1) {
-                isFinishTime = true;
-                
-                // Tạm dừng nhịp để chuẩn bị Finish Move
-                document.getElementById('answer-options').innerHTML = '';
-                const alert = document.getElementById('finish-alert');
-                alert.style.display = 'block';
-                alert.classList.add('alert-pop');
-                
-                await new Promise(r => setTimeout(r, 1200));
-                
-                alert.style.display = 'none';
-                alert.classList.remove('alert-pop');
-                card.classList.add('finish-mode-card');
-                progress.innerText = "FINISH MOVE - QUYẾT ĐỊNH!";
-                progress.style.color = "var(--finish-gold)";
-            } else {
-                isFinishTime = false;
-                card.classList.remove('finish-mode-card');
-                progress.innerText = `câu ${currentIndex + 1} / ${quizData.length}`;
-                progress.style.color = "#a8a7a7";
-            }
-
             const item = quizData[currentIndex];
             document.getElementById('kanji-main').innerText = item.radical.split(' ')[0];
-
-            const correctMeaning = item.meanings[lang] || item.meanings['vi'];
-            let opts = [correctMeaning];
+            const correct = (gameMode === 'han') ? item.han_viet : (item.meanings[lang] || item.meanings['vi']);
+            
+            let opts = [correct];
             while(opts.length < 4) {
-                let randomMeaning = allPool[Math.floor(Math.random()*allPool.length)].meanings[lang];
-                if(!opts.includes(randomMeaning)) opts.push(randomMeaning);
+                let rand = allPool[Math.floor(Math.random()*allPool.length)];
+                let randVal = (gameMode === 'han') ? rand.han_viet : (rand.meanings[lang] || rand.meanings['vi']);
+                if(!opts.includes(randVal) && randVal !== "") opts.push(randVal);
             }
             opts.sort(() => 0.5 - Math.random());
-
+            
             const container = document.getElementById('answer-options');
             container.innerHTML = '';
             opts.forEach(o => {
                 const b = document.createElement('button');
                 b.className = 'btn-rhythm';
                 b.innerHTML = `<span class="btn-meaning">${o}</span>`;
-                b.onclick = () => handleInput(o, correctMeaning);
+                b.onclick = () => handleInput(o, correct);
                 container.appendChild(b);
             });
-
-            startBar();
+            startTimeBar();
         }
 
-        function startBar() {
-            const ball = document.getElementById('runner');
-            ball.style.transition = 'none';
-            ball.style.left = '0%';
+        let timer;
+        function startTimeBar() {
+            const fill = document.getElementById('time-fill');
+            fill.style.transition = 'none';
+            fill.style.width = '100%';
             
-            // Finish Move: tốc độ nhanh hơn
-            const currentSpeed = isFinishTime ? speed * 0.7 : speed;
-
             setTimeout(() => {
-                ball.style.transition = `left ${currentSpeed}ms linear`;
-                ball.style.left = '100%';
-                startTime = Date.now();
+                fill.style.transition = `width ${speed}ms linear`;
+                fill.style.width = '0%';
                 clearTimeout(timer);
-                timer = setTimeout(() => processResult('MISS'), currentSpeed);
+                timer = setTimeout(() => processResult('MISS'), speed);
             }, 50);
         }
 
         function handleInput(sel, cor) {
             clearTimeout(timer);
-            const currentSpeed = isFinishTime ? speed * 0.7 : speed;
-            const pos = (Date.now() - startTime) / currentSpeed;
-            
-            if (sel !== cor) processResult('MISS');
-            else {
-                const diff = Math.abs(pos - 0.9);
-                if (diff < 0.05) processResult('PERFECT');
-                else if (diff < 0.12) processResult('GREAT');
-                else if (diff < 0.22) processResult('COOL');
-                else processResult('BAD');
-            }
+            if (sel === cor) processResult('PERFECT');
+            else processResult('MISS');
         }
 
         function processResult(rank) {
@@ -276,60 +274,62 @@
             stats[rank]++;
 
             if (rank === 'PERFECT') {
-                combo++;
-                if (combo > maxCombo) maxCombo = combo;
+                combo++; if (combo > maxCombo) maxCombo = combo;
                 lbl.style.color = 'var(--perfect-red)';
                 document.getElementById('snd-perfect').play();
             } else {
-                combo = 0; 
-                if (rank === 'GREAT') lbl.style.color = 'var(--great-green)';
-                else if (rank === 'COOL') lbl.style.color = 'var(--cool-light-blue)';
-                else if (rank === 'BAD') lbl.style.color = 'var(--bad-deep-pink)';
-                else lbl.style.color = 'var(--perfect-red)';
-                
-                comboLbl.style.opacity = '0';
+                combo = 0;
+                lbl.style.color = 'var(--miss-gray)';
                 document.getElementById('snd-miss').play();
             }
 
-            if (combo > 0) {
-                comboLbl.innerText = `X${combo}`;
-                comboLbl.classList.remove('float-up-animation');
-                void comboLbl.offsetWidth;
-                comboLbl.classList.add('float-up-animation');
+            comboLbl.innerText = `X${combo}`;
+            comboLbl.style.opacity = combo > 1 ? '1' : '0';
+            
+            [lbl, comboLbl].forEach(el => {
+                el.classList.remove('float-up-animation');
+                void el.offsetWidth;
+                el.classList.add('float-up-animation');
+            });
+
+            setTimeout(() => { currentIndex++; play(); }, 800);
+        }
+
+        function goBackSafe() {
+            // Hàm quay lại an toàn
+            if (document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
+                window.history.back();
+            } else {
+                // Thay 'index.html' bằng URL trang chủ của bạn nếu cần
+                window.location.href = 'index.html'; 
             }
-
-            lbl.classList.remove('float-up-animation');
-            void lbl.offsetWidth;
-            lbl.classList.add('float-up-animation');
-
-            setTimeout(() => { currentIndex++; play(); }, 950);
         }
 
         function showFinalResult() {
+            const accuracy = Math.round((stats.PERFECT / quizData.length) * 100);
             document.getElementById('answer-options').innerHTML = '';
-            document.getElementById('bar-wrap').style.display = 'none';
+            document.getElementById('time-bar-wrap').style.display = 'none';
             document.getElementById('rank-wrap').style.display = 'none';
-            document.getElementById('diff-wrap').style.opacity = '0';
-            
             document.getElementById('quiz-main-card').innerHTML = `
-                <div class="result-container text-center">
-                    <h2 class="font-black text-forest-green text-xl uppercase tracking-tighter">hoàn thành lộ trình</h2>
+                <div class="w-full">
+                    <h2 class="font-black text-forest-green text-lg uppercase mb-3">${t.res_title}</h2>
                     <div class="res-grid">
-                        <div class="res-item"><span class="res-label">Perfect</span><span class="res-count text-[#ff1744]">${stats.PERFECT}</span></div>
-                        <div class="res-item"><span class="res-label">Great</span><span class="res-count text-[#2ecc71]">${stats.GREAT}</span></div>
-                        <div class="res-item"><span class="res-label">Cool</span><span class="res-count text-[#4fc3f7]">${stats.COOL}</span></div>
-                        <div class="res-item"><span class="res-label">Bad</span><span class="res-count text-[#d81b60]">${stats.BAD}</span></div>
-                        <div class="res-item"><span class="res-label">Miss</span><span class="res-count text-[#ff1744]">${stats.MISS}</span></div>
-                        <div class="res-item" style="background: #fff3e0;"><span class="res-label" style="color: #e65100; opacity: 0.6;">Combo</span><span class="res-count text-[#ff5722]">x${maxCombo}</span></div>
+                        <div class="res-item"><span class="res-label">${t.perfect}</span><span class="res-count text-[#ff1744]">${stats.PERFECT}</span></div>
+                        <div class="res-item"><span class="res-label">${t.miss}</span><span class="res-count text-gray-500">${stats.MISS}</span></div>
+                        <div class="res-item"><span class="res-label">${t.accuracy}</span><span class="res-count text-[#e67e22]">${accuracy}%</span></div>
+                        <div class="res-item" style="background:#fff3e0; border:none;"><span class="res-label" style="color:#e65100; opacity:0.6;">Combo Max</span><span class="res-count text-[#ff5722]">x${maxCombo}</span></div>
                     </div>
-                    <div class="flex flex-col gap-3 mt-4">
-                        <button onclick="location.reload()" class="bg-forest-green text-white px-10 py-4 rounded-full font-black uppercase text-[11px] tracking-widest active:scale-95 transition-all">ôn tập lại</button>
-                        <button onclick="history.back()" class="bg-white text-forest-green border-2 border-forest-green px-10 py-4 rounded-full font-black uppercase text-[11px] tracking-widest active:scale-95 transition-all">về trang chủ</button>
+                    <div class="flex flex-col gap-3 mt-6">
+                        <button onclick="location.reload()" class="bg-forest-green text-white py-4 rounded-full font-black uppercase text-[12px] tracking-widest active:scale-95 transition-all shadow-md w-full">
+                            ${t.again}
+                        </button>
+                        <button onclick="goBackSafe()" class="bg-white text-forest-green border-2 border-forest-green py-4 rounded-full font-black uppercase text-[12px] tracking-widest active:scale-95 transition-all w-full">
+                            ${t.back}
+                        </button>
                     </div>
                 </div>
             `;
         }
-
         init();
     </script>
 </body>
