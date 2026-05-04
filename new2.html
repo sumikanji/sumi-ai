@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumi Kanji - Responsive Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sumi Kanji - Ultimate Responsive</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
@@ -15,48 +15,50 @@
             --red: #ff8a65;    
             --text: #e0e0e0;
             --border: #333;
-            --muted: #4a4a4a;
+            --muted: #555;
         }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Quicksand', sans-serif;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
             min-height: 100vh;
         }
 
         .workbook {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1100px; /* Max trên PC */
             background: var(--page);
-            border-radius: 40px;
+            border-radius: 30px;
             border: 1px solid var(--border);
             display: flex;
-            flex-direction: column; /* Mặc định dọc (mobile) */
-            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-            position: relative;
+            flex-direction: column; /* Mobile ưu tiên dọc */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             overflow: hidden;
         }
 
-        .page { flex: 1; padding: 40px 25px; display: flex; flex-direction: column; align-items: center; }
+        .page { width: 100%; padding: 30px 20px; display: flex; flex-direction: column; align-items: center; }
 
-        /* --- TRANG TRÁI --- */
+        /* TRANG TRÁI (TOP) */
         .page-left { border-bottom: 1px solid var(--border); perspective: 1000px; }
         
         .jlpt-badge {
-            font-size: 0.7rem; color: var(--muted); border: 1px solid var(--muted);
-            padding: 3px 12px; border-radius: 5px; align-self: flex-start;
-            text-transform: uppercase; margin-bottom: 20px;
+            font-size: 0.65rem; color: var(--muted); border: 1px solid var(--muted);
+            padding: 2px 10px; border-radius: 4px; align-self: flex-start;
+            text-transform: uppercase; margin-bottom: 15px;
         }
 
-        /* Container Thẻ Lật */
+        /* Thẻ lật co giãn theo màn hình */
         .flip-card {
-            width: 280px; height: 350px; /* Size mobile */
+            width: 100%;
+            max-width: 300px; /* Giới hạn độ to trên mobile */
+            aspect-ratio: 4 / 5; /* Giữ tỷ lệ thẻ */
             cursor: pointer; position: relative;
             transform-style: preserve-3d;
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -65,65 +67,66 @@
 
         .card-face {
             position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden; border-radius: 35px;
+            backface-visibility: hidden; border-radius: 30px;
             display: flex; flex-direction: column; align-items: center;
             justify-content: center; border: 2px solid var(--border);
             background: #252525;
+            padding: 20px;
         }
         .card-back { transform: rotateY(180deg); background: #1a1a1a; }
 
+        /* Bộ thủ */
         .radical-garden {
             background: rgba(0,0,0,0.2); padding: 8px 15px;
-            border-radius: 15px; display: flex; gap: 10px;
-            font-size: 1.2rem; font-weight: bold; margin-top: 15px;
+            border-radius: 12px; display: flex; gap: 10px;
+            font-size: 1.1rem; font-weight: bold; margin: 15px 0;
         }
 
-        .am-han-group { text-align: center; margin-top: 15px; }
-        .am-han-text { font-size: 2.2rem; font-weight: 700; color: var(--orange); text-transform: uppercase; margin: 0; }
-        .am-han-mean { font-size: 0.9rem; color: #888; font-style: italic; }
+        .am-han-group { text-align: center; }
+        .am-han-text { font-size: 2rem; font-weight: 700; color: var(--orange); text-transform: uppercase; margin: 0; }
+        .am-han-mean { font-size: 0.85rem; color: #888; font-style: italic; }
 
-        .mnemonic-highlight {
-            margin-top: 30px; background: rgba(255, 138, 101, 0.08);
-            padding: 20px; border-radius: 25px; border-left: 6px solid var(--red);
-            width: 100%; box-sizing: border-box;
+        .mnemonic-box {
+            margin-top: 20px; background: rgba(255, 138, 101, 0.08);
+            padding: 20px; border-radius: 20px; border-left: 5px solid var(--red);
+            width: 100%; font-size: 0.95rem; line-height: 1.6;
         }
-        .mnemonic-highlight p { font-size: 1rem; line-height: 1.6; margin: 0; color: #fff; }
 
-        /* --- TRANG PHẢI --- */
-        .page-right { background: #161616; width: 100%; }
-        .read-info { display: flex; width: 100%; gap: 10px; margin-bottom: 25px; }
+        /* TRANG PHẢI (BOTTOM) */
+        .page-right { background: #161616; padding-bottom: 50px; }
+        .read-row { display: flex; width: 100%; gap: 10px; margin-bottom: 25px; }
         .read-box { flex: 1; padding: 10px; border-bottom: 2px solid #333; }
         .label { font-size: 0.6rem; color: #555; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        .value { font-size: 1.2rem; font-weight: 700; color: var(--green); }
+        .value { font-size: 1.1rem; font-weight: 700; color: var(--green); }
 
-        ruby { font-size: 1.8rem; font-weight: 700; color: #fff; }
-        rt { font-size: 0.8rem; color: var(--orange); }
-        .vocab-item { background: rgba(255,255,255,0.02); padding: 18px; border-radius: 20px; margin-bottom: 15px; border: 1px solid #2a2a2a; width: 100%; box-sizing: border-box; }
-        .v-ex { display: block; margin-top: 10px; color: #888; font-size: 0.9rem; line-height: 1.5; }
+        /* Từ vựng */
+        .vocab-item { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 20px; margin-bottom: 12px; border: 1px solid #2a2a2a; width: 100%; }
+        ruby { font-size: 1.6rem; font-weight: 700; color: #fff; }
+        rt { font-size: 0.75rem; color: var(--orange); font-weight: 500; }
+        .v-ex { display: block; margin-top: 10px; color: #888; font-size: 0.85rem; line-height: 1.5; }
 
         .btn-luyen {
             background: var(--green); color: #121212; border: none;
-            padding: 15px 30px; border-radius: 50px; font-weight: 700;
-            cursor: pointer; margin-top: 20px; font-family: inherit;
+            padding: 12px 30px; border-radius: 50px; font-weight: 700;
+            cursor: pointer; margin-top: 15px; font-family: inherit; font-size: 1rem;
         }
 
-        /* ======================================================
-           PHẦN TỐI ƯU CHO MÁY TÍNH (Màn hình > 900px)
-        ========================================================= */
+        /* ================= PC OPTIMIZATION ================= */
         @media (min-width: 900px) {
-            .workbook { flex-direction: row; min-height: 780px; }
+            body { padding: 40px; }
+            .workbook { flex-direction: row; min-height: 750px; }
+            .page { flex: 1; padding: 50px; }
             .page-left { border-bottom: none; border-right: 1px solid var(--border); }
-            
-            /* Phóng to thẻ Kanji trên máy tính */
-            .flip-card { width: 350px; height: 420px; }
-            .am-han-text { font-size: 3rem; }
-            .radical-garden { font-size: 1.6rem; }
-            .mnemonic-highlight p { font-size: 1.2rem; }
-            
-            /* Gáy sách chỉ hiện trên PC */
+            .flip-card { max-width: 320px; }
+            .am-han-text { font-size: 2.8rem; }
+            .am-han-mean { font-size: 1rem; }
+            .mnemonic-box { font-size: 1.1rem; }
+            .value { font-size: 1.3rem; }
+            /* Gáy sách giả trên PC */
+            .workbook { position: relative; }
             .workbook::after {
-                content: ""; position: absolute; left: 50%; top: 5%;
-                width: 2px; height: 90%; background: linear-gradient(transparent, #333, transparent);
+                content: ""; position: absolute; left: 50%; top: 10%;
+                width: 1px; height: 80%; background: #333;
             }
         }
     </style>
@@ -143,35 +146,38 @@
                 </div>
                 <div class="am-han-group">
                     <p class="am-han-text">NGỮ</p>
-                    <p class="am-han-mean">ngôn ngữ, thuật ngữ</p>
+                    <p class="am-han-mean">ngôn ngữ, từ ngữ</p>
                 </div>
+                <p style="font-size: 0.6rem; color: #444; margin-top: 10px;">chạm để viết</p>
             </div>
             
             <div class="card-face card-back">
                 <div id="k-practice"></div>
-                <button class="btn-luyen" onclick="event.stopPropagation(); writerP.quiz()">luyện viết ✏️</button>
+                <button class="btn-luyen" onclick="event.stopPropagation(); writerP.quiz()">Bắt đầu viết ✏️</button>
             </div>
         </div>
 
-        <div class="mnemonic-highlight">
-            <p>Dùng <b>lời nói (言)</b> của <b>năm (五)</b> cái <b>miệng (口)</b> để tạo thành <b>ngôn ngữ</b>.</p>
+        <div class="mnemonic-box">
+            <b>Mẹo nhớ:</b> Dùng <b>lời nói (言)</b> của <b>năm (五)</b> cái <b>miệng (口)</b> để tạo thành <b>ngôn ngữ</b>.
         </div>
     </div>
 
     <!-- TRANG PHẢI -->
     <div class="page page-right">
-        <div class="read-info">
+        <div class="read-row">
             <div class="read-box"><span class="label">onyomi</span><span class="value">ゴ (go)</span></div>
             <div class="read-box"><span class="label">kunyomi</span><span class="value">かた.る</span></div>
         </div>
 
-        <div class="vocab-item">
-            <ruby>日本語<rt>にほんご</rt></ruby>
-            <span class="v-ex">日本語を勉強するのは楽しい。<br>(Học tiếng Nhật rất thú vị.)</span>
-        </div>
-        <div class="vocab-item">
-            <ruby>物語<rt>ものがたり</rt></ruby>
-            <span class="v-ex">おじいさんから物語を聞く。<br>(Nghe kể chuyện từ ông.)</span>
+        <div class="vocab-list" style="width: 100%;">
+            <div class="vocab-item">
+                <ruby>日本語<rt>にほんご</rt></ruby>
+                <span class="v-ex">日本語を勉強します。<br>(Tôi học tiếng Nhật.)</span>
+            </div>
+            <div class="vocab-item">
+                <ruby>物語<rt>ものがたり</rt></ruby>
+                <span class="v-ex">面白い物語ですね。<br>(Một câu chuyện thú vị nhỉ.)</span>
+            </div>
         </div>
     </div>
 </div>
@@ -184,35 +190,48 @@
         '#ff8a65','#ff8a65','#ff8a65'
     ];
 
-    // Xác định kích thước Kanji dựa trên màn hình
-    const kanjiSize = window.innerWidth > 900 ? 200 : 160;
+    // Hàm đo kích thước container để vẽ Kanji vừa vặn
+    function getKanjiSize() {
+        const cardWidth = document.querySelector('.card-face').clientWidth;
+        return cardWidth * 0.6; // Chữ chiếm 60% chiều rộng thẻ
+    }
 
-    const writerS = HanziWriter.create('k-static', char, {
-        width: kanjiSize, height: kanjiSize, padding: 10,
-        showOutline: true, outlineColor: '#333', strokeAnimationSpeed: 0
-    });
+    let writerS, writerP;
 
-    const writerP = HanziWriter.create('k-practice', char, {
-        width: kanjiSize, height: kanjiSize, padding: 10,
-        showOutline: true, outlineColor: '#333'
-    });
+    function initKanji() {
+        const size = getKanjiSize();
+        
+        // Clear nếu đã tồn tại (cho trường hợp resize)
+        document.getElementById('k-static').innerHTML = '';
+        document.getElementById('k-practice').innerHTML = '';
+
+        writerS = HanziWriter.create('k-static', char, {
+            width: size, height: size, padding: 5,
+            showOutline: true, outlineColor: '#333', strokeAnimationSpeed: 0
+        });
+
+        writerP = HanziWriter.create('k-practice', char, {
+            width: size, height: size, padding: 5,
+            showOutline: true, outlineColor: '#333'
+        });
+
+        strokeColors.forEach((color, i) => {
+            writerS.updateColor('strokeColor', color, { strokeNum: i });
+            writerP.updateColor('strokeColor', color, { strokeNum: i });
+        });
+        writerS.showCharacter();
+    }
 
     function flipCard() {
         document.getElementById('card').classList.toggle('is-flipped');
         if (document.getElementById('card').classList.contains('is-flipped')) {
-            strokeColors.forEach((color, i) => {
-                writerP.updateColor('strokeColor', color, { strokeNum: i });
-            });
             setTimeout(() => writerP.animateCharacter(), 300);
         }
     }
 
-    window.onload = function() {
-        strokeColors.forEach((color, i) => {
-            writerS.updateColor('strokeColor', color, { strokeNum: i });
-        });
-        writerS.showCharacter();
-    };
+    window.onload = initKanji;
+    // Tối ưu khi xoay màn hình điện thoại
+    window.onresize = initKanji;
 </script>
 
 </body>
