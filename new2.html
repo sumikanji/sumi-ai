@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sumi Kanji - Full Features Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+    <style>
+        :root {
+            --bg: #121212;
+            --page: #1e1e1e;
+            --green: #81c784; 
+            --orange: #ffb74d; 
+            --red: #ff8a65;    
+            --text: #e0e0e0;
+            --border: #333;
+            --muted: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .workbook {
+            width: 1100px;
+            min-height: 800px;
+            display: flex;
+            background: var(--page);
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .spine {
+            position: absolute;
+            left: 50%; width: 2px; height: 90%; top: 5%;
+            background: linear-gradient(transparent, #444, transparent);
+            z-index: 10;
+        }
+
+        .page { flex: 1; padding: 50px; display: flex; flex-direction: column; box-sizing: border-box; }
+
+        /* --- TRANG TRÁI: FLASHCARD --- */
+        .page-left { border-right: 1px solid var(--border); align-items: center; perspective: 1000px; }
+        
+        .jlpt-badge {
+            font-size: 0.7rem; color: var(--muted);
+            border: 1px solid var(--muted); padding: 3px 12px;
+            border-radius: 5px; align-self: flex-start; margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .flip-card {
+            width: 320px; height: 420px; cursor: pointer;
+            position: relative; transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .flip-card.is-flipped { transform: rotateY(180deg); }
+
+        .card-face {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 45px;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; border: 2px solid var(--border);
+            background: #252525;
+        }
+
+        .card-back { transform: rotateY(180deg); background: #1a1a1a; }
+
+        /* Khung bộ thủ */
+        .radical-garden {
+            margin-top: 15px;
+            background: rgba(255,255,255,0.03);
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: flex; gap: 12px;
+            font-size: 1.4rem; font-weight: bold;
+            border: 1px solid #333;
+        }
+
+        .am-han-group { text-align: center; margin-top: 15px; }
+        .am-han-text { font-size: 2.6rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 2px; margin: 0; }
+        .am-han-mean { font-size: 1rem; color: #888; font-style: italic; margin-top: 5px; }
+
+        .mnemonic-highlight {
+            margin-top: 30px; background: rgba(255, 138, 101, 0.1);
+            padding: 25px; border-radius: 25px; border-left: 8px solid var(--red); width: 100%;
+        }
+        .mnemonic-highlight p { font-size: 1.2rem; line-height: 1.7; margin: 0; color: #fff; }
+        .mnemonic-highlight b { color: var(--orange); font-size: 1.3rem; }
+
+        /* --- TRANG PHẢI: TỪ VỰNG --- */
+        .page-right { background: #161616; }
+        .reading-box { padding: 12px; border-bottom: 2px solid #333; margin-bottom: 20px; }
+        .label { font-size: 0.65rem; color: #555; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .value { font-size: 1.3rem; font-weight: 700; color: var(--green); }
+
+        ruby { font-size: 2rem; font-weight: 700; color: #fff; }
+        rt { font-size: 0.85rem; color: var(--orange); font-weight: 500; }
+        .vocab-item { background: rgba(255,255,255,0.02); padding: 22px; border-radius: 25px; margin-bottom: 15px; border: 1px solid #2a2a2a; }
+        .v-ex { display: block; margin-top: 10px; color: #888; font-size: 0.9rem; font-style: italic; }
+
+        .btn-luyen {
+            background: var(--green); color: #121212; border: none;
+            padding: 12px 30px; border-radius: 50px; font-family: inherit;
+            font-weight: 700; cursor: pointer; margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="workbook">
+    <div class="spine"></div>
+
+    <!-- TRANG TRÁI -->
+    <div class="page page-left">
+        <div class="jlpt-badge">jlpt n4</div>
+        
+        <div class="flip-card" id="card" onclick="flipCard()">
+            <!-- MẶT TRƯỚC -->
+            <div class="card-face card-front">
+                <div id="kanji-static"></div>
+                <div class="radical-garden">
+                    <span style="color: var(--green);">言</span> • 
+                    <span style="color: var(--orange);">五</span> • 
+                    <span style="color: var(--red);">口</span>
+                </div>
+                <div class="am-han-group">
+                    <p class="am-han-text">NGỮ</p>
+                    <p class="am-han-mean">ngôn ngữ, từ ngữ</p>
+                </div>
+            </div>
+            
+            <!-- MẶT SAU: LUYỆN VIẾT ĐỒNG BỘ MÀU -->
+            <div class="card-face card-back">
+                <div id="kanji-practice"></div>
+                <button class="btn-luyen" onclick="event.stopPropagation(); writerPractice.quiz()">luyện viết ✏️</button>
+            </div>
+        </div>
+
+        <div class="mnemonic-highlight">
+            <p>Dùng <b>lời nói (言)</b> của <b>năm (五)</b> cái <b>miệng (口)</b> để tạo thành <b>ngôn ngữ</b>.</p>
+        </div>
+    </div>
+
+    <!-- TRANG PHẢI -->
+    <div class="page page-right">
+        <div style="display: flex; gap: 15px; margin-bottom: 30px;">
+            <div class="reading-box" style="flex:1;"><span class="label">onyomi</span><span class="value">ゴ (go)</span></div>
+            <div class="reading-box" style="flex:1;"><span class="label">kunyomi</span><span class="value">かた.る</span></div>
+        </div>
+
+        <span class="label" style="margin-bottom: 20px;">từ vựng & ví dụ</span>
+        <div class="vocab-list">
+            <div class="vocab-item">
+                <ruby>日本語<rt>にほんご</rt></ruby>
+                <span class="v-ex">Ví dụ: 日本語を勉強します。<br>(Tôi học tiếng Nhật.)</span>
+            </div>
+            <div class="vocab-item">
+                <ruby>物語<rt>ものがたり</rt></ruby>
+                <span class="v-ex">Ví dụ: この物語はとても面白い。<br>(Câu chuyện này rất thú vị.)</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const char = '語';
+    const strokeColors = [
+        '#81c784','#81c784','#81c784','#81c784','#81c784','#81c784','#81c784',
+        '#ffb74d','#ffb74d','#ffb74d','#ffb74d',
+        '#ff8a65','#ff8a65','#ff8a65'
+    ];
+
+    const writerStatic = HanziWriter.create('kanji-static', char, {
+        width: 180, height: 180, padding: 10,
+        showOutline: true, outlineColor: '#333', strokeAnimationSpeed: 0
+    });
+
+    const writerPractice = HanziWriter.create('kanji-practice', char, {
+        width: 180, height: 180, padding: 10,
+        showOutline: true, outlineColor: '#333',
+        highlightColor: '#fff'
+    });
+
+    function flipCard() {
+        document.getElementById('card').classList.toggle('is-flipped');
+        if (document.getElementById('card').classList.contains('is-flipped')) {
+            // Đồng bộ màu cho mặt sau khi lật
+            strokeColors.forEach((color, i) => {
+                writerPractice.updateColor('strokeColor', color, { strokeNum: i });
+            });
+            setTimeout(() => writerPractice.animateCharacter(), 300);
+        }
+    }
+
+    window.onload = function() {
+        // Áp màu mặt trước
+        strokeColors.forEach((color, i) => {
+            writerStatic.updateColor('strokeColor', color, { strokeNum: i });
+        });
+        writerStatic.showCharacter();
+    };
+</script>
+
+</body>
+</html>
