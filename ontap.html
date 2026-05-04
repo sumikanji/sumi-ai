@@ -338,6 +338,68 @@
     transform: scale(1.1); /* Phóng to nhẹ để tạo điểm nhấn */
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+/* HIỆU ỨNG LẬT THÈ (FLASHCARD FLIP) */
+.flashcard-scene {
+    width: 100%;
+    height: 280px; /* Cố định chiều cao vùng lật */
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+/* Trạng thái khi lật */
+.flashcard-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.card-front {
+    background: white;
+}
+
+.card-back {
+    background: #fafafa;
+    transform: rotateY(180deg); /* Mặt sau mặc định quay ngược */
+    border: 2px dashed var(--bg-dot);
+}
+/* Phóng to phần hiển thị số lượng từ còn lại */
+#counter {
+    font-size: 14px; /* Tăng kích thước chữ tiêu đề */
+    font-weight: 900;
+    color: var(--forest-green);
+    letter-spacing: 1px;
+}
+
+#remaining-count {
+    font-size: 24px; /* Số lượng từ hiện ra rất to */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: var(--muji-red);
+    display: block;
+    line-height: 1;
+    margin-top: 5px;
+}
     </style>
 </head>
 <body>
@@ -362,11 +424,15 @@
 
 <main class="flex-1 flex flex-col items-center justify-start p-4">
     <div class="w-full max-w-[420px]">
-        <!-- Thanh tiến độ -->
         <div class="mb-4 flex justify-between items-end px-2">
-            <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest" id="counter">Sẵn sàng...</div>
-            <div class="text-lg font-black text-[var(--forest-green)]" id="percent">0%</div>
-        </div>
+    <div id="counter" class="uppercase">
+        còn lại
+        <span id="remaining-count">0</span> <!-- Nơi hiển thị số to -->
+    </div>
+    <div class="text-right">
+        <div id="percent" class="text-lg font-black text-[var(--forest-green)]">0%</div>
+    </div>
+</div>
         <div class="h-2 w-full bg-white rounded-full overflow-hidden border-2 border-[var(--bg-dot)] mb-8">
             <div id="progress-fill" class="progress-fill"></div>
         </div>
@@ -404,22 +470,29 @@
     </div>
 </div>
             
-            <!-- Vùng nội dung chính -->
-            <div class="flashcard-content-area" style="height: 240px; display: flex; flex-direction: column; justify-content: center; width: 100%;">
-                <div class="kanji-container-wrapper mb-2" id="kanji-wrapper">
-                    <div id="kanji-text" class="kanji-display">...</div>
-                </div>
-
-                <div style="min-height: 50px; display: flex; align-items: center; justify-content: center; width: 100%;">
-                    <div id="meaning-text" class="meaning-hidden" style="font-family: 'Be Vietnam Pro', sans-serif; text-transform: lowercase;">
-                        loading...
-                    </div>
-                </div>
-                
-                <button onclick="toggleMeaning()" id="toggle-btn" class="btn-toggle-3d mt-4 bg-white border-2 border-gray-100 rounded-full px-8 py-1.5 text-[9px] font-black text-gray-400 uppercase tracking-widest">
-                    Hiện nghĩa
-                </button>
+            <!-- KHUNG LẬT FLASHCARD -->
+<div class="flashcard-scene" onclick="toggleFlip()" style="height: 280px; width: 100%; perspective: 1000px; cursor: pointer;">
+    <div id="card-inner" class="flashcard-inner" style="position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d;">
+        
+        <!-- MẶT TRƯỚC (HIỆN KANJI) -->
+        <div class="card-face card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; background: white; border-radius: 25px;">
+            <div class="kanji-container-wrapper mb-2" id="kanji-wrapper" style="width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 0 10px;">
+                <div id="kanji-text" class="kanji-display" style="font-size: 80px; font-weight: 800; color: #558b2f; white-space: nowrap; display: inline-block;">...</div>
             </div>
+            <div class="text-[9px] font-black text-gray-300 uppercase tracking-widest mt-2">Chạm để xem nghĩa</div>
+        </div>
+
+        <!-- MẶT SAU (HIỆN NGHĨA & CÁCH ĐỌC) -->
+        <div class="card-face card-back" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fafafa; border-radius: 25px; transform: rotateY(180deg); border: 2px dashed #c5e1a5;">
+            <!-- Hiển thị cách đọc (reading) -->
+            <div id="back-reading" class="text-2xl font-black text-[#a63d40] mb-2 uppercase">...</div>
+            <!-- Hiển thị ý nghĩa (nghia) -->
+            <div id="back-meaning" class="text-lg font-medium text-gray-600 italic px-4 text-center">...</div>
+            <div class="text-[9px] font-black text-gray-300 uppercase tracking-widest mt-8">Chạm để lật lại</div>
+        </div>
+
+    </div>
+</div>
 
             <!-- Vùng nhập liệu & Chế độ -->
             <div class="w-full mt-4">
@@ -469,64 +542,87 @@
     let allVocabulary = [];
     let currentPool = [];
     let currentIndex = 0;
-    let currentMode = 'reading';
-    let isMeaningHidden = true; // Thêm dòng này nếu chưa có
-    let isComposing = false;    // THÊM DÒNG NÀY VÀO ĐÂY
+    let isComposing = false;
+    let isFlipped = false; 
 
     const elements = {
         kanji: document.getElementById('kanji-text'),
         wrapper: document.getElementById('kanji-wrapper'),
-        meaning: document.getElementById('meaning-text'),
+        backReading: document.getElementById('back-reading'),
+        backMeaning: document.getElementById('back-meaning'),
+        cardInner: document.getElementById('card-inner'),
         input: document.getElementById('answer-input'),
         counter: document.getElementById('counter'),
         progress: document.getElementById('progress-fill'),
         percent: document.getElementById('percent'),
-        tag: document.getElementById('level-tag')
+        tag: document.getElementById('level-tag'),
+        toast: document.getElementById('feedback-toast')
     };
 
-    // Tự động co chữ Kanji
-    function autoResize() {
-        elements.kanji.style.transform = "scale(1)";
-        const containerWidth = elements.wrapper.offsetWidth;
-        const textWidth = elements.kanji.scrollWidth;
-        if (textWidth > containerWidth) {
-            const ratio = (containerWidth / textWidth) - 0.1;
-            elements.kanji.style.transform = `scale(${ratio})`;
+    // --- HÀM QUAN TRỌNG: CO GIÃN KANJI ---
+    function autoScaleKanji() {
+        if (!elements.wrapper || !elements.kanji) return;
+
+        // 1. Reset về cỡ chữ tối đa và xóa mọi transform cũ
+        let fontSize = 80; 
+        elements.kanji.style.fontSize = fontSize + 'px';
+        elements.kanji.style.transform = "none"; 
+
+        // Lấy chiều rộng vùng chứa (trừ padding)
+        const containerWidth = elements.wrapper.offsetWidth - 30; 
+
+        // 2. Dùng vòng lặp giảm font size cho đến khi vừa khít
+        // offsetWidth lấy chiều rộng thực tế của chữ đang hiển thị
+        while (elements.kanji.offsetWidth > containerWidth && fontSize > 20) {
+            fontSize -= 2;
+            elements.kanji.style.fontSize = fontSize + 'px';
         }
+    }
+function shufflePool() {
+    if (currentPool.length <= 1) return;
+
+    // thuật toán shuffle Fisher-Yates để trộn thật sự ngẫu nhiên
+    for (let i = currentPool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [currentPool[i], currentPool[j]] = [currentPool[j], currentPool[i]];
+    }
+
+    currentIndex = 0; // quay về từ đầu tiên của danh sách đã trộn
+    
+    // hiệu ứng phản hồi trên placeholder để người dùng biết đã trộn
+    elements.input.placeholder = "đã trộn ngẫu nhiên! ✨";
+    setTimeout(() => { 
+        elements.input.placeholder = "nhập romaji ..."; 
+    }, 1000);
+
+    displayCard(); // hiển thị từ mới ngay lập tức
+}
+    // Lật thẻ Flashcard
+    function toggleFlip() {
+        isFlipped = !isFlipped;
+        elements.cardInner.style.transform = isFlipped ? "rotateY(180deg)" : "rotateY(0deg)";
     }
 
     async function init() {
-    try {
-        const savedData = localStorage.getItem('sumi_progress'); // Kiểm tra dữ liệu đã lưu
-        
-        if (savedData) {
-            allVocabulary = JSON.parse(savedData); // Nếu có thì dùng lại
-        } else {
-            const response = await fetch('data.json');
-            allVocabulary = await response.json();
-            allVocabulary = allVocabulary.map(item => ({...item, learned: false}));
-        }
-        
-        // Khôi phục level đang học từ lần trước
-        const lastLevel = localStorage.getItem('sumi_level') || 'All';
-        filterLevel(lastLevel);
-    } catch (e) {
-        elements.meaning.innerText = "Lỗi kết nối dữ liệu";
+        try {
+            const savedData = localStorage.getItem('sumi_progress');
+            if (savedData) {
+                allVocabulary = JSON.parse(savedData);
+            } else {
+                const response = await fetch('data.json');
+                allVocabulary = await response.json();
+                allVocabulary = allVocabulary.map(item => ({...item, learned: false}));
+            }
+            filterLevel(localStorage.getItem('sumi_level') || 'All');
+        } catch (e) { console.error("Lỗi tải dữ liệu"); }
     }
-}
-function saveProgress() {
-    localStorage.setItem('sumi_progress', JSON.stringify(allVocabulary)); // Lưu mảng từ vựng
-    const activeBtn = document.querySelector('.btn-jlpt.active');
-    if (activeBtn) {
-        localStorage.setItem('sumi_level', activeBtn.innerText); // Lưu Level đang chọn
-    }
-}
 
     function filterLevel(level) {
         document.querySelectorAll('.btn-jlpt').forEach(b => b.classList.remove('active'));
-        document.getElementById(`jlpt-${level}`).classList.add('active');
+        const activeBtn = document.getElementById(`jlpt-${level}`);
+        if(activeBtn) activeBtn.classList.add('active');
+        localStorage.setItem('sumi_level', level);
 
-        // Chỉ lấy những từ chưa học (learned = false)
         currentPool = allVocabulary.filter(item => {
             const matchLevel = (level === 'All' || item.level === level);
             return matchLevel && !item.learned;
@@ -537,312 +633,107 @@ function saveProgress() {
             displayCard();
         } else {
             elements.kanji.innerText = "✨";
-            elements.meaning.innerText = "BẠN ĐÃ THUỘC HẾT!";
-            elements.counter.innerText = "0 TỪ CÒN LẠI";
-            elements.progress.style.width = "100%";
+            elements.counter.innerText = "ĐÃ THUỘC HẾT!";
         }
     }
 
-   
-
-    // CHỨC NĂNG ĐÁNH DẤU ĐÃ THUỘC
-    function markMastered() {
+    function displayCard() {
         if (currentPool.length === 0) return;
         const word = currentPool[currentIndex];
         
-        // Đánh dấu trong mảng gốc
-        const target = allVocabulary.find(i => i.kanji === word.kanji);
-        if (target) target.learned = true;
+        // 1. Reset trạng thái thẻ (luôn hiện mặt trước)
+        isFlipped = false;
+        elements.cardInner.style.transform = "rotateY(0deg)";
+        elements.toast.classList.remove('toast-active');
 
-        // Xóa khỏi pool hiện tại
-        currentPool.splice(currentIndex, 1);
-saveProgress();
-        if (currentPool.length === 0) {
-            filterLevel('All');
+        // 2. Đổ dữ liệu
+        elements.kanji.innerText = word.kanji;
+        if (elements.backReading) elements.backReading.innerText = word.reading;
+        if (elements.backMeaning) elements.backMeaning.innerText = word.nghia.toLowerCase();
+        elements.tag.innerText = word.level || "JLPT";
+        
+        // 3. Reset Input
+        elements.input.value = "";
+        elements.input.placeholder = "Nhập Romaji ..."; 
+        elements.input.classList.remove('input-correct', 'input-wrong');
+
+        // 4. Cập nhật tiến độ
+        elements.counter.innerText = `CÒN LẠI: ${currentPool.length} TỪ`;
+        const prg = (currentIndex / (currentPool.length - 1 || 1)) * 100;
+        elements.progress.style.width = `${prg}%`;
+        elements.percent.innerText = `${Math.round(prg)}%`;
+
+        // 5. Chạy co giãn chữ NGAY LẬP TỨC sau khi thay đổi Text
+        requestAnimationFrame(() => {
+            autoScaleKanji();
+            elements.input.focus();
+        });
+    }
+
+    function handleInputLogic(inputElement) {
+        if (currentPool.length === 0) return;
+        inputElement.value = wanakana.toHiragana(inputElement.value, { IMEMode: true });
+        
+        const currentWord = currentPool[currentIndex];
+        const userInput = inputElement.value.trim();
+
+        if (userInput === currentWord.reading) {
+            inputElement.classList.add('input-correct');
+            elements.toast.classList.add('toast-active');
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % currentPool.length;
+                displayCard();
+            }, 500); 
+        } else if (userInput !== "" && !currentWord.reading.startsWith(userInput)) {
+            inputElement.classList.add('input-wrong');
         } else {
-            if (currentIndex >= currentPool.length) currentIndex = 0;
+            inputElement.classList.remove('input-wrong');
+        }
+    }
+
+    function markMastered() {
+        if (currentPool.length === 0) return;
+        const target = allVocabulary.find(i => i.kanji === currentPool[currentIndex].kanji);
+        if (target) target.learned = true;
+        currentPool.splice(currentIndex, 1);
+        localStorage.setItem('sumi_progress', JSON.stringify(allVocabulary));
+        displayCard();
+    }
+
+    function skipWord() {
+        if (currentPool.length > 0) {
+            currentIndex = (currentIndex + 1) % currentPool.length;
             displayCard();
         }
     }
-    // Hàm co giãn cho Nghĩa
-function autoScaleMeaning() {
-    const container = document.querySelector('.meaning-container-wrapper');
-    const text = document.getElementById('meaning-text');
-    if (!container || !text) return;
 
-    let fontSize = 18; // Reset về size lớn nhất
-    text.style.fontSize = fontSize + 'px';
-
-    const maxHeight = container.clientHeight;
-    const maxWidth = container.clientWidth - 20;
-
-    // Vòng lặp: Nếu chữ dài quá ngang HOẶC cao quá khung thì giảm size
-    // scrollHeight và scrollWidth giúp đo kích thước thực tế của nội dung bên trong
-    while ((text.scrollHeight > maxHeight || text.scrollWidth > maxWidth) && fontSize > 10) {
-        fontSize -= 1;
-        text.style.fontSize = fontSize + 'px';
+    function showHint() {
+        if (currentPool.length === 0) return;
+        elements.input.placeholder = `Gợi ý: ${currentPool[currentIndex].reading}`;
+        elements.input.focus();
     }
-}
 
-
-function autoScaleKanji() {
-    const container = document.getElementById('kanji-wrapper');
-    const text = document.getElementById('kanji-text');
-    if (!container || !text) return;
-
-    // Reset về cỡ chữ tối đa trước khi tính toán
-    const maxFontSize = 80; 
-    text.style.fontSize = maxFontSize + 'px';
-
-    const containerWidth = container.offsetWidth - 20; // Trừ padding an toàn
-    const textWidth = text.offsetWidth;
-
-    // Nếu chữ dài hơn khung, tính toán tỷ lệ để co lại vừa khít
-    if (textWidth > containerWidth) {
-        const scaleFactor = containerWidth / textWidth;
-        const newFontSize = Math.floor(maxFontSize * scaleFactor);
-        
-        // Giới hạn không cho nhỏ hơn 24px để vẫn đọc được
-        text.style.fontSize = Math.max(newFontSize, 24) + 'px';
-    }
-}
-    // CHỨC NĂNG LÀM MỚI TOÀN BỘ
     function resetAll() {
-        if(confirm("Xóa toàn bộ tiến độ và học lại từ đầu?")) {
+        if(confirm("Xóa toàn bộ tiến độ?")) {
             allVocabulary.forEach(item => item.learned = false);
+            localStorage.removeItem('sumi_progress');
             filterLevel('All');
         }
     }
 
-    function toggleMode(mode) {
-        currentMode = mode;
-        document.getElementById('mode-reading').classList.toggle('text-[var(--forest-green)]', mode === 'reading');
-        document.getElementById('mode-reading').classList.toggle('text-gray-300', mode !== 'reading');
-        document.getElementById('mode-romaji').classList.toggle('text-[var(--forest-green)]', mode === 'romaji');
-        document.getElementById('mode-romaji').classList.toggle('text-gray-300', mode !== 'romaji');
-        elements.input.placeholder = mode === 'reading' ? "Gõ Kana..." : "Gõ Romaji...";
-        elements.input.focus();
-    }
-function shufflePool() {
-    if (currentPool.length <= 1) return;
+    // Event Listeners
+    elements.input.addEventListener('compositionstart', () => { isComposing = true; });
+    elements.input.addEventListener('compositionend', (e) => { 
+        isComposing = false; 
+        handleInputLogic(e.target);
+    });
+    elements.input.addEventListener('input', (e) => {
+        if (!isComposing) handleInputLogic(e.target);
+    });
 
-    for (let i = currentPool.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [currentPool[i], currentPool[j]] = [currentPool[j], currentPool[i]];
-    }
-
-    currentIndex = 0;
-    
-    // Hiệu ứng phản hồi trên placeholder
-    elements.input.placeholder = "Đã trộn ngẫu nhiên! ✨";
-    setTimeout(() => { elements.input.placeholder = "Nhập Romaji ..."; }, 1000);
-
-    displayCard();
-}
-   // Hàm hiển thị gợi ý khi bấm nút bóng đèn
-function showHint() {
-    if (currentPool.length === 0) return;
-    const word = currentPool[currentIndex];
-    
-    // Lấy đáp án dựa trên chế độ đang chọn (KANA hoặc ROMAJI)
-    const hint = word[currentMode];
-    
-    // Hiển thị gợi ý vào placeholder
-    elements.input.placeholder = `Gợi ý: ${hint}`;
-    
-    // Hiệu ứng đổi màu viền tạm thời để báo hiệu đã nhận gợi ý
-    elements.input.style.borderColor = 'var(--candy-orange)';
-    setTimeout(() => {
-        elements.input.style.borderColor = '#eee';
-    }, 500);
-}
-
-
-
-function toggleMeaning() {
-    isMeaningHidden = !isMeaningHidden;
-    renderMeaningState();
-}
-
-function renderMeaningState() {
-    const meaningText = document.getElementById('meaning-text');
-    const toggleBtn = document.getElementById('toggle-btn'); // Cậu đã đổi từ eye-btn sang toggle-btn
-    
-    if (isMeaningHidden) {
-        // Trạng thái: ĐANG ẨN
-        meaningText.classList.add('meaning-hidden');
-        if (toggleBtn) {
-            toggleBtn.innerText = "Hiện nghĩa";
-            toggleBtn.style.color = "#999";
-            toggleBtn.style.borderColor = "#eee";
-        }
-    } else {
-        // Trạng thái: ĐANG HIỆN
-        meaningText.classList.remove('meaning-hidden');
-        if (toggleBtn) {
-            toggleBtn.innerText = "Ẩn nghĩa";
-            toggleBtn.style.color = "var(--forest-green)";
-            toggleBtn.style.borderColor = "var(--forest-green)";
-        }
-    }
-}
-
-// Hàm hiển thị thẻ từ vựng mới
-function displayCard() {
-    if (currentPool.length === 0) return;
-    const word = currentPool[currentIndex];
-    
-    // 1. Đổ dữ liệu từ mới vào khung
-    elements.kanji.innerText = word.kanji;
-    elements.meaning.innerText = word.nghia.toLowerCase(); // Viết thường mềm mại
-    elements.tag.innerText = word.level || "JLPT";
-    
-    // 2. RESET GỢI Ý (QUAN TRỌNG): Đưa placeholder về mặc định mỗi khi sang từ mới
-    elements.input.placeholder = "Nhập Romaji ..."; 
-
-    // Gọi hàm co giãn ngay sau khi cập nhật chữ
-    requestAnimationFrame(autoScaleKanji);
-    
-    // 3. KHÓA TRẠNG THÁI ẨN NGHĨA: Luôn ẩn khi sang từ mới
-    isMeaningHidden = true; 
-    renderMeaningState();
-
-    // 4. Reset ô nhập liệu và các hiệu ứng đúng/sai
-    elements.input.value = "";
-    elements.input.classList.remove('input-correct', 'input-wrong');
-    
-    // Cập nhật bộ đếm và thanh tiến độ
-    elements.counter.innerText = `CÒN LẠI: ${currentPool.length} TỪ`;
-    const prg = (currentIndex / (currentPool.length - 1 || 1)) * 100;
-    elements.progress.style.width = `${prg}%`;
-    elements.percent.innerText = `${Math.round(prg)}%`;
-
-   // Quan trọng: Đợi một chút để text render rồi mới đo đạc
-    setTimeout(() => {
-        autoScaleKanji();    // Co giãn Kanji
-        autoScaleMeaning();  // Co giãn Nghĩa
-    }, 10);
-    elements.input.focus();
-}
-
-// Hàm SkipWord sẽ gọi displayCard đã được sửa ở trên
-function skipWord() {
-    if (currentPool.length > 0) {
-        currentIndex = (currentIndex + 1) % currentPool.length;
-        displayCard(); // Giờ đây displayCard sẽ tự động ẩn nghĩa
-    }
-}
-// Mở Popup khi bấm nút Làm mới
-function resetAll() {
-    document.getElementById('reset-modal').classList.add('active');
-}
-
-// Đóng Popup khi bấm Hủy
-function closeResetModal() {
-    document.getElementById('reset-modal').classList.remove('active');
-}
-
-// Thực hiện làm mới khi bấm Đồng ý
-function confirmReset() {
-    // 1. Reset logic học tập
-    allVocabulary.forEach(item => item.learned = false);
-    
-    // 2. Quay về Level "All" và hiển thị từ đầu
-    filterLevel('All');
-    localStorage.removeItem('sumi_progress');
-    // 3. Đóng Popup
-    closeResetModal();
-    
-    // 4. Thông báo nhẹ nhàng qua Sumi Bot
-    typeText("Đã làm mới hoàn toàn! Cùng bắt đầu lại nào 🌸");
-}
-
-// Đóng popup nếu bấm trượt ra ngoài vùng trắng
-window.onclick = function(event) {
-    const modal = document.getElementById('reset-modal');
-    if (event.target == modal) {
-        closeResetModal();
-    }
-}
-// --- LOGIC NHẬP LIỆU CHUẨN (IME SAFE) ---
-elements.input.addEventListener('compositionstart', () => { 
-    isComposing = true; 
-});
-
-elements.input.addEventListener('compositionend', (e) => { 
-    isComposing = false; 
-    setTimeout(() => handleInputLogic(e.target), 10);
-});
-
-elements.input.addEventListener('input', (e) => {
-    if (isComposing) return; 
-    handleInputLogic(e.target);
-});
-
-// Lắng nghe sự kiện phím Space để hiện/ẩn nghĩa
-elements.input.addEventListener('keydown', (e) => {
-    if (e.code === 'Space' && elements.input.value.trim() === "") {
-        e.preventDefault(); 
-        toggleMeaning();    
-    }
-});
-
-// Hàm gộp để co giãn toàn bộ văn bản
-function autoScaleText() {
-    autoScaleKanji();
-    autoScaleMeaning();
-}
-
-function handleInputLogic(inputElement) {
-    if (currentPool.length === 0) return;
-
-    inputElement.value = wanakana.toHiragana(inputElement.value, { IMEMode: true });
-    
-    const currentWord = currentPool[currentIndex];
-    const userInput = inputElement.value.trim();
-    const toast = document.getElementById('feedback-toast');
-
-    if (userInput === currentWord.reading) {
-        inputElement.classList.add('input-correct');
-        
-        // Hiện thông báo XUẤT SẮC ngay giữa khung
-        toast.classList.add('toast-active');
-        
-        setTimeout(() => {
-            currentIndex = (currentIndex + 1) % currentPool.length;
-            displayCard(); 
-            // Reset trạng thái sau khi chuyển từ
-            inputElement.classList.remove('input-correct');
-            toast.classList.remove('toast-active');
-        }, 500); 
-    } 
-    else if (userInput !== "" && !currentWord.reading.startsWith(userInput)) {
-        inputElement.classList.add('input-wrong');
-    } 
-    else {
-        inputElement.classList.remove('input-wrong');
-    }
-}
-
-
-// Theo dõi sự thay đổi kích thước màn hình (khi bàn phím hiện/ẩn)
-window.visualViewport.addEventListener('resize', () => {
-// window.scrollTo(0, 0); <--- XÓA HOẶC COMMENT DÒNG NÀY
-    // Ép cuộn về đầu để tránh bị lệch khung trên iOS
-    window.scrollTo(0, 0);
-    
-    // Gọi lại các hàm co giãn để chữ tự thu nhỏ cho vừa khung mới
-    autoScaleText(); 
-    
-    // Nếu bàn phím hiện lên (chiều cao giảm), có thể thu nhỏ bớt Kanji
-    if (window.visualViewport.height < 500) {
-        elements.kanji.style.fontSize = "40px"; // Thu nhỏ tạm thời
-    } else {
-        autoScaleText(); // Trở lại kích thước chuẩn
-    }
-});
     window.onload = init;
-    window.onresize = autoResize;
+    // Khi xoay màn hình hoặc đổi kích thước cũng cần co lại chữ
+    window.addEventListener('resize', autoScaleKanji); 
 </script>
 </body>
 </html>
