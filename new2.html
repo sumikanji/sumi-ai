@@ -2,7 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Sumi Kanji - Full Features Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumi Kanji - Responsive Design</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
@@ -22,129 +23,133 @@
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
-            padding: 40px 20px;
         }
 
         .workbook {
-            width: 1100px;
-            min-height: 800px;
-            display: flex;
+            width: 100%;
+            max-width: 1100px;
             background: var(--page);
             border-radius: 40px;
             border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column; /* Mặc định dọc (mobile) */
             box-shadow: 0 40px 100px rgba(0,0,0,0.6);
             position: relative;
+            overflow: hidden;
         }
 
-        .spine {
-            position: absolute;
-            left: 50%; width: 2px; height: 90%; top: 5%;
-            background: linear-gradient(transparent, #444, transparent);
-            z-index: 10;
-        }
+        .page { flex: 1; padding: 40px 25px; display: flex; flex-direction: column; align-items: center; }
 
-        .page { flex: 1; padding: 50px; display: flex; flex-direction: column; box-sizing: border-box; }
-
-        /* --- TRANG TRÁI: FLASHCARD --- */
-        .page-left { border-right: 1px solid var(--border); align-items: center; perspective: 1000px; }
+        /* --- TRANG TRÁI --- */
+        .page-left { border-bottom: 1px solid var(--border); perspective: 1000px; }
         
         .jlpt-badge {
-            font-size: 0.7rem; color: var(--muted);
-            border: 1px solid var(--muted); padding: 3px 12px;
-            border-radius: 5px; align-self: flex-start; margin-bottom: 20px;
-            text-transform: uppercase;
+            font-size: 0.7rem; color: var(--muted); border: 1px solid var(--muted);
+            padding: 3px 12px; border-radius: 5px; align-self: flex-start;
+            text-transform: uppercase; margin-bottom: 20px;
         }
 
+        /* Container Thẻ Lật */
         .flip-card {
-            width: 320px; height: 420px; cursor: pointer;
-            position: relative; transform-style: preserve-3d;
+            width: 280px; height: 350px; /* Size mobile */
+            cursor: pointer; position: relative;
+            transform-style: preserve-3d;
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .flip-card.is-flipped { transform: rotateY(180deg); }
 
         .card-face {
             position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden; border-radius: 45px;
+            backface-visibility: hidden; border-radius: 35px;
             display: flex; flex-direction: column; align-items: center;
             justify-content: center; border: 2px solid var(--border);
             background: #252525;
         }
-
         .card-back { transform: rotateY(180deg); background: #1a1a1a; }
 
-        /* Khung bộ thủ */
         .radical-garden {
-            margin-top: 15px;
-            background: rgba(255,255,255,0.03);
-            padding: 10px 20px;
-            border-radius: 15px;
-            display: flex; gap: 12px;
-            font-size: 1.4rem; font-weight: bold;
-            border: 1px solid #333;
+            background: rgba(0,0,0,0.2); padding: 8px 15px;
+            border-radius: 15px; display: flex; gap: 10px;
+            font-size: 1.2rem; font-weight: bold; margin-top: 15px;
         }
 
         .am-han-group { text-align: center; margin-top: 15px; }
-        .am-han-text { font-size: 2.6rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 2px; margin: 0; }
-        .am-han-mean { font-size: 1rem; color: #888; font-style: italic; margin-top: 5px; }
+        .am-han-text { font-size: 2.2rem; font-weight: 700; color: var(--orange); text-transform: uppercase; margin: 0; }
+        .am-han-mean { font-size: 0.9rem; color: #888; font-style: italic; }
 
         .mnemonic-highlight {
-            margin-top: 30px; background: rgba(255, 138, 101, 0.1);
-            padding: 25px; border-radius: 25px; border-left: 8px solid var(--red); width: 100%;
+            margin-top: 30px; background: rgba(255, 138, 101, 0.08);
+            padding: 20px; border-radius: 25px; border-left: 6px solid var(--red);
+            width: 100%; box-sizing: border-box;
         }
-        .mnemonic-highlight p { font-size: 1.2rem; line-height: 1.7; margin: 0; color: #fff; }
-        .mnemonic-highlight b { color: var(--orange); font-size: 1.3rem; }
+        .mnemonic-highlight p { font-size: 1rem; line-height: 1.6; margin: 0; color: #fff; }
 
-        /* --- TRANG PHẢI: TỪ VỰNG --- */
-        .page-right { background: #161616; }
-        .reading-box { padding: 12px; border-bottom: 2px solid #333; margin-bottom: 20px; }
-        .label { font-size: 0.65rem; color: #555; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        .value { font-size: 1.3rem; font-weight: 700; color: var(--green); }
+        /* --- TRANG PHẢI --- */
+        .page-right { background: #161616; width: 100%; }
+        .read-info { display: flex; width: 100%; gap: 10px; margin-bottom: 25px; }
+        .read-box { flex: 1; padding: 10px; border-bottom: 2px solid #333; }
+        .label { font-size: 0.6rem; color: #555; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        .value { font-size: 1.2rem; font-weight: 700; color: var(--green); }
 
-        ruby { font-size: 2rem; font-weight: 700; color: #fff; }
-        rt { font-size: 0.85rem; color: var(--orange); font-weight: 500; }
-        .vocab-item { background: rgba(255,255,255,0.02); padding: 22px; border-radius: 25px; margin-bottom: 15px; border: 1px solid #2a2a2a; }
-        .v-ex { display: block; margin-top: 10px; color: #888; font-size: 0.9rem; font-style: italic; }
+        ruby { font-size: 1.8rem; font-weight: 700; color: #fff; }
+        rt { font-size: 0.8rem; color: var(--orange); }
+        .vocab-item { background: rgba(255,255,255,0.02); padding: 18px; border-radius: 20px; margin-bottom: 15px; border: 1px solid #2a2a2a; width: 100%; box-sizing: border-box; }
+        .v-ex { display: block; margin-top: 10px; color: #888; font-size: 0.9rem; line-height: 1.5; }
 
         .btn-luyen {
             background: var(--green); color: #121212; border: none;
-            padding: 12px 30px; border-radius: 50px; font-family: inherit;
-            font-weight: 700; cursor: pointer; margin-top: 15px;
+            padding: 15px 30px; border-radius: 50px; font-weight: 700;
+            cursor: pointer; margin-top: 20px; font-family: inherit;
+        }
+
+        /* ======================================================
+           PHẦN TỐI ƯU CHO MÁY TÍNH (Màn hình > 900px)
+        ========================================================= */
+        @media (min-width: 900px) {
+            .workbook { flex-direction: row; min-height: 780px; }
+            .page-left { border-bottom: none; border-right: 1px solid var(--border); }
+            
+            /* Phóng to thẻ Kanji trên máy tính */
+            .flip-card { width: 350px; height: 420px; }
+            .am-han-text { font-size: 3rem; }
+            .radical-garden { font-size: 1.6rem; }
+            .mnemonic-highlight p { font-size: 1.2rem; }
+            
+            /* Gáy sách chỉ hiện trên PC */
+            .workbook::after {
+                content: ""; position: absolute; left: 50%; top: 5%;
+                width: 2px; height: 90%; background: linear-gradient(transparent, #333, transparent);
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="workbook">
-    <div class="spine"></div>
-
     <!-- TRANG TRÁI -->
     <div class="page page-left">
         <div class="jlpt-badge">jlpt n4</div>
         
         <div class="flip-card" id="card" onclick="flipCard()">
-            <!-- MẶT TRƯỚC -->
             <div class="card-face card-front">
-                <div id="kanji-static"></div>
+                <div id="k-static"></div>
                 <div class="radical-garden">
-                    <span style="color: var(--green);">言</span> • 
-                    <span style="color: var(--orange);">五</span> • 
-                    <span style="color: var(--red);">口</span>
+                    <span style="color: var(--green);">言</span> • <span style="color: var(--orange);">五</span> • <span style="color: var(--red);">口</span>
                 </div>
                 <div class="am-han-group">
                     <p class="am-han-text">NGỮ</p>
-                    <p class="am-han-mean">ngôn ngữ, từ ngữ</p>
+                    <p class="am-han-mean">ngôn ngữ, thuật ngữ</p>
                 </div>
             </div>
             
-            <!-- MẶT SAU: LUYỆN VIẾT ĐỒNG BỘ MÀU -->
             <div class="card-face card-back">
-                <div id="kanji-practice"></div>
-                <button class="btn-luyen" onclick="event.stopPropagation(); writerPractice.quiz()">luyện viết ✏️</button>
+                <div id="k-practice"></div>
+                <button class="btn-luyen" onclick="event.stopPropagation(); writerP.quiz()">luyện viết ✏️</button>
             </div>
         </div>
 
@@ -155,21 +160,18 @@
 
     <!-- TRANG PHẢI -->
     <div class="page page-right">
-        <div style="display: flex; gap: 15px; margin-bottom: 30px;">
-            <div class="reading-box" style="flex:1;"><span class="label">onyomi</span><span class="value">ゴ (go)</span></div>
-            <div class="reading-box" style="flex:1;"><span class="label">kunyomi</span><span class="value">かた.る</span></div>
+        <div class="read-info">
+            <div class="read-box"><span class="label">onyomi</span><span class="value">ゴ (go)</span></div>
+            <div class="read-box"><span class="label">kunyomi</span><span class="value">かた.る</span></div>
         </div>
 
-        <span class="label" style="margin-bottom: 20px;">từ vựng & ví dụ</span>
-        <div class="vocab-list">
-            <div class="vocab-item">
-                <ruby>日本語<rt>にほんご</rt></ruby>
-                <span class="v-ex">Ví dụ: 日本語を勉強します。<br>(Tôi học tiếng Nhật.)</span>
-            </div>
-            <div class="vocab-item">
-                <ruby>物語<rt>ものがたり</rt></ruby>
-                <span class="v-ex">Ví dụ: この物語はとても面白い。<br>(Câu chuyện này rất thú vị.)</span>
-            </div>
+        <div class="vocab-item">
+            <ruby>日本語<rt>にほんご</rt></ruby>
+            <span class="v-ex">日本語を勉強するのは楽しい。<br>(Học tiếng Nhật rất thú vị.)</span>
+        </div>
+        <div class="vocab-item">
+            <ruby>物語<rt>ものがたり</rt></ruby>
+            <span class="v-ex">おじいさんから物語を聞く。<br>(Nghe kể chuyện từ ông.)</span>
         </div>
     </div>
 </div>
@@ -182,34 +184,34 @@
         '#ff8a65','#ff8a65','#ff8a65'
     ];
 
-    const writerStatic = HanziWriter.create('kanji-static', char, {
-        width: 180, height: 180, padding: 10,
+    // Xác định kích thước Kanji dựa trên màn hình
+    const kanjiSize = window.innerWidth > 900 ? 200 : 160;
+
+    const writerS = HanziWriter.create('k-static', char, {
+        width: kanjiSize, height: kanjiSize, padding: 10,
         showOutline: true, outlineColor: '#333', strokeAnimationSpeed: 0
     });
 
-    const writerPractice = HanziWriter.create('kanji-practice', char, {
-        width: 180, height: 180, padding: 10,
-        showOutline: true, outlineColor: '#333',
-        highlightColor: '#fff'
+    const writerP = HanziWriter.create('k-practice', char, {
+        width: kanjiSize, height: kanjiSize, padding: 10,
+        showOutline: true, outlineColor: '#333'
     });
 
     function flipCard() {
         document.getElementById('card').classList.toggle('is-flipped');
         if (document.getElementById('card').classList.contains('is-flipped')) {
-            // Đồng bộ màu cho mặt sau khi lật
             strokeColors.forEach((color, i) => {
-                writerPractice.updateColor('strokeColor', color, { strokeNum: i });
+                writerP.updateColor('strokeColor', color, { strokeNum: i });
             });
-            setTimeout(() => writerPractice.animateCharacter(), 300);
+            setTimeout(() => writerP.animateCharacter(), 300);
         }
     }
 
     window.onload = function() {
-        // Áp màu mặt trước
         strokeColors.forEach((color, i) => {
-            writerStatic.updateColor('strokeColor', color, { strokeNum: i });
+            writerS.updateColor('strokeColor', color, { strokeNum: i });
         });
-        writerStatic.showCharacter();
+        writerS.showCharacter();
     };
 </script>
 
