@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>nông trại kanji - sumi ai</title>
     <style>
         :root {
@@ -10,11 +10,12 @@
             --sidebar: #f8f1e5;
             --grass: #a5d6a7;
             --soil: #795548;
-            --dark: #333333; /* màu tối đậm nét hơn */
+            --dark: #333333;
             --white: #ffffff;
             --accent: #ffb74d;
             --exp: #ba68c8;
             --kanji-red: #a63d40;
+            --sumi-gold: #f39c12;
         }
 
         * { 
@@ -22,8 +23,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             font-weight: bold; 
             text-transform: lowercase; 
-            margin: 0; 
-            padding: 0; 
+            margin: 0; padding: 0; 
         }
 
         body { 
@@ -34,483 +34,272 @@
             color: var(--dark); 
         }
 
-        /* --- sidebar --- */
+        /* --- SIDEBAR --- */
         .sidebar { 
-            width: 280px; 
-            background: var(--sidebar); 
-            border-right: 6px solid var(--dark); 
-            display: flex; 
-            flex-direction: column; 
-            padding: 25px; 
-            gap: 20px; 
-            z-index: 10; 
+            width: 280px; background: var(--sidebar); border-right: 6px solid var(--dark); 
+            display: flex; flex-direction: column; padding: 25px; gap: 20px; z-index: 10; 
         }
         
         .char-frame {
-            background: var(--white);
-            border: 6px solid var(--dark);
-            border-radius: 35px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 8px 0 var(--dark);
-            position: relative;
+            background: var(--white); border: 6px solid var(--dark); border-radius: 35px;
+            padding: 20px; text-align: center; box-shadow: 0 8px 0 var(--dark); position: relative;
         }
 
         .avatar-main {
-            width: 90px; height: 90px;
-            background: #ffccbc;
-            margin: 0 auto 12px;
-            border-radius: 50%;
-            border: 5px solid var(--dark);
-            font-size: 3rem;
+            width: 80px; height: 80px; background: #ffccbc; margin: 0 auto 12px;
+            border-radius: 50%; border: 5px solid var(--dark); font-size: 2.5rem;
             display: flex; align-items: center; justify-content: center;
         }
 
-        .lv-tag {
-            position: absolute; bottom: 15px; right: 15px;
-            background: var(--accent);
-            padding: 4px 12px;
-            border-radius: 15px;
-            border: 4px solid var(--dark);
-            font-size: 0.9rem;
-            color: white;
-        }
-
         .exp-bar {
-            width: 100%; height: 16px;
-            background: #eee;
-            border-radius: 10px;
-            border: 3px solid var(--dark);
-            margin-top: 15px;
-            overflow: hidden;
+            width: 100%; height: 16px; background: #eee; border-radius: 10px;
+            border: 3px solid var(--dark); margin-top: 15px; overflow: hidden;
         }
-        #exp-fill { width: 60%; height: 100%; background: var(--exp); transition: 0.5s; }
+        #exp-fill { width: 10%; height: 100%; background: var(--exp); transition: 0.5s; }
 
-        .nav-menu { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
+        .nav-menu { display: flex; flex-direction: column; gap: 15px; }
         .nav-btn { 
-            background: var(--white); 
-            border: 5px solid var(--dark); 
-            border-radius: 22px; 
-            padding: 15px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            box-shadow: 0 6px 0 var(--dark); 
-            transition: 0.1s; 
-            width: 100%;
-            font-size: 1rem;
+            background: var(--white); border: 6px solid var(--dark); border-radius: 22px; 
+            padding: 15px; cursor: pointer; display: flex; align-items: center; gap: 12px; 
+            box-shadow: 0 6px 0 var(--dark); transition: 0.1s; width: 100%; justify-content: center;
         }
         .nav-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--dark); }
         .nav-btn.active { background: var(--accent); color: white; }
 
-        /* --- main game area --- */
-        .main-game { flex: 1; padding: 25px; display: flex; flex-direction: column; gap: 20px; position: relative; }
+        /* --- MAIN AREA --- */
+        .main-game { flex: 1; padding: 30px; display: flex; flex-direction: column; gap: 20px; position: relative; }
         
-        .top-stats { display: flex; justify-content: flex-end; gap: 15px; }
-        .stat-box { 
-            background: white; 
-            padding: 10px 20px; 
-            border: 4px solid var(--dark); 
-            border-radius: 20px; 
-            box-shadow: 0 4px 0 var(--dark);
+        .top-stats { display: flex; justify-content: flex-end; gap: 15px; align-items: center; }
+        
+        .coin-box {
+            background: white; padding: 8px 20px; border: 4px solid var(--dark);
+            border-radius: 20px; box-shadow: 0 5px 0 var(--dark);
+            display: flex; align-items: center; gap: 10px; font-size: 1.2rem;
+        }
+        
+
+        .sumi-coin-img { width: 35px; height: 35px; animation: coin-rotate 4s infinite linear; }
+        @keyframes coin-rotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
         }
 
-        /* --- PHẦN GRID VƯỜN TỐI ƯU --- */
-.display-area { 
-    flex: 1; 
-    background: var(--grass); 
-    border: 8px solid var(--dark); 
-    border-radius: 50px; 
-    padding: 30px; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    position: relative; 
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
-    overflow: hidden; /* Tránh tràn khung trên mobile */
-}
+        /* Ảnh đồng coin chữ S Nổi Bật */
+        .sumi-coin-img { width: 32px; height: 32px; animation: coin-float 3s infinite ease-in-out; }
+        @keyframes coin-float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(10deg); } }
 
-.garden-grid { 
-    display: grid; 
-    /* PC: 3 cột đều nhau */
-    grid-template-columns: repeat(3, 1fr); 
-    /* Khoảng cách linh hoạt */
-    gap: clamp(10px, 3vw, 30px); 
-    width: 100%;
-    max-width: 800px; /* Chống việc vườn bị kéo quá dài trên màn hình siêu rộng */
-}
-
-.plot { 
-    background: var(--soil); 
-    border: 6px solid #4e342e; 
-    border-radius: clamp(15px, 4vw, 35px); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    cursor: pointer; 
-    box-shadow: inset 0 -12px 0 rgba(0,0,0,0.3), 0 5px 15px rgba(0,0,0,0.2); 
-    transition: 0.2s; 
-    /* KỸ THUẬT QUAN TRỌNG: ÉP HÌNH VUÔNG CHUẨN */
-    aspect-ratio: 1 / 1; 
-    width: 100%;
-}
-
-.kanji-main { 
-    /* Kanji co giãn theo ô đất */
-    width: 80%; 
-    height: 80%; 
-    background: white; 
-    border: clamp(3px, 1vw, 5px) solid var(--dark); 
-    border-radius: clamp(10px, 2vw, 25px); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: clamp(2rem, 8vw, 4.5rem); 
-    color: var(--dark);
-    animation: grow 0.5s ease-out;
-}
-
-/* --- RESPONSIVE CHO MOBILE --- */
-@media (max-width: 768px) {
-    body { flex-direction: column; } /* Sidebar nhảy lên trên hoặc ẩn đi */
-    
-    .sidebar { 
-        width: 100%; 
-        height: auto; 
-        border-right: none; 
-        border-bottom: 6px solid var(--dark); 
-        padding: 15px;
-    }
-
-    .display-area {
-        padding: 15px;
-        border-radius: 30px;
-    }
-
-    .garden-grid { 
-        /* MOBILE: Chuyển sang 2 cột x 3 hàng */
-        grid-template-columns: repeat(2, 1fr); 
-        max-width: 400px;
-    }
-
-    .top-stats { justify-content: center; margin-bottom: 10px; }
-}
-
-        @keyframes grow {
-            0% { transform: scale(0); }
-            80% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        /* VÙNG CỎ */
+        .display-area { 
+            flex: 1; background: var(--grass); border: 8px solid var(--dark); 
+            border-radius: 50px; padding: 30px; display: flex; 
+            justify-content: center; align-items: center; position: relative; 
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
         }
 
-        /* --- overlay kho hạt giống --- */
+        .garden-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: clamp(10px, 3vw, 30px); 
+            width: 100%; max-width: 800px;
+        }
+
+        .plot { 
+            background: var(--soil); border: 6px solid #4e342e; border-radius: 35px; 
+            display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; box-shadow: inset 0 -12px 0 rgba(0,0,0,0.3), 0 5px 15px rgba(0,0,0,0.2); 
+            transition: 0.2s; aspect-ratio: 1/1; width: 100%;
+        }
+
+        .kanji-main { 
+            width: 80%; height: 80%; background: white; border: 5px solid var(--dark); 
+            border-radius: 25px; display: flex; align-items: center; justify-content: center; 
+            font-size: clamp(2rem, 8vw, 4rem); box-shadow: 0 6px 0 var(--dark);
+            animation: grow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* KHO HẠT GIỐNG */
         .overlay-panel {
-            position: absolute; width: 90%; height: 85%;
-            background: #fff9c4; border: 8px solid var(--dark);
-            border-radius: 45px; display: none; flex-direction: column;
-            padding: 30px; z-index: 20; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: absolute; inset: 15px; background: #fff9c4; 
+            border: 8px solid var(--dark); border-radius: 40px; display: none; 
+            flex-direction: column; padding: 25px; z-index: 20; 
+            max-height: calc(100% - 30px);
         }
 
         .seed-list {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 20px; overflow-y: auto; padding: 15px;
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 15px; padding: 10px;
+            overflow-y: auto !important; 
+            flex: 1; 
+            -webkit-overflow-scrolling: touch; 
         }
 
         .seed-item {
-            background: white; border: 4px solid var(--dark);
-            border-radius: 20px; padding: 15px; text-align: center;
-            cursor: pointer; transition: 0.2s; box-shadow: 0 5px 0 var(--dark);
-        }
-        .seed-item:hover { background: var(--accent); color: white; transform: translateY(-5px); }
-        .seed-item .k-char { font-size: 2.5rem; }
-        .seed-item .k-hv { font-size: 0.9rem; color: var(--kanji-red); margin-top: 5px; }
-
-        /* --- modal review --- */
-        .modal { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.7); display: none; 
-            justify-content: center; align-items: center; z-index: 100; 
-        }
-        .modal-content { 
-            background: #fdf5e6; border: 10px solid var(--dark); 
-            border-radius: 50px; padding: 40px; width: 480px; text-align: center; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        }
-        .big-kanji { 
-            font-size: 8rem; background: white; border: 6px solid var(--dark); 
-            border-radius: 40px; margin: 25px 0; padding: 10px;
+            background: white; border: 4px solid var(--dark); border-radius: 20px; 
+            padding: 15px; text-align: center; cursor: pointer; box-shadow: 0 5px 0 var(--dark);
         }
 
-        /* thanh cuộn */
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-thumb { background: var(--dark); border-radius: 10px; }
-        /* thêm vào phần style hiện có */
-.top-stats { display: flex; justify-content: flex-end; gap: 15px; align-items: center; }
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 6px solid var(--dark); padding: 10px; }
+            .char-frame { display: none; }
+            .nav-menu { flex-direction: row; justify-content: center; gap: 8px; }
+            .nav-btn { padding: 10px; font-size: 0.85rem; border-width: 4px; border-radius: 15px; box-shadow: 0 4px 0 var(--dark); }
+            .main-game { padding: 15px; }
+            .display-area { border-radius: 35px; padding: 20px; border-width: 6px; }
+            .garden-grid { grid-template-columns: repeat(2, 1fr); max-width: 400px; }
+            .seed-list { grid-template-columns: repeat(3, 1fr); }
+            .seed-item { padding: 10px; aspect-ratio: 1/1.2; }
+        }
 
-.stat-box.coin-box {
-    background: #fff9c4; /* màu vàng nhạt */
-    border-color: var(--sumi-gold);
-    color: var(--sumi-gold);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 25px;
-}
-
-.coin-icon-ani {
-    display: inline-block;
-    animation: coin-spin 3s infinite linear;
-}
-
-@keyframes coin-spin {
-    0% { transform: rotateY(0deg); }
-    100% { transform: rotateY(360deg); }
-}
-
-.sumi-coin-svg {
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
-    /* Hiệu ứng xoay tròn liên tục */
-    animation: coin-rotate 4s infinite linear;
-}
-
-@keyframes coin-rotate {
-    0% { transform: rotateY(0deg); }
-    50% { transform: rotateY(180deg); }
-    100% { transform: rotateY(360deg); }
-}
-
-/* Cập nhật lại stat-box để chứa SVG */
-.coin-box {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #fff9c4;
-    border: 4px solid var(--dark);
-    padding: 8px 15px;
-    border-radius: 20px;
-}
+        @keyframes grow { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal-content { background: #fdf5e6; border: 10px solid var(--dark); border-radius: 50px; padding: 30px; width: 90%; max-width: 450px; text-align: center; }
     </style>
 </head>
 <body>
     <aside class="sidebar">
         <div class="char-frame">
             <div class="avatar-main">🤖</div>
-            <div style="font-size: 1.2rem;">sumi bot</div>
-            <div class="lv-tag">lv.12</div>
-            <div class="exp-bar"><div id="exp-fill" style="width: 60%;"></div></div>
+            <div style="font-size: 1.1rem;">sumi bot</div>
+            <div class="exp-bar"><div id="exp-fill"></div></div>
         </div>
-
         <nav class="nav-menu">
-            <button class="nav-btn active" onclick="showView('garden')">🏡 vườn kanji</button>
-            <button class="nav-btn" onclick="showView('seeds')">🌱 kho hạt giống</button>
-            <button class="nav-btn">🗺️ bản đồ n5-n1</button>
+            <button class="nav-btn active" onclick="showView('garden')">🏡 vườn</button>
+            <button class="nav-btn" onclick="showView('seeds')">🌱 hạt giống</button>
         </nav>
     </aside>
 
     <main class="main-game">
-       <div class="top-stats">
-    <div class="stat-box coin-box">
-    <svg class="sumi-coin-svg" viewBox="0 0 100 100">
-        <circle cx="50" cy="54" r="46" fill="#d35400"/>
-        <circle cx="50" cy="50" r="46" fill="#f39c12" stroke="#333333" stroke-width="8"/>
-        <path d="M40 35C40 30 60 30 60 40C60 50 40 50 40 60C40 70 60 70 60 65" 
-              stroke="#333333" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <span id="sumi-coin-balance">0</span>
-</div>
-    <div class="stat-box">💎 120</div>
-</div>
+        <div class="top-stats">
+            <div class="coin-box">
+                <img class="sumi-coin-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1NCIgcj0iNDYiIGZpbGw9IiMzMzMzMzMiLz4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NiIgZmlsbD0iI2ZmYjc0ZCIgc3Ryb2tlPSIjMzMzMzMzIiBzdHJva2Utd2lkdGg9IjgiLz4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzMzMzMzMyIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHBhdGggZD0iTTQyIDM4QzQyIDM0IDU4IDM0IDU4IDQzQzU4IDUwIDQyIDQ3IDQyIDU1QzQyIDY1IDU4IDY1IDU4IDYxIiBzdHJva2U9IiNhNjNkNDAiIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0zNCAzMEMyOCAzNCAyOCA0NCAzNCA1MCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4=">
+                <span id="sumi-coin-balance">0</span>
+            </div>
+        </div>
 
         <div class="display-area">
-            <!-- khu vực vườn -->
             <div id="garden-view" class="garden-grid"></div>
-
-            <!-- khu vực kho hạt giống -->
-            <div id="seeds-view" class="overlay-panel" style="display:none;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h2 style="font-size:1.8rem;">🌱 kho hạt giống (id-based)</h2>
-                    <button onclick="showView('garden')" style="border:none; background:none; cursor:pointer; font-size:2.5rem; color:#333;">✖</button>
+            <div id="seeds-view" class="overlay-panel">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <h2>🌱 kho hạt giống</h2>
+                    <button onclick="showView('garden')" style="border:none; background:none; cursor:pointer; font-size:2rem;">✖</button>
                 </div>
                 <div class="seed-list" id="seed-container"></div>
             </div>
         </div>
     </main>
 
-    <!-- modal khi click vào kanji trong vườn -->
-    <div id="modal-review" class="modal" style="display:none;">
+    <div id="modal-review" class="modal">
         <div class="modal-content">
-            <!-- Đã sửa ID: m-hv và m-meaning để khớp với script -->
-            <h2 id="m-hv" style="font-size: 2rem; color: #a63d40;">âm hán việt</h2>
-            <div class="big-kanji" id="m-kanji" style="font-size: 80px; font-weight: 900; color: #a63d40;">?</div>
-            <p id="m-meaning" style="font-size: 1.4rem;">đang tải ý nghĩa...</p>
-            <button class="nav-btn" style="background:#a63d40; color:white; justify-content:center; margin-top:30px; font-size:1.2rem;" onclick="harvestKanji()">🧺 thu hoạch ngay (+50 exp)</button>
+            <h2 id="m-hv" style="color: var(--kanji-red); font-size: 2rem;">âm hán</h2>
+            <div class="big-kanji" id="m-kanji" style="font-size: 6rem; font-weight: 900; background: white; border: 5px solid var(--dark); border-radius: 30px; margin: 15px 0;">?</div>
+            <p id="m-meaning" style="font-size: 1.3rem;">ý nghĩa...</p>
+            <button class="nav-btn" style="background:var(--kanji-red); color:white; margin-top:25px;" onclick="harvestKanji()">🧺 thu hoạch (+10 🪙)</button>
         </div>
     </div>
 
     <script>
         let kanjiData = []; 
-        let gardenPlots = ["日", "本"]; // Trạng thái vườn mặc định
+        let gardenPlots = JSON.parse(localStorage.getItem('sumi_garden_plots')) || ["日", "本"];
+        let sumiCoins = parseInt(localStorage.getItem('sumi_coin_balance')) || 100;
         let currentHarvestingIndex = -1;
 
-        // 1. Tải dữ liệu và khớp với cấu trúc JSON của bạn
         async function loadData() {
             try {
                 const response = await fetch('data.json'); 
-                if (!response.ok) throw new Error('không tìm thấy file data.json');
-                
                 const rawData = await response.json();
-                
                 kanjiData = [];
-                // Duyệt qua các cấp độ n5, n4... từ file JSON
                 Object.keys(rawData).forEach(level => {
                     rawData[level].forEach(item => {
-                        kanjiData.push({
-                            kanji: item.c,      // Khớp với "c" trong JSON
-                            hv: item.hv,        // Khớp với "hv" trong JSON[cite: 8]
-                            meaning: item.m_vi, // Khớp với "m_vi" trong JSON[cite: 8]
-                            level: level.toUpperCase()
-                        });
+                        kanjiData.push({ kanji: item.c, hv: item.hv, meaning: item.m_vi });
                     });
                 });
-
                 renderGarden();
                 renderSeedList();
-            } catch (error) {
-                console.error('lỗi:', error);
-                alert('vui lòng chạy qua live server để đọc file json!');
-            }
+                updateUI();
+            } catch (error) { console.error('lỗi dữ liệu json'); }
         }
 
-        // 2. Hiển thị vườn (tối đa 6 ô đất)
+        function updateUI() {
+            document.getElementById('sumi-coin-balance').innerText = sumiCoins.toLocaleString();
+            localStorage.setItem('sumi_coin_balance', sumiCoins);
+            localStorage.setItem('sumi_garden_plots', JSON.stringify(gardenPlots));
+        }
+
         function renderGarden() {
             const container = document.getElementById('garden-view');
-            if(!container) return;
             container.innerHTML = "";
-            
             for (let i = 0; i < 6; i++) {
                 const plot = document.createElement('div');
                 plot.className = 'plot';
-                
                 if (gardenPlots[i]) {
-                    const kChar = gardenPlots[i];
-                    const item = kanjiData.find(d => d.kanji === kChar);
+                    const char = gardenPlots[i];
+                    const item = kanjiData.find(d => d.kanji === char) || {hv:'?', meaning:'?'};
                     plot.onclick = () => openModal(item, i);
-                    plot.innerHTML = `<div class="kanji-main" style="font-weight:900;">${kChar}</div>`;
-                } else {
-                    plot.innerHTML = `<div style="font-size:2.5rem; opacity:0.2;">🌱</div>`;
-                }
+                    plot.innerHTML = `<div class="kanji-main">${char}</div>`;
+                } else { plot.innerHTML = `<div style="opacity:0.2; font-size:3rem;">🌱</div>`; }
                 container.appendChild(plot);
             }
         }
 
-        // 3. Hiển thị danh sách hạt giống trong kho[cite: 8]
         function renderSeedList() {
             const container = document.getElementById('seed-container');
-            if(!container) return;
             container.innerHTML = "";
-            
             kanjiData.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'seed-item';
-                div.style.cursor = 'pointer';
                 div.onclick = () => plantKanji(item.kanji);
-                div.innerHTML = `
-                    <div class="k-char" style="font-weight:900; font-size:24px;">${item.kanji}</div>
-                    <div class="k-hv" style="font-weight:700;">${item.hv}</div>
-                `;
+                div.innerHTML = `<div style="font-size:2rem;">${item.kanji}</div><div style="font-size:0.7rem; color:var(--kanji-red);">${item.hv}</div>`;
                 container.appendChild(div);
             });
         }
 
-        // 4. Trồng cây mới
         function plantKanji(char) {
+            if (sumiCoins < 5) { alert('không đủ coin!'); return; }
             if (gardenPlots.length < 6) {
+                sumiCoins -= 5;
                 gardenPlots.push(char);
-                renderGarden();
-                showView('garden');
-            } else {
-                alert('vườn đã đầy! hãy thu hoạch bớt cây.');
+                updateUI(); renderGarden(); showView('garden');
+            } else { alert('vườn đầy rồi!'); }
+        }
+
+        function harvestKanji() {
+            if (currentHarvestingIndex > -1) {
+                gardenPlots.splice(currentHarvestingIndex, 1);
+                sumiCoins += 10;
+                let w = parseInt(document.getElementById('exp-fill').style.width) || 10;
+                if(w < 100) document.getElementById('exp-fill').style.width = (w + 10) + "%";
+                updateUI(); renderGarden(); closeModal();
             }
         }
 
-        // thêm biến lưu số dư
-let sumiCoins = parseInt(localStorage.getItem('sumi_coin_balance')) || 0;
-
-// hàm khởi tạo ví tiền
-function initWallet() {
-    document.getElementById('sumi-coin-balance').innerText = sumiCoins.toLocaleString();
-}
-
-// Sửa lại hàm thu hoạch cũ của cậu
-function harvestKanji() {
-    if (currentHarvestingIndex > -1) {
-        // 1. Logic thu hoạch cây cũ
-        gardenPlots.splice(currentHarvestingIndex, 1);
-        renderGarden();
-        
-        // 2. CỘNG COIN SUMI
-        const reward = 10; // mỗi cây thu được 10 coin
-        sumiCoins += reward;
-        localStorage.setItem('sumi_coin_balance', sumiCoins);
-        document.getElementById('sumi-coin-balance').innerText = sumiCoins.toLocaleString();
-        
-        // 3. Hiệu ứng bay coin (+10)
-        createCoinEffect(reward);
-        
-        // 4. Logic tăng EXP cũ
-        const fill = document.getElementById('exp-fill');
-        let currentWidth = parseInt(fill.style.width) || 0;
-        if(currentWidth < 100) fill.style.width = (currentWidth + 5) + "%";
-        
-        closeModal();
-    }
-}
-
-// Hàm tạo hiệu ứng số bay lên khi nhận coin
-function createCoinEffect(amount) {
-    const effect = document.createElement('div');
-    effect.className = 'coin-fly';
-    effect.innerText = `+${amount} 🪙`;
-    
-    // Đặt vị trí xuất hiện ngay tại modal
-    effect.style.left = "50%";
-    effect.style.top = "40%";
-    
-    document.body.appendChild(effect);
-    setTimeout(() => effect.remove(), 1000);
-}
-
-
-
-        // 6. Điều hướng và Modal
-        function showView(view) {
-            document.getElementById('garden-view').style.display = (view === 'garden') ? 'grid' : 'none';
-            document.getElementById('seeds-view').style.display = (view === 'seeds') ? 'flex' : 'none';
+        function showView(v) {
+            const garden = document.getElementById('garden-view');
+            const seeds = document.getElementById('seeds-view');
+            if (v === 'garden') {
+                garden.style.display = 'grid'; seeds.style.display = 'none';
+            } else {
+                garden.style.display = 'none'; seeds.style.display = 'flex';
+                document.getElementById('seed-container').scrollTop = 0;
+            }
+            const btns = document.querySelectorAll('.nav-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            if(v === 'garden') btns[0].classList.add('active'); else btns[1].classList.add('active');
         }
 
-        function openModal(item, index) {
-            if (!item) return;
-            currentHarvestingIndex = index;
+        function openModal(item, idx) {
+            currentHarvestingIndex = idx;
             document.getElementById('m-hv').innerText = item.hv;
             document.getElementById('m-kanji').innerText = item.kanji;
-            document.getElementById('m-meaning').innerText = "nghĩa: " + item.meaning;
+            document.getElementById('m-meaning').innerText = item.meaning;
             document.getElementById('modal-review').style.display = 'flex';
         }
 
-        function closeModal() { 
-            document.getElementById('modal-review').style.display = 'none'; 
-        }
-
-        window.onclick = (e) => {
-            if (e.target.id === 'modal-review') closeModal();
-        }
-
-        window.onload = () => {
-    loadData();    // Tải Kanji
-    initWallet();  // Tải tiền
-};
+        function closeModal() { document.getElementById('modal-review').style.display = 'none'; }
+        window.onload = loadData;
+        window.onclick = (e) => { if (e.target.className === 'modal') closeModal(); }
     </script>
 </body>
 </html>
