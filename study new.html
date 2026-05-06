@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sumi ai - intellectual archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f0f2f5;
+            --container-bg: #ffffff;
+            --pill-inactive: #f8f9fa;
+            --pill-active: #eef9f8; /* màu xanh nhạt theo ảnh mẫu */
+            --green-glow: #26a69a; 
+            --orange: #e67e22; 
+            --border: #e0e0e0;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: lowercase; /* giữ phong cách chữ thường theo yêu cầu */
+            overflow: hidden;
+        }
+
+        .main-wrapper {
+            width: 96vw;
+            height: 94vh;
+            max-width: 1400px;
+            background: var(--container-bg);
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        /* banner đảo màu rực rỡ */
+        .top-banner {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--green-glow);
+            flex-shrink: 0;
+        }
+
+        .brand-info h1 { font-size: 1.8rem; margin: 0; letter-spacing: 5px; color: #ffffff; }
+
+        .stats-hub { display: flex; gap: 15px; }
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 25px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            min-width: 130px;
+        }
+        .stat-num { font-size: 1.5rem; font-weight: 700; color: #ffffff; display: block; line-height: 1; }
+        .stat-label { font-size: 0.5rem; color: rgba(255, 255, 255, 0.8); letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
+
+        .content-body { flex: 1; position: relative; overflow: hidden; height: 100%; }
+
+        /* view thư viện bài học */
+        .pills-view {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .guide-strip {
+            background: #fbfbfb;
+            padding: 25px 50px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .guide-tag { color: var(--orange); font-weight: 700; font-size: 0.9rem; }
+        .guide-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* lưới 4 cột để viên thuốc to bầu dục */
+        .pills-grid {
+            padding: 40px 50px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 25px;
+        }
+
+        .lesson-pill {
+            background: var(--pill-inactive);
+            border: 1px solid var(--border);
+            border-radius: 999px; /* bo tròn đối xứng hai đầu */
+            aspect-ratio: 1.7 / 1; /* tỉ lệ viên thuốc bầu dục nằm ngang */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .lesson-pill.active { 
+            background: var(--pill-active); 
+            border-color: var(--green-glow);
+        }
+
+        .pill-text b { font-size: 1.3rem; color: var(--text-main); display: block; margin-bottom: 5px; }
+        .pill-text span { font-size: 0.75rem; color: var(--green-glow); font-weight: 700; }
+        .arrow-icon { position: absolute; right: 35px; font-size: 1.4rem; color: var(--green-glow); }
+
+        /* view bản thảo bài học */
+        .manuscript-view {
+            position: absolute; inset: 0;
+            display: none;
+            flex-direction: row;
+            background: var(--container-bg);
+            z-index: 10;
+        }
+        .manuscript-view.active { display: flex; }
+
+        .page { flex: 1; padding: 30px; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+        .page-left { background: #fafafa; border-right: 1px solid var(--border); max-width: 300px; }
+
+        .btn-illuminate {
+            background: var(--green-glow); color: #fff; border: none;
+            padding: 16px 40px; border-radius: 50px; font-weight: 700;
+            cursor: pointer; margin-top: 30px; transition: 0.3s;
+        }
+
+        /* lưới kanji ép vừa khung hình 5x2 */
+        .kanji-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); 
+            grid-template-rows: repeat(2, 1fr); 
+            gap: 15px;
+            flex: 1;
+            margin: 15px 0;
+            min-height: 0;
+        }
+
+        .kanji-item {
+            background: #fff;
+            aspect-ratio: 1 / 1;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .kanji-char {
+            font-family: 'Klee One', cursive;
+            font-size: clamp(1.5rem, 7vh, 2.8rem);
+            color: var(--green-glow);
+            line-height: 1;
+        }
+
+        .kanji-hv {
+            font-size: clamp(0.6rem, 2vh, 0.9rem);
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+        /* hiệu ứng nhấn cho các viên thuốc bài học */
+.lesson-pill:active {
+    transform: scale(0.95); /* thu nhỏ nhẹ khi nhấn */
+    background: #d0e8e7;    /* đổi màu đậm hơn một chút khi kích */
+    transition: 0.1s;
+}
+
+/* hiệu ứng nhấn cho các ô vuông kanji */
+.kanji-item:active {
+    transform: scale(0.9);  /* nhấn lún sâu hơn một chút */
+    border-color: var(--green-glow);
+    background: #f0fdfa;
+    transition: 0.1s;
+}
+.lesson-pill:hover {
+    box-shadow: 0 8px 20px rgba(38, 166, 154, 0.15);
+    border-color: var(--green-glow);
+}
+
+.kanji-item:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* thêm hiệu ứng mượt mà khi đổi trạng thái cho toàn bộ item */
+.lesson-pill, .kanji-item, .btn-illuminate {
+    user-select: none; /* chặn bôi đen văn bản khi kích nhanh */
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* hiệu ứng cho nút thắp sáng */
+.btn-illuminate:active {
+    transform: scale(0.95) translateY(2px);
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.1);
+}
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <header class="top-banner">
+            <div class="brand-info"><h1>sumi garden</h1></div>
+            <div class="stats-hub">
+                <div class="stat-pill">
+                    <span class="stat-num" id="mastered-count">0</span>
+                    <span class="stat-label">mastered</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-num">100</span>
+                    <span class="stat-label">total archive</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="content-body">
+            <div class="pills-view" id="pills-wrapper">
+                <div class="guide-strip">
+                    <div class="guide-tag">✨ hướng dẫn học tập:</div>
+                    <div class="guide-text">
+                        chọn một "viên thuốc" tri thức để bắt đầu. sau khi hoàn thành rèn luyện, hãy nhấn nút <b>"thắp sáng bài học"</b>. <br>
+                        viên thuốc sẽ chuyển sang màu xanh ngọc, đánh dấu tri thức đã vĩnh cửu thuộc về cậu.
+                    </div>
+                </div>
+                <div class="pills-grid" id="pills-container"></div>
+            </div>
+
+            <div class="manuscript-view" id="manuscript-modal">
+                <div class="page page-left">
+                    <h2 style="font-size: 1.8rem; color: var(--green-glow); margin: 0;">bản thảo bài học</h2>
+                    <p style="line-height: 1.6; color: var(--text-muted); margin-top: 20px; font-size: 0.85rem;">
+                        hãy rèn luyện 10 ký tự ở trang bên phải. tri thức chỉ thực sự thắp sáng khi tâm trí và nét bút hòa làm một.
+                    </p>
+                    <button class="btn-illuminate" id="btn-master-lesson">thắp sáng bài học ✨</button>
+                    <button style="margin-top: auto; background: none; border: none; color: #ccc; cursor: pointer; font-weight: 700;" onclick="backToPills()">[ quay lại thư viện ]</button>
+                </div>
+                <div class="page">
+                    <div class="kanji-grid" id="kanji-list-body"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+    let allData = [];
+
+    async function init() {
+        try {
+            const res = await fetch('JLPT.json');
+            const data = await res.json();
+            allData = data["N5"] || [];
+            updateMastery();
+            renderPills();
+        } catch (e) { console.error("lỗi tải dữ liệu"); }
+    }
+
+    function updateMastery() {
+        const mastered = JSON.parse(localStorage.getItem('sumi_garden_n5') || '[]');
+        document.getElementById('mastered-count').innerText = mastered.length;
+    }
+
+    function renderPills() {
+        const container = document.getElementById('pills-container');
+        container.innerHTML = '';
+        const lessons = Math.ceil(allData.length / 10);
+        const masteredLessons = JSON.parse(localStorage.getItem('sumi_lessons_done') || '[]');
+
+        for (let i = 0; i < lessons; i++) {
+            const kanjis = allData.slice(i * 10, (i + 1) * 10);
+            const isDone = masteredLessons.includes(i + 1);
+            const pill = document.createElement('div');
+            pill.className = `lesson-pill ${isDone ? 'active' : ''}`;
+            pill.innerHTML = `
+                <div class="pill-text">
+                    <b>bài học ${String(i + 1).padStart(2, '0')}</b>
+                    <span>10 kanji archive</span>
+                </div>
+                <div class="arrow-icon">➔</div>`;
+            pill.onclick = () => openManuscript(kanjis, i + 1);
+            container.appendChild(pill);
+        }
+    }
+
+    function openManuscript(kanjis, index) {
+        document.getElementById('manuscript-modal').classList.add('active');
+        const list = document.getElementById('kanji-list-body');
+        list.innerHTML = '';
+        
+        kanjis.forEach(k => {
+            const item = document.createElement('div');
+            item.className = 'kanji-item';
+            item.innerHTML = `<div class="kanji-char">${k.c}</div><div class="kanji-hv">${k.hv}</div>`;
+            list.appendChild(item);
+        });
+
+        document.getElementById('btn-master-lesson').onclick = () => {
+            let done = JSON.parse(localStorage.getItem('sumi_lessons_done') || '[]');
+            if(!done.includes(index)) done.push(index);
+            localStorage.setItem('sumi_lessons_done', JSON.stringify(done));
+            
+            let masteredK = JSON.parse(localStorage.getItem('sumi_garden_n5') || '[]');
+            kanjis.forEach(k => { if(!masteredK.includes(k.c)) masteredK.push(k.c); });
+            localStorage.setItem('sumi_garden_n5', JSON.stringify(masteredK));
+            
+            updateMastery();
+            backToPills();
+        };
+    }
+
+    function backToPills() {
+        document.getElementById('manuscript-modal').classList.remove('active');
+        renderPills();
+    }
+    window.onload = init;
+</script>
+</body>
+</html>
