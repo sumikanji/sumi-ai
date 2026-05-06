@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sumi AI - Intellectual Archive PC (Light Edition)</title>
     <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
@@ -231,6 +232,77 @@
         .detail-view.active { display: flex; }
         #draw-box { border: 1px solid var(--border); border-radius: 20px; background: #fafafa; }
         .btn-back { margin-top: 30px; background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 12px 30px; border-radius: 50px; cursor: pointer; font-family: inherit; font-size: 0.85rem; }
+    /* --- TỐI ƯU HÓA MOBILE (BREAKPOINT 768PX) --- */
+@media (max-width: 768px) {
+    .main-wrapper {
+        width: 100%; /* Tràn viền màn hình điện thoại */
+        height: 100vh;
+        border-radius: 0; /* Loại bỏ bo góc ngoài cùng để tối ưu diện tích */
+    }
+
+    .top-banner {
+        padding: 15px 20px; /* Thu hẹp khoảng cách header */
+        flex-direction: column; /* Xếp chồng tên JLPT và chỉ số stats */
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .stats-hub {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+@media (max-width: 768px) {
+    .pills-view {
+        padding: 10px 20px 30px;
+        display: flex;
+        flex-direction: column; /* Xếp dọc các bài học */
+        gap: 15px;
+        align-content: flex-start;
+    }
+
+    .lesson-pill {
+        flex: 1 1 auto;
+        width: 100%; /* Giãn tối đa chiều ngang */
+        height: 90px; /* Chiều cao cố định để không bị biến dạng */
+        padding: 20px 30px; /* Vẫn giữ độ mập mạp nhưng vừa vặn hơn */
+    }
+
+    .pill-text b { font-size: 1rem; }
+}
+@media (max-width: 768px) {
+    .manuscript-view {
+        flex-direction: column; /* Xoay dọc trang học */
+        overflow-y: auto;
+    }
+
+    .page-left {
+        flex: 0 0 auto;
+        padding: 20px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .page-right {
+        padding: 20px;
+    }
+
+    .kanji-grid {
+        grid-template-columns: repeat(3, 1fr); /* Giảm còn 3 cột để ô Kanji đủ to */
+        gap: 10px;
+    }
+
+    /* Bảng vẽ chi tiết */
+    .detail-view {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    #draw-box {
+        width: 280px !important; /* Kích thước vừa khít chiều ngang điện thoại */
+        height: 280px !important;
+    }
+}
     </style>
 </head>
 <body>
