@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumi AI - Neubrutalism Mobile Optimized</title>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fdf8f1;
+            --grid-color: #aac9a1;
+            --card-bg: #ffffff;
+            --accent-yellow: #fff3bf;
+            --accent-blue: #fbfaf5;
+            --accent-green: #fbfaf5;
+            --muji-red: #a63d40;
+            --black: #2b2d42;
+            --border-thick: 4px solid var(--black);
+            --border-thin: 2px solid var(--black);
+            --shadow: 8px 8px 0px var(--black);
+            --shadow-active: 3px 3px 0px var(--black);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(var(--grid-color) 1.2px, transparent 1.2px),
+                linear-gradient(90deg, var(--grid-color) 1.2px, transparent 1.2px);
+            background-size: 25px 25px;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px 0;
+            min-height: 100vh;
+            color: var(--black);
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        /* KHÔNG CHO PHÉP CHỮ NGHIÊNG TRÊN TOÀN APP */
+        * {
+            font-style: normal !important;
+            box-sizing: border-box;
+        }
+
+        /* CONTAINER THAY ĐỔI LINH HOẠT THEO MÀN HÌNH */
+        .flashcard-container {
+            perspective: 2000px;
+            width: 92%;
+            max-width: 900px;
+            height: 480px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateX(180deg);
+        }
+
+        /* NÚT PHÁT ÂM NÉT MẢNH */
+        .btn-speak {
+            background: #fff;
+            border: var(--border-thin);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 2px 2px 0px var(--black);
+            transition: 0.1s;
+            float: right;
+            margin-left: 12px;
+            margin-top: 2px;
+            border-radius: 4px;
+        }
+
+        .btn-speak:active {
+            transform: translate(1px, 1px);
+            box-shadow: 0px 0px 0px #000;
+        }
+
+        .btn-speak svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--black);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border: var(--border-thick);
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* MẶT TRƯỚC: TẬP TRUNG CAO ĐỘ */
+        .card-front {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-yellow);
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        /* MẶT SAU: GIAO DIỆN MẶC ĐỊNH */
+        .card-back {
+            transform: rotateX(180deg);
+            display: grid;
+            grid-template-columns: 1fr 1.4 fr;
+            background: var(--card-bg);
+        }
+
+        /* CỘT TRÁI (NGHĨA) */
+        .back-left {
+            border-right: var(--border-thick);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: #fbfaf5;
+            text-align: center;
+        }
+
+        /* CỘT PHẢI (VÍ DỤ) */
+        .back-right {
+            padding: 25px;
+            overflow-y: auto;
+            background: #fbfaf5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .level-badge {
+            background: var(--black);
+            color: white;
+            padding: 4px 16px;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 15px;
+            box-shadow: 3px 3px 0px var(--muji-red);
+            text-transform: uppercase;
+        }
+
+        /* CHỮ HÁN TỰ (KANJI) GIỮ NGUYÊN VIẾT HOA ĐỂ RÕ NÉT */
+        .grammar-main,
+        ruby,
+        rt,
+        .grammar-main ruby {
+            text-transform: uppercase !important;
+        }
+
+        .grammar-main {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--black);
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        /* CHỮ NỘI DUNG THƯỜNG VIẾT THƯỜNG */
+        .meaning-main {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--muji-red);
+            margin-top: 10px;
+            text-transform: lowercase;
+        }
+
+        /* KHU VỰC CHỨA CÁC VÍ DỤ ĐÃ ĐƯỢC TÁCH KHUNG BIỆT LẬP */
+        .example-section-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            /* tạo khoảng cách rộng rãi giữa các ô ví dụ */
+            margin-top: 5px;
+        }
+
+        /* TỪNG Ô VÍ DỤ ĐÓNG KHUNG RIÊNG BIỆT */
+        .example-card {
+            background: #ffffff;
+            border: var(--border-thin);
+            /* Đóng khung nét mảnh cho từng phần còn lại */
+            padding: 16px;
+            border-radius: 4px;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.05);
+            /* Bóng đổ nhẹ tạo khối */
+        }
+
+        .example-jp {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        /* TOÀN BỘ TIẾNG VIỆT ĐƯỢC ÉP BUỘC VIẾT THƯỜNG */
+        .example-vn {
+            font-size: 13px;
+            font-weight: 500;
+            color: #555;
+            text-transform: lowercase !important;
+            display: block;
+            line-height: 1.4;
+        }
+
+        /* ĐIỀU KHIỂN */
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            width: 92%;
+            max-width: 900px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: var(--border-thick);
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            background: white;
+            box-shadow: 5px 5px 0px var(--black);
+            transition: 0.1s;
+            text-transform: lowercase;
+        }
+
+        .btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0px 0px 0px #000;
+        }
+
+        .btn-next {
+            background: #73cb70;
+        }
+
+        .progress-text {
+            margin-top: 20px;
+            font-weight: 900;
+            font-size: 18px;
+            background: white;
+            padding: 4px 16px;
+            border: var(--border-thick);
+        }
+
+        ruby rt {
+            color: var(--muji-red);
+            font-weight: 700;
+            font-size: 0.55em;
+            text-transform: uppercase !important;
+        }
+
+        .hint {
+            margin-top: 30px;
+            font-weight: 700;
+            font-size: 11px;
+            color: rgba(0, 0, 0, 0.3);
+            text-transform: lowercase;
+        }
+
+        .back-right::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .back-right::-webkit-scrollbar-thumb {
+            background: var(--black);
+        }
+
+        /* ==========================================================================
+           CẤU HÌNH TỐI ƯU GIAO DIỆN TRÊN ĐIỆN THOẠI (RESPONSIVE MOBILE)
+           ========================================================================== */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px 0;
+            }
+
+            .flashcard-container {
+                height: 520px;
+                width: 94%;
+            }
+
+            /* CHUYỂN MẶT SAU THÀNH VỀ 1 CỘT DỌC ĐỂ CHỐNG TRÀN CHỮ */
+            .card-back {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+
+            .back-left {
+                border-right: none;
+                border-bottom: var(--border-thick);
+                padding: 12px 15px;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                background: #fffdf9;
+            }
+
+            .level-badge {
+                margin-bottom: 0;
+            }
+
+            .meaning-main {
+                font-size: 20px;
+                margin-top: 0;
+                text-align: right;
+                flex: 1;
+                margin-left: 15px;
+                text-transform: lowercase;
+            }
+
+            .back-left div[style*="opacity"] {
+                display: none;
+            }
+
+            .back-right {
+                padding: 15px;
+            }
+
+            .grammar-main {
+                font-size: 32px;
+            }
+
+            .example-jp {
+                font-size: 16px;
+            }
+
+            .controls {
+                width: 94%;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .btn {
+                padding: 14px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="flashcard-container" onclick="flipCard()">
+        <div class="flashcard" id="card">
+            <div class="card-face card-front">
+                <div class="level-badge" id="frontLevel">--</div>
+                <div class="grammar-main" id="frontGrammar">đang nạp dữ liệu...</div>
+                <div class="hint">chạm để xem nghĩa & ví dụ</div>
+            </div>
+
+            <div class="card-face card-back">
+                <div class="back-left">
+                    <div class="level-badge" id="backLevelBadge">--</div>
+                    <div class="meaning-main" id="backMeaning">trống</div>
+                    <div style="display: none;">CHẠM ĐỂ QUAY LẠI</div>
+                </div>
+                <div class="back-right">
+                    <div
+                        style="font-size: 11px; font-weight: 900; margin-bottom: 12px; text-transform: lowercase; color: var(--muji-red);">
+                        ví dụ minh họa</div>
+                    <div class="example-section-container" id="backExamples"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="event.stopPropagation(); move(-1)">lùi lại</button>
+        <button class="btn btn-next" onclick="event.stopPropagation(); move(1)">mẫu tiếp theo</button>
+    </div>
+
+    <div class="progress-text" id="progress">0 / 0</div>
+
+    <script src="data.js"></script>
+
+    <script>
+        let dataList = [];
+        let currentIndex = 0;
+
+        window.onload = function () {
+            if (window.sumiData && Array.isArray(window.sumiData) && window.sumiData.length > 0) {
+                dataList = window.sumiData;
+                localStorage.setItem('sumi_v3_data', JSON.stringify(dataList));
+                render();
+            } else {
+                fetch('data.js')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (Array.isArray(data) && data.length > 0) {
+                            dataList = data;
+                            localStorage.setItem('sumi_v3_data', JSON.stringify(dataList));
+                            render();
+                        }
+                    })
+                    .catch(error => {
+                        const savedData = localStorage.getItem('sumi_v3_data');
+                        if (savedData) {
+                            try {
+                                dataList = JSON.parse(savedData);
+                                if (dataList.length > 0) render();
+                            } catch (e) {
+                                document.getElementById('frontGrammar').innerText = "lỗi tải dữ liệu";
+                            }
+                        }
+                    });
+            }
+        };
+
+        function flipCard() {
+            if (dataList.length === 0) return;
+            document.getElementById('card').classList.toggle('is-flipped');
+        }
+
+        function render() {
+            if (!dataList || dataList.length === 0) return;
+
+            const item = dataList[currentIndex];
+            if (!item) return;
+
+            document.getElementById('card').classList.remove('is-flipped');
+
+            document.getElementById('frontLevel').innerText = item.level || 'N2';
+            document.getElementById('backLevelBadge').innerText = item.level || 'N2';
+            document.getElementById('frontGrammar').innerHTML = item.grammarHtml || item.grammarRaw || '';
+
+            // Ép chữ phần giải nghĩa dịch sang chữ viết thường
+            document.getElementById('backMeaning').innerText = (item.meaning || '').toLowerCase();
+
+            if (item.examples && Array.isArray(item.examples)) {
+                const exHtml = item.examples.map(ex => {
+                    const filterDiv = document.createElement('div');
+                    filterDiv.innerHTML = ex.jpRuby || '';
+                    filterDiv.querySelectorAll('rt').forEach(rt => rt.remove());
+                    const cleanText = filterDiv.innerText.trim();
+
+                    // Chuyển toàn bộ chuỗi giải nghĩa tiếng Việt sang chữ viết thường
+                    const lowercaseVn = (ex.vn || '').toLowerCase();
+
+                    return `
+                        <div class="example-card">
+                            <button class="btn-speak" onclick="speak('${cleanText.replace(/'/g, "\\'")}', event)" title="Nghe đọc">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                </svg>
+                            </button>
+                            <div class="example-jp">${ex.jpRuby || ''}</div>
+                            <div class="example-vn">${lowercaseVn}</div>
+                        </div>
+                    `;
+                }).join('');
+                document.getElementById('backExamples').innerHTML = exHtml;
+            } else {
+                document.getElementById('backExamples').innerHTML = '<div class="example-card">không có ví dụ</div>';
+            }
+
+            document.getElementById('progress').innerText = `${currentIndex + 1} / ${dataList.length}`;
+        }
+
+        function speak(text, event) {
+            if (event) event.stopPropagation();
+            if (!('speechSynthesis' in window)) return;
+
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voices = window.speechSynthesis.getVoices();
+            const preferredVoice = voices.find(v => v.lang === 'ja-JP' && (v.name.includes('Google') || v.name.includes('Natural'))) || voices.find(v => v.lang === 'ja-JP');
+
+            if (preferredVoice) utterance.voice = preferredVoice;
+            utterance.lang = 'ja-JP';
+            utterance.rate = 0.85;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function move(step) {
+            if (dataList.length === 0) return;
+            currentIndex += step;
+            if (currentIndex < 0) currentIndex = dataList.length - 1;
+            if (currentIndex >= dataList.length) currentIndex = 0;
+            render();
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (dataList.length === 0) return;
+            if (e.code === 'Space') { e.preventDefault(); flipCard(); }
+            if (e.code === 'ArrowRight') move(1);
+            if (e.code === 'ArrowLeft') move(-1);
+        });
+    </script>
+</body>
+
+</html>
