@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="community.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="firebase-config.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="community.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <!-- Logo gà con Hiyo -->
+        <svg class="brand-logo-unko" viewBox="-72 -66 144 132" fill="none" aria-hidden="true"><g><path d="M-2 -40 C-6 -52 2 -56 4 -48 C6 -54 14 -52 8 -42" fill="#FFE066" stroke="#9A6A1F" stroke-width="2.5" stroke-linejoin="round"/><path d="M0 -40 C30 -40 46 -18 46 10 C46 36 28 50 0 50 C-28 50 -46 36 -46 10 C-46 -18 -30 -40 0 -40 Z" fill="#FFE066" stroke="#9A6A1F" stroke-width="3"/><path d="M-44 14 Q-58 22 -48 34 Q-42 28 -40 22 Z" fill="#FFD43B" stroke="#9A6A1F" stroke-width="2.5"/><path d="M44 14 Q58 22 48 34 Q42 28 40 22 Z" fill="#FFD43B" stroke="#9A6A1F" stroke-width="2.5"/><path d="M-14 50 l-4 6 M-14 50 l0 7 M-14 50 l4 6 M14 50 l-4 6 M14 50 l0 7 M14 50 l4 6" stroke="#FF922B" stroke-width="3" stroke-linecap="round"/><ellipse cx="-15" cy="4" rx="7.5" ry="9.5" fill="#3B2412"/><ellipse cx="15" cy="4" rx="7.5" ry="9.5" fill="#3B2412"/><circle cx="-12" cy="0" r="3" fill="#fff"/><circle cx="18" cy="0" r="3" fill="#fff"/><circle cx="-17" cy="9" r="1.4" fill="#fff"/><circle cx="13" cy="9" r="1.4" fill="#fff"/><path d="M-5 14 Q0 20 5 14 Q0 11 -5 14 Z" fill="#FF922B"/><ellipse cx="-28" cy="16" rx="7" ry="4" fill="#FF8FA3" opacity="0.75"/><ellipse cx="28" cy="16" rx="7" ry="4" fill="#FF8FA3" opacity="0.75"/><ellipse cx="-8" cy="-36" rx="24" ry="8.5" fill="#2E2A27" transform="rotate(-10 -8 -36)"/><circle cx="-10" cy="-45" r="3.5" fill="#2E2A27"/><path transform="translate(46 -30) scale(1)" d="M0 -8 L2.4 -2.4 L8 0 L2.4 2.4 L0 8 L-2.4 2.4 L-8 0 L-2.4 -2.4 Z" fill="#FFD43B"/></g></svg>
+        <div class="brand-text">
+          <h1>Sumi Kanji</h1>
+          <p>笑って 楽しくマスター！</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-item active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span>Trang chủ</span>
+        </a>
+        <a href="route.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          <span>Lộ trình học</span>
+        </a>
+        <a href="dict.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span>Từ điển Kanji</span>
+        </a>
+        <a href="kanken.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Thi Kanken</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          <span>Cá nhân</span>
+        </a>
+      </nav>
+
+      <div class="nav-right">
+        <div class="search-bar" id="search-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="search-input" placeholder="Tìm Kanji, Hán Việt, nghĩa..." autocomplete="off">
+          <div class="search-results" id="search-results"></div>
+        </div>
+        <div class="profile-pill">
+          <span>漢字はかせ</span>
+          <span class="profile-emoji">🐣</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Container Chính -->
+  <main class="container">
+    <!-- Hero Banner Pastel -->
+    <section class="hero-banner">
+      <p class="hero-tag">楽しく・笑って・身につく！</p>
+      <h2 class="hero-title">Học Kanji – Vững bước tương lai</h2>
+      <p class="hero-subtitle">Từng chữ Hán nhỏ, tạo nên cánh cửa lớn theo phong cách học tập vui nhộn.</p>
+
+      <!-- Minh họa Unko Sensei Giáo Sư -->
+      <span id="hero-hiyo"></span>
+    </section>
+
+    <!-- ===== Hôm nay: Ôn tập ngắt quãng + Học tiếp ===== -->
+    <section class="home-today">
+      <!-- Ôn tập ngắt quãng -->
+      <div class="srs-card" id="srs-card">
+        <div class="srs-head">
+          <div class="srs-title"><span class="srs-ico">🔁</span><div><b>Ôn tập hôm nay</b><small>間隔反復 · Ôn đúng lúc sắp quên</small></div></div>
+          <a class="srs-help" href="route.html#on-tap" title="Ôn tập ngắt quãng hoạt động thế nào?">? Cách hoạt động</a>
+        </div>
+        <div class="srs-main">
+          <div class="srs-hiyo" id="srs-hiyo"></div>
+          <div class="srs-due">
+            <div class="srs-num" id="srs-num">0</div>
+            <div class="srs-label" id="srs-label">chữ cần ôn</div>
+            <a class="srs-go" id="srs-go" href="review.html">Bắt đầu ôn →</a>
+          </div>
+          <div class="srs-week">
+            <div class="srs-week-title">7 ngày tới</div>
+            <div class="srs-bars" id="srs-bars"></div>
+          </div>
+        </div>
+        <div class="srs-garden">
+          <div class="srs-track" id="srs-track"></div>
+          <div class="srs-legend" id="srs-legend"></div>
+        </div>
+      </div>
+
+      <!-- Học tiếp + mục tiêu ngày -->
+      <div class="today-side">
+        <a class="next-card" id="next-card" href="level.html?id=g1"></a>
+        <div class="goal-card">
+          <div class="gc-ring">
+            <svg class="tp-ring" viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="32" cy="32" r="27" class="ring-bg"/>
+              <circle cx="32" cy="32" r="27" class="ring-fg" id="tp-ring"/>
+            </svg>
+            <span class="gc-flame" id="tp-flame">🔥</span>
+          </div>
+          <div class="gc-text">
+            <div class="gc-row"><b id="tp-xp">0</b>/<span id="tp-goal">50</span>⭐ <span class="gc-sep">·</span> <b id="tp-streak">0</b> ngày liên tiếp</div>
+            <div class="gc-note" id="tp-streak-note"></div>
+            <div class="gc-sel">Mục tiêu: <select id="tp-goal-select" aria-label="Chọn mục tiêu mỗi ngày"></select> <span class="gc-freeze" id="tp-freeze" title="Ngày nghỉ phép: tự giữ chuỗi khi bạn lỡ bỏ 1 ngày. Giữ chuỗi 7 ngày được thưởng 1 ngày (tối đa 2)."></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="overall-progress" id="overall-progress"></div>
+
+    <!-- Lưới thẻ cấp độ (vẽ bằng script.js) -->
+    <div class="cards-grid" id="cards-grid"></div>
+
+    <!-- Cộng đồng: góp ý mới & bảng xếp hạng -->
+    <section class="home-community" id="community">
+      <div class="hc-card">
+        <div class="hc-head"><h3>💡 Mẹo nhớ từ cộng đồng <small>みんなの覚え方</small></h3><span class="hc-hint">Góp ý ở cuối trang học mỗi chữ</span></div>
+        <div id="home-tips"></div>
+      </div>
+      <div class="hc-card">
+        <div class="hc-head"><h3>🏆 Bảng xếp hạng <small>ランキング</small></h3><a href="rank.html">Xem toàn bộ →</a></div>
+        <div id="home-board"></div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
