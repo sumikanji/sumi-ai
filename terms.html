@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Điều khoản & Bản quyền – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="terms.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="firebase-config.js" defer></script>
+  <script src="auth.js" defer></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <!-- Logo gà con Hiyo -->
+        <svg class="brand-logo-unko" viewBox="-72 -66 144 132" fill="none" aria-hidden="true"><g><path d="M-2 -40 C-6 -52 2 -56 4 -48 C6 -54 14 -52 8 -42" fill="#FFE066" stroke="#9A6A1F" stroke-width="2.5" stroke-linejoin="round"/><path d="M0 -40 C30 -40 46 -18 46 10 C46 36 28 50 0 50 C-28 50 -46 36 -46 10 C-46 -18 -30 -40 0 -40 Z" fill="#FFE066" stroke="#9A6A1F" stroke-width="3"/><path d="M-44 14 Q-58 22 -48 34 Q-42 28 -40 22 Z" fill="#FFD43B" stroke="#9A6A1F" stroke-width="2.5"/><path d="M44 14 Q58 22 48 34 Q42 28 40 22 Z" fill="#FFD43B" stroke="#9A6A1F" stroke-width="2.5"/><path d="M-14 50 l-4 6 M-14 50 l0 7 M-14 50 l4 6 M14 50 l-4 6 M14 50 l0 7 M14 50 l4 6" stroke="#FF922B" stroke-width="3" stroke-linecap="round"/><ellipse cx="-15" cy="4" rx="7.5" ry="9.5" fill="#3B2412"/><ellipse cx="15" cy="4" rx="7.5" ry="9.5" fill="#3B2412"/><circle cx="-12" cy="0" r="3" fill="#fff"/><circle cx="18" cy="0" r="3" fill="#fff"/><circle cx="-17" cy="9" r="1.4" fill="#fff"/><circle cx="13" cy="9" r="1.4" fill="#fff"/><path d="M-5 14 Q0 20 5 14 Q0 11 -5 14 Z" fill="#FF922B"/><ellipse cx="-28" cy="16" rx="7" ry="4" fill="#FF8FA3" opacity="0.75"/><ellipse cx="28" cy="16" rx="7" ry="4" fill="#FF8FA3" opacity="0.75"/><ellipse cx="-8" cy="-36" rx="24" ry="8.5" fill="#2E2A27" transform="rotate(-10 -8 -36)"/><circle cx="-10" cy="-45" r="3.5" fill="#2E2A27"/><path transform="translate(46 -30) scale(1)" d="M0 -8 L2.4 -2.4 L8 0 L2.4 2.4 L0 8 L-2.4 2.4 L-8 0 L-2.4 -2.4 Z" fill="#FFD43B"/></g></svg>
+        <div class="brand-text">
+          <h1>Sumi Kanji</h1>
+          <p>笑って 楽しくマスター！</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span>Trang chủ</span>
+        </a>
+        <a href="route.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          <span>Lộ trình học</span>
+        </a>
+        <a href="dict.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span>Từ điển Kanji</span>
+        </a>
+        <a href="kanken.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Thi Kanken</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          <span>Cá nhân</span>
+        </a>
+      </nav>
+
+      <div class="nav-right">
+        <div class="profile-pill">
+          <span>漢字はかせ</span>
+          <span class="profile-emoji">🐣</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container terms-page">
+    <section class="terms-hero">
+      <h2>📜 利用規約 <span>Điều khoản sử dụng &amp; Bản quyền</span></h2>
+      <p>Cập nhật lần cuối: 05/10/2026. Khi sử dụng Sumi Kanji, bạn đồng ý với các điều khoản dưới đây.</p>
+      <nav class="terms-toc">
+        <a href="#gioi-thieu">1. Giới thiệu</a><a href="#ban-quyen">2. Bản quyền</a><a href="#duoc-phep">3. Bạn được phép</a>
+        <a href="#khong-duoc">4. Không được phép</a><a href="#tai-khoan">5. Tài khoản &amp; góp ý</a><a href="#nguon">6. Nguồn dữ liệu</a>
+        <a href="#kanken">7. Đề thi Kanken</a><a href="#mien-tru">8. Miễn trừ trách nhiệm</a><a href="#lien-he">9. Liên hệ</a>
+      </nav>
+    </section>
+
+    <section class="terms-card" id="gioi-thieu">
+      <h3>1. Giới thiệu</h3>
+      <p>Sumi Kanji là trang học chữ Hán (Kanji) miễn phí dành cho người Việt, học theo lộ trình lớp học của Nhật Bản và các cấp Kanken.</p>
+    </section>
+
+    <section class="terms-card" id="ban-quyen">
+      <h3>2. Bản quyền</h3>
+      <p>Các nội dung sau thuộc quyền sở hữu của <b>Sumi Kanji</b> và được bảo hộ theo luật sở hữu trí tuệ của Việt Nam, Nhật Bản cùng các điều ước quốc tế (Công ước Berne):</p>
+      <ul>
+        <li><b>Tên và biểu trưng</b> “Sumi Kanji”.</li>
+        <li><b>Nhân vật Hiyo (ひよ)</b> cùng 9 dạng tiến hóa (Tama, Piyo, Hiyo, Hiyo đi học, Gà choai, Hiyo tốt nghiệp, Gà teen, Chim lửa, Phượng hoàng), bao gồm nét mặt, phụ kiện và tên gọi.</li>
+        <li><b>Giao diện</b>, bố cục, màu sắc và hiệu ứng của trang.</li>
+        <li><b>Mã nguồn</b> HTML, CSS, JavaScript.</li>
+        <li><b>Nội dung biên soạn</b> gồm giải nghĩa tiếng Việt, nguồn gốc chữ, mẹo học, câu ví dụ, bản dịch, đề luyện thi và lộ trình học.</li>
+      </ul>
+      <p class="terms-note">Mã nguồn và hình ảnh có chứa dấu nhận dạng ẩn. Dấu này được dùng làm bằng chứng nếu phát hiện sao chép.</p>
+    </section>
+
+    <section class="terms-card ok" id="duoc-phep">
+      <h3>3. Bạn được phép ✅</h3>
+      <ul>
+        <li>Dùng trang để tự học, ôn luyện và thi thử.</li>
+        <li>In phiếu luyện viết và sổ tay ôn tập để học cá nhân, hoặc phát cho học sinh trong lớp học không thu phí.</li>
+        <li>Chụp màn hình để chia sẻ thành tích hoặc giới thiệu trang, kèm tên “Sumi Kanji” hoặc đường dẫn.</li>
+        <li>Trích dẫn ngắn nội dung, có ghi rõ nguồn.</li>
+      </ul>
+    </section>
+
+    <section class="terms-card ng" id="khong-duoc">
+      <h3>4. Không được phép ❌</h3>
+      <ul>
+        <li>Sao chép toàn bộ hoặc phần lớn trang web, mã nguồn, giao diện để dựng một trang khác.</li>
+        <li>Dùng nhân vật Hiyo hoặc tên “Sumi Kanji” trên sản phẩm, hàng hóa, ứng dụng, trang mạng xã hội hoặc quảng cáo khi chưa được đồng ý bằng văn bản.</li>
+        <li>Dùng công cụ tự động tải hàng loạt (crawl/scrape) dữ liệu, đề thi hay phần giải nghĩa.</li>
+        <li>Bán lại, cho thuê hoặc đưa nội dung vào khóa học có thu phí.</li>
+        <li>Gỡ bỏ hoặc che giấu thông tin bản quyền và nguồn dữ liệu.</li>
+      </ul>
+    </section>
+
+    <section class="terms-card" id="tai-khoan">
+      <h3>5. Tài khoản &amp; góp ý cộng đồng</h3>
+      <ul>
+        <li>Bạn tự chịu trách nhiệm bảo mật tài khoản. Với tài khoản lưu trên máy, dữ liệu nằm trong trình duyệt của bạn, nên hãy dùng chức năng <i>Sao lưu</i> ở trang Cá nhân.</li>
+        <li>Khi đăng mẹo học, bạn đồng ý cho Sumi Kanji hiển thị mẹo đó trên trang, kèm tên hiển thị của bạn. Bạn vẫn giữ quyền tác giả với mẹo của mình.</li>
+        <li>Không đăng nội dung xúc phạm, quảng cáo hoặc vi phạm bản quyền người khác. Nội dung bị báo cáo nhiều lần sẽ tự động bị ẩn.</li>
+      </ul>
+    </section>
+
+    <section class="terms-card" id="nguon">
+      <h3>6. Nguồn dữ liệu mở</h3>
+      <p>Một phần dữ liệu được xây dựng từ các dự án mở. Sumi Kanji trân trọng ghi công các dự án này:</p>
+      <ul>
+        <li><b>Thứ tự nét chữ:</b> <a href="https://kanjivg.tagaini.net/" target="_blank" rel="noopener">KanjiVG</a> © Ulrich Apel, giấy phép <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>.</li>
+        <li><b>Âm đọc, số nét, bộ thủ, từ vựng:</b> <a href="https://www.edrdg.org/" target="_blank" rel="noopener">JMdict / KANJIDIC</a> © Electronic Dictionary Research and Development Group, giấy phép <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</li>
+        <li><b>Biểu tượng (icon):</b> <a href="https://lucide.dev/" target="_blank" rel="noopener">Lucide</a>, giấy phép <a href="https://github.com/lucide-icons/lucide/blob/main/LICENSE" target="_blank" rel="noopener">ISC</a>.</li>
+        <li><b>Danh sách chữ theo lớp:</b> 学年別漢字配当表 và 常用漢字表 do Bộ Giáo dục Nhật Bản (文部科学省) công bố.</li>
+      </ul>
+      <p class="terms-note">Phần dữ liệu lấy từ các nguồn trên vẫn theo giấy phép gốc (CC BY-SA). Mục 2 và 4 áp dụng cho phần do Sumi Kanji tự tạo: nhân vật, giao diện, mã nguồn, giải nghĩa tiếng Việt, nguồn gốc chữ, câu ví dụ và đề luyện thi.</p>
+    </section>
+
+    <section class="terms-card" id="kanken">
+      <h3>7. Về đề thi Kanken</h3>
+      <p>Đề thi trên Sumi Kanji là <b>đề luyện tập do Sumi Kanji tự biên soạn</b> theo cấu trúc kỳ thi, không phải đề thi chính thức. “漢検” và “日本漢字能力検定” là nhãn hiệu của 公益財団法人 日本漢字能力検定協会. Sumi Kanji không liên kết với hiệp hội này.</p>
+    </section>
+
+    <section class="terms-card" id="mien-tru">
+      <h3>8. Miễn trừ trách nhiệm</h3>
+      <p>Nội dung được biên soạn cẩn thận nhưng vẫn có thể có sai sót. Nếu phát hiện lỗi, bạn hãy góp ý để trang ngày càng hoàn thiện. Sumi Kanji không chịu trách nhiệm về kết quả thi thực tế. Điều khoản có thể được cập nhật, và ngày cập nhật được ghi ở đầu trang.</p>
+    </section>
+
+    <section class="terms-card" id="lien-he">
+      <h3>9. Liên hệ &amp; báo cáo vi phạm</h3>
+      <p>Nếu muốn xin phép sử dụng nhân vật Hiyo, hoặc phát hiện trang khác sao chép Sumi Kanji, bạn vui lòng liên hệ <span id="terms-contact">qua mục góp ý trên trang</span>.</p>
+    </section>
+  </main>
+  <script>document.addEventListener('DOMContentLoaded',function(){var c=(window.SUMI_SITE||{}).contact;if(c)document.getElementById('terms-contact').innerHTML='<a href="mailto:'+c+'">'+c+'</a>';});</script>
+</body>
+</html>

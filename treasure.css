@@ -1,0 +1,143 @@
+/*! © 2026 Sumi Kanji */
+/* ===== Hiyo truy tìm kho báu ===== */
+.tr-wrap { max-width: 980px; }
+.tr-pbtn { border: none; cursor: pointer; font: inherit; }
+.tr-hud { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: #332d29; color: #fff; border-radius: 18px; padding: 8px 14px; margin-bottom: 10px; }
+.tr-me { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.tr-me { flex: 1 1 360px; }
+.tr-av { width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #fff7d6; display: grid; place-items: center; overflow: hidden; }
+.tr-av-svg { width: 36px; height: 36px; }
+.tr-me-txt { display: grid; line-height: 1.2; min-width: 0; }
+.tr-me-txt b { font-size: 0.85rem; color: #facc15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
+.tr-me-txt small { font-size: 0.72rem; color: #d6d3d1; white-space: nowrap; }
+.tr-slots { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+.tr-slots span { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: #44403c; color: #78716c; font-weight: 900; font-family: 'Klee One', serif; font-size: 1.1rem; }
+.tr-slots span.got { background: #fef3c7; color: #7c2d12; box-shadow: 0 0 0 2px #f59e0b; animation: trGot .4s ease; }
+@keyframes trGot { 50% { transform: scale(1.25); } }
+.tr-stage { position: relative; height: min(62vh, 480px); min-height: 300px; border-radius: 22px; overflow: hidden; border: 2px solid #f1e3b3; background: #bfe3ff; touch-action: none; user-select: none; }
+#tr-canvas { position: absolute; inset: 0; display: block; }
+.tr-toast { position: absolute; left: 50%; top: 12px; transform: translate(-50%, -20px); opacity: 0; background: rgba(51, 45, 41, .92); color: #fff; border-radius: 14px; padding: 8px 14px; font-size: 0.85rem; font-weight: 700; max-width: 90%; text-align: center; transition: opacity .2s, transform .2s; pointer-events: none; z-index: 2; }
+.tr-toast.show { opacity: 1; transform: translate(-50%, 0); }
+.tr-toast.big { font-size: 1rem; }
+.tr-toast .tk { font-family: 'Klee One', serif; font-size: 1.6rem; color: #facc15; vertical-align: -3px; margin-right: 4px; }
+.tr-toast small { color: #d6d3d1; }
+.tr-over { position: absolute; inset: 0; z-index: 3; background: rgba(255, 253, 244, .9); display: flex; align-items: center; justify-content: center; padding: 14px; overflow-y: auto; }
+.tr-over[hidden] { display: none; }
+.tr-end-in { display: grid; justify-items: center; gap: 8px; text-align: center; max-width: 560px; margin: auto; }
+.tr-end-in h2 { margin: 0; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: 1.4rem; }
+.tr-end-in p { margin: 0; color: #57534e; font-size: 0.88rem; line-height: 1.55; }
+.tr-sub { font-size: 0.78rem !important; color: #a16207 !important; font-weight: 700; }
+.tr-keys { font-size: 0.72rem !important; color: #a8a29e !important; }
+.tr-hiyo { width: 78px; height: auto; }
+.tr-levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; }
+.tr-lv { display: grid; gap: 2px; border: 2px solid #ede7de; border-radius: 16px; padding: 10px 8px; background: #fff; cursor: pointer; font: inherit; color: #332d29; box-shadow: 0 3px 0 #ede7de; transition: transform .1s; }
+.tr-lv:hover:not(:disabled) { transform: translateY(-2px); }
+.tr-lv b { font-family: 'Zen Maru Gothic', sans-serif; font-size: 1.2rem; }
+.tr-lv span { font-weight: 800; font-size: 0.82rem; }
+.tr-lv small { font-size: 0.7rem; color: #78716c; }
+.tr-lv.hanoi { background: #f0f9ff; border-color: #bae6fd; }
+.tr-lv.hoian { background: #fffbeb; border-color: #fcd34d; }
+.tr-lv.danang { background: #fefce8; border-color: #fde047; }
+.tr-lv.saigon { background: #f5f3ff; border-color: #c4b5fd; }
+.tr-lv.on { box-shadow: 0 0 0 3px #eab308; }
+.tr-lv.lock { opacity: .55; cursor: not-allowed; }
+.tr-loot { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.tr-loot span { display: grid; justify-items: center; background: #fef3c7; border: 1.5px solid #f59e0b; border-radius: 12px; padding: 4px 9px; min-width: 56px; }
+.tr-loot b { font-family: 'Klee One', serif; font-size: 1.5rem; line-height: 1.15; color: #7c2d12; }
+.tr-loot em { font-style: normal; font-size: 0.62rem; font-weight: 900; color: #a16207; }
+.tr-loot small { font-size: 0.66rem; color: #57534e; }
+.tr-acts { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.tr-pad { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 12px; user-select: none; touch-action: none; }
+.tr-dir { display: flex; gap: 10px; }
+.tr-pad button { border: none; border-radius: 18px; font: inherit; font-weight: 900; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.tr-dir button { width: 72px; height: 64px; background: #fff; border: 2px solid #ede7de; box-shadow: 0 4px 0 #ede7de; font-size: 1.4rem; color: #57534e; }
+.tr-jump { width: 120px; height: 64px; background: linear-gradient(135deg, #facc15, #eab308); color: #422006; box-shadow: 0 4px 0 #a16207; font-size: 1.1rem; }
+.tr-pad button.on { transform: translateY(3px); box-shadow: none; }
+@media (hover: hover) and (pointer: fine) { .tr-pad { opacity: .75; } }
+@media (max-width: 560px) { .tr-levels { grid-template-columns: 1fr 1fr; } .tr-slots span { width: 24px; height: 24px; font-size: 0.9rem; } .tr-stage { height: min(48vh, 340px); min-height: 280px; } .tr-over { align-items: flex-start; } }
+
+/* ---- v2: menu bước, câu hỏi, phép, đếm ngược, phòng ---- */
+.tr-step { display: grid; gap: 6px; width: 100%; justify-items: center; }
+.tr-step > span { font-size: 0.75rem; font-weight: 900; color: #a16207; text-transform: uppercase; letter-spacing: .04em; }
+.tr-go { font-size: 1.05rem; padding: 11px 30px; }
+@keyframes trBlink { 50% { opacity: .45; } }
+.tr-count { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: 5rem; color: #fff; text-shadow: 0 4px 0 #a16207, 0 0 30px rgba(0,0,0,.25); pointer-events: none; }
+.tr-count[hidden] { display: none; }
+.tr-quiz { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; background: rgba(51,45,41,.35); padding: 12px; }
+.tr-quiz[hidden] { display: none; }
+.tq-in { width: min(460px, 100%); background: #fffdf6; border: 2px solid #dc2626; border-radius: 22px; padding: 14px; display: grid; gap: 10px; box-shadow: 0 12px 30px rgba(0,0,0,.2); animation: tqPop .25s ease; }
+@keyframes tqPop { from { transform: scale(.85); opacity: 0; } }
+.tq-head { display: flex; align-items: center; gap: 10px; }
+.tq-head b { display: block; font-size: 0.95rem; color: #b91c1c; }
+.tq-head small { font-size: 0.75rem; color: #78716c; }
+.tq-k { width: 54px; height: 54px; flex-shrink: 0; display: grid; place-items: center; background: #dc2626; color: #fde68a; border-radius: 14px; font-family: 'Klee One', serif; font-size: 2rem; font-weight: 600; }
+.tq-t { margin-left: auto; }
+.tq-ask { font-size: 1rem; font-weight: 700; line-height: 1.5; text-align: center; }
+.tq-ask small { display: block; font-size: 0.78rem; color: #78716c; font-weight: 600; }
+.tq-w { font-family: 'Klee One', serif; font-size: 1.5rem; color: #7c2d12; }
+.tq-r { color: #a16207; font-size: 0.9rem; }
+.tq-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tq-opt { display: flex; align-items: center; gap: 8px; text-align: left; border: 2px solid #ede7de; background: #fff; border-radius: 14px; padding: 9px 10px; font: inherit; font-weight: 700; font-size: 0.88rem; color: #332d29; cursor: pointer; box-shadow: 0 3px 0 #ede7de; }
+.tq-opts.jp .tq-opt { font-family: 'Klee One', serif; font-size: 1.05rem; }
+.tq-opt span { flex-shrink: 0; width: 22px; height: 22px; border-radius: 7px; background: #f5f0e6; display: grid; place-items: center; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.72rem; font-weight: 900; color: #78716c; }
+.tq-opt:hover:not(:disabled) { border-color: #eab308; }
+.tq-opt.right { border-color: #22c55e; background: #dcfce7; }
+.tq-opt.wrong { border-color: #ef4444; background: #fee2e2; animation: mmNudge .35s; }
+@keyframes mmNudge { 25%, 75% { transform: translateX(-4px); } 50% { transform: translateX(4px); } }
+@media (max-width: 560px) {
+  .tr-dir button { width: 56px; }
+  .tr-jump { width: 88px; }
+  .tq-opts { grid-template-columns: 1fr; }
+  .tr-hud { padding: 6px 8px; gap: 6px; }
+  .tr-me { flex-wrap: wrap; }
+  .tr-slots { margin-left: 0; }
+}
+
+/* ---- v3: bưu thiếp Việt Nam, màn tiến hóa ---- */
+.tr-count .tr-post { pointer-events: none; }
+.tr-post { font-size: 1rem; line-height: 1.4; width: min(440px, 92%); background: #fffdf6; border-radius: 20px; padding: 14px 18px 12px; text-align: left; text-shadow: none; box-shadow: 0 14px 34px rgba(0,0,0,.25); border-top: 8px solid #da251d; position: relative; animation: tqPop .35s ease; }
+.tr-post small { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.7rem; font-weight: 800; color: #a16207; text-transform: uppercase; letter-spacing: .05em; }
+.tr-post h3 { margin: 2px 0 6px; font-size: 1.25rem; color: #332d29; }
+.tr-post p { margin: 0 0 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.86rem; font-weight: 600; line-height: 1.5; color: #44403c; }
+.tr-post p.en { font-style: italic; color: #78716c; font-size: 0.8rem; }
+.tr-post.hoian { border-top-color: #f59e0b; } .tr-post.danang { border-top-color: #eab308; } .tr-post.saigon { border-top-color: #7c3aed; }
+.tr-cd { position: absolute; right: 14px; top: 10px; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-size: 1.5rem; color: #fff; background: #da251d; opacity: 0; transform: scale(.6); transition: .2s; }
+.tr-cd.on { opacity: 1; transform: scale(1); }
+.tr-fact { background: #fff7ed; border-radius: 12px; padding: 8px 12px; font-size: 0.8rem !important; text-align: left; max-width: 480px; }
+.tr-fact i { color: #78716c; }
+.tr-evo { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; background: radial-gradient(circle, rgba(255,251,235,.92), rgba(51,45,41,.78)); cursor: pointer; overflow: hidden; }
+.tr-evo[hidden] { display: none; }
+.ev-stage { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
+.ev-rays { position: absolute; width: 560px; height: 560px; left: 50%; top: 44%; margin: -280px 0 0 -280px; background: repeating-conic-gradient(from 0deg, rgba(250,204,21,.35) 0 10deg, transparent 10deg 20deg); border-radius: 50%; animation: evSpin 6s linear infinite; -webkit-mask: radial-gradient(circle, #000 30%, transparent 70%); mask: radial-gradient(circle, #000 30%, transparent 70%); }
+.ev-weap .ev-rays { background: repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--wc) 40%, transparent) 0 10deg, transparent 10deg 20deg); }
+@keyframes evSpin { to { transform: rotate(360deg); } }
+.ev-old, .ev-new { position: absolute; left: 50%; top: 44%; width: min(46vh, 220px); height: min(46vh, 220px); transform: translate(-50%, -50%); }
+.ev-svg { width: 100%; height: 100%; filter: drop-shadow(0 10px 16px rgba(0,0,0,.25)); }
+.ev-old { animation: evOld 1.3s ease forwards; }
+.ev-new { opacity: 0; animation: evNew .8s cubic-bezier(.2,1.6,.4,1) 1.1s forwards; }
+.ev-flash { position: absolute; inset: 0; background: #fff; opacity: 0; animation: evFlash .6s ease .85s; pointer-events: none; }
+@keyframes evOld { 0% { transform: translate(-50%, -50%) scale(.2); } 25% { transform: translate(-50%, -50%) scale(1); } 45%, 60%, 75% { filter: brightness(1); transform: translate(-50%, -50%) scale(1.02); } 52%, 68% { filter: brightness(2.2); } 90% { filter: brightness(4); transform: translate(-50%, -50%) scale(1.1); opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.15); } }
+@keyframes evNew { from { opacity: 0; transform: translate(-50%, -50%) scale(.3); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes evFlash { 0% { opacity: 0; } 40% { opacity: .95; } 100% { opacity: 0; } }
+.ev-txt { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); display: grid; justify-items: center; gap: 2px; background: rgba(255,255,255,.92); border-radius: 18px; padding: 8px 20px; text-align: center; min-width: 240px; animation: tqPop .4s ease 1.2s both; }
+.ev-weap .ev-txt { animation-delay: .3s; }
+.ev-txt small { font-size: 0.72rem; font-weight: 900; color: #a16207; text-transform: uppercase; letter-spacing: .06em; }
+.ev-txt b { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: 1.35rem; color: #332d29; }
+.ev-txt em { font-style: normal; font-size: 0.85rem; font-weight: 700; color: #57534e; }
+.ev-txt i { font-style: normal; font-size: 0.72rem; color: #a8a29e; }
+.ev-icon { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); width: min(34vh, 160px); height: min(34vh, 160px); border-radius: 40px; background: #fff; border: 6px solid var(--wc); display: grid; place-items: center; font-size: min(18vh, 84px); box-shadow: 0 0 60px var(--wc); animation: evIcon .7s cubic-bezier(.2,1.6,.4,1) both; }
+.ev-icon svg { width: 60%; height: 60%; color: var(--wc); }
+@keyframes evIcon { from { transform: translate(-50%, -50%) scale(.2) rotate(-30deg); opacity: 0; } to { transform: translate(-50%, -50%) scale(1) rotate(0); opacity: 1; } }
+.ev-skip { position: absolute; right: 12px; top: 10px; font-size: 0.7rem; font-weight: 800; color: rgba(255,255,255,.85); background: rgba(0,0,0,.25); border-radius: 99px; padding: 3px 10px; }
+
+/* mạng · xu · thời gian */
+.tr-stats { display: flex; gap: 12px; align-items: center; font-weight: 900; font-size: 0.95rem; }
+.tr-stats span { display: inline-flex; align-items: center; gap: 5px; }
+.tr-heart { font-style: normal; color: #f87171; font-size: 1.1rem; line-height: 1; }
+.tr-coin { width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fde68a, #facc15 60%); border: 2px solid #b45309; position: relative; }
+.tr-coin::after { content: ''; position: absolute; inset: 4px; background: #b45309; }
+.tr-clock { width: 15px; height: 15px; border-radius: 50%; border: 2px solid #d6d3d1; position: relative; }
+.tr-clock::after { content: ''; position: absolute; left: 5px; top: 2px; width: 2px; height: 5px; background: #d6d3d1; }
+.tr-stars { display: flex; gap: 6px; justify-content: center; font-size: 2rem; }
+.tr-stars i { font-style: normal; color: #d6d3d1; }
+.tr-stars i.on { color: #f59e0b; text-shadow: 0 2px 0 #b45309; }

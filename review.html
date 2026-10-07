@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ôn tập – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="review.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <!-- Thanh trên -->
+    <div class="topbar">
+      <a href="index.html" class="back-btn" id="back-btn">← Trang chủ</a>
+      <div class="top-title" id="top-title">Ôn tập</div>
+      <div class="top-xp" id="top-xp" title="Điểm hôm nay">⭐ 0</div>
+    </div>
+
+    <!-- Màn hình bắt đầu / trống -->
+    <section class="screen start" id="screen-start" hidden>
+      <div id="start-mascot"></div>
+      <h1 id="start-title"></h1>
+      <p class="start-sub" id="start-sub"></p>
+      <div class="start-rules" id="start-rules"></div>
+      <div class="start-actions" id="start-actions"></div>
+    </section>
+
+    <!-- Màn hình câu hỏi -->
+    <section class="screen quiz" id="screen-quiz" hidden>
+      <div class="quiz-meta">
+        <div class="meta-left" id="meta-left"></div>
+        <div class="meta-right" id="meta-right"></div>
+      </div>
+      <div class="bar"><span id="bar-fill"></span></div>
+
+      <div class="q-card" id="q-card">
+        <div class="q-label" id="q-label"></div>
+        <div class="q-prompt" id="q-prompt"></div>
+      </div>
+
+      <div class="options" id="options"></div>
+
+      <!-- Phản hồi sau khi trả lời -->
+      <div class="feedback" id="feedback" hidden>
+        <div class="fb-head">
+          <div class="fb-mascot" id="fb-mascot"></div>
+          <div>
+            <div class="fb-verdict" id="fb-verdict"></div>
+            <div class="fb-stage" id="fb-stage"></div>
+          </div>
+        </div>
+        <div class="fb-info" id="fb-info"></div>
+        <button class="next-btn" id="next-btn">Tiếp tục →</button>
+      </div>
+    </section>
+
+    <!-- Màn hình kết thúc -->
+    <section class="screen end" id="screen-end" hidden>
+      <div id="end-mascot"></div>
+      <h1 id="end-title"></h1>
+      <div class="end-stats" id="end-stats"></div>
+      <div class="end-goal" id="end-goal"></div>
+      <div class="end-list" id="end-list"></div>
+      <div class="start-actions" id="end-actions"></div>
+    </section>
+  </main>
+</body>
+</html>

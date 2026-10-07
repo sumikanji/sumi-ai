@@ -1,0 +1,132 @@
+/* ===== Hiệu ứng dùng chung: ăn mừng, pháo giấy ===== */
+.fx-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(51, 45, 41, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fx-fade 0.2s ease;
+}
+
+.fx-overlay.out {
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.fx-confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fx-confetti i {
+  position: absolute;
+  top: -20px;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  animation-name: fx-fall;
+  animation-timing-function: cubic-bezier(.25, .6, .5, 1);
+  animation-fill-mode: forwards;
+}
+
+.fx-card {
+  position: relative;
+  background: #fffdf5;
+  border: 2px solid #facc15;
+  border-radius: 26px;
+  padding: 26px 28px 22px;
+  width: min(380px, 100%);
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  animation: fx-pop 0.45s cubic-bezier(.2, 1.6, .4, 1);
+}
+
+.fx-mascot {
+  width: 110px;
+  height: 110px;
+  margin: -70px auto 6px;
+  display: block;
+  animation: fx-bounce 1s ease-in-out infinite;
+}
+
+.fx-title {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 1.35rem;
+  color: #713f12;
+}
+
+.fx-sub {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  color: #78716c;
+  line-height: 1.6;
+}
+
+.fx-sub b {
+  color: #c2410c;
+}
+
+.fx-btn {
+  margin-top: 18px;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 34px;
+  font: inherit;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #713f12;
+  background: linear-gradient(135deg, #fde047, #facc15);
+  box-shadow: 0 6px 16px rgba(234, 179, 8, 0.35);
+  cursor: pointer;
+}
+
+@keyframes fx-fall {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(720deg); opacity: 0.6; }
+}
+
+@keyframes fx-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fx-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fx-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===== Màn tiến hóa ===== */
+.evo-card { padding-top: 22px; }
+.evo-stage { position: relative; width: 190px; height: 170px; margin: 0 auto; }
+.evo-svg { width: 100%; height: 100%; display: block; }
+.evo-old, .evo-new { position: absolute; inset: 10px; }
+.evo-old { animation: evoShake 2.2s ease-in forwards; }
+.evo-new { opacity: 0; transform: scale(.3); }
+.evolved .evo-old { opacity: 0; }
+.evolved .evo-new { animation: evoPop .7s cubic-bezier(.2,1.6,.4,1) forwards; }
+.evo-rays { position: absolute; left: 50%; top: 50%; width: 0; height: 0; opacity: 0; animation: evoRays 2.4s ease-in forwards; }
+.evo-rays i { position: absolute; left: -4px; bottom: 0; width: 8px; height: 120px; background: linear-gradient(#fde047, rgba(253,224,71,0)); transform-origin: 50% 100%; border-radius: 4px; }
+.evolved .evo-rays { animation: evoSpin 6s linear infinite; opacity: .7; }
+.evo-text { opacity: 0; transform: translateY(8px); transition: all .4s .3s; }
+.evolved .evo-text { opacity: 1; transform: none; }
+@keyframes evoShake {
+  0% { transform: none; filter: none; }
+  20%, 40%, 60%, 75%, 88% { transform: translateX(-6px) rotate(-5deg); }
+  30%, 50%, 68%, 82%, 94% { transform: translateX(6px) rotate(5deg); }
+  70% { filter: brightness(1.6); }
+  100% { transform: scale(1.15); filter: brightness(3) saturate(0); }
+}
+@keyframes evoPop { from { opacity: 0; transform: scale(.3); filter: brightness(3); } to { opacity: 1; transform: scale(1); filter: none; } }
+@keyframes evoRays { 60% { opacity: 0; } 100% { opacity: .9; } }
+@keyframes evoSpin { to { transform: rotate(360deg); } }

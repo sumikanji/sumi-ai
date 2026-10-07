@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chữ sinh đôi – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="twins.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="data/twins.js" defer></script>
+  <script src="twins.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topbar">
+      <a href="index.html" class="back-btn" id="back-btn">← Về cấp học</a>
+      <div class="top-title">👯 Chữ sinh đôi</div>
+      <div class="top-xp" id="top-prog">0/10</div>
+    </div>
+
+    <section class="tw-card" id="tw-start">
+      <div id="tw-start-hiyo"></div>
+      <h1>Chữ sinh đôi</h1>
+      <p>Nhiều chữ Hán trông na ná nhau: 未 và 末, 土 và 士, 人 và 入… Chọn đúng chữ theo nghĩa, rồi xem <b>mẹo phân biệt</b> để không bao giờ nhầm nữa.</p>
+      <div class="tw-pool" id="tw-pool">
+        <button data-v="learned">Chữ đã học <small></small></button>
+        <button data-v="fav">❤️ Yêu thích <small></small></button>
+        <button data-v="open">Chữ đang mở <small></small></button>
+      </div>
+      <button class="act-btn primary tw-go" id="tw-go">▶ Bắt đầu 10 câu</button>
+      <p class="tw-note" id="tw-note"></p>
+    </section>
+
+    <section class="tw-card tw-play" id="tw-play" hidden>
+      <div class="tw-q" id="tw-q"></div>
+      <div class="tw-opts" id="tw-opts"></div>
+      <div class="tw-reveal" id="tw-reveal" hidden></div>
+    </section>
+
+    <section class="tw-card" id="tw-end" hidden></section>
+  </main>
+</body>
+</html>

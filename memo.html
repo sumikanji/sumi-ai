@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhìn rồi viết – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="memo.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="memo.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topbar">
+      <a href="index.html" class="back-btn" id="back-btn">← Về cấp học</a>
+      <div class="top-title">✍️ Nhìn rồi viết</div>
+      <div class="top-xp" id="top-prog">0/10</div>
+    </div>
+
+    <section class="mm" id="mm">
+      <!-- Bắt đầu -->
+      <div class="mm-card mm-start" id="mm-start">
+        <div id="mm-start-hiyo"></div>
+        <h1>Nhìn 3 giây rồi viết</h1>
+        <p>Chữ Hán hiện ra trong vài giây rồi biến mất. Hãy <b>viết lại theo trí nhớ</b>, đúng thứ tự nét. Hiyo sẽ chấm từng nét: đủ nét chưa, đúng thứ tự chưa, nét nào viết ngược chiều.</p>
+        <div class="mm-pool" id="mm-pool">
+          <button data-v="learned">Chữ đã học <small></small></button>
+          <button data-v="fav">❤️ Yêu thích <small></small></button>
+          <button data-v="open">Chữ đang mở <small></small></button>
+        </div>
+        <button class="act-btn primary mm-go" id="mm-go">▶ Bắt đầu 10 chữ</button>
+        <p class="mm-note">Viết càng giỏi, thời gian nhìn càng ngắn: 3 giây → 2 giây → 1 giây.</p>
+      </div>
+
+      <!-- Chơi -->
+      <div class="mm-card mm-play" id="mm-play" hidden>
+        <div class="mm-ask" id="mm-ask"></div>
+        <div class="mm-pad" id="mm-pad">
+          <div class="mm-show" id="mm-show"><span id="mm-show-k"></span><i class="mm-timer" id="mm-timer"></i></div>
+          <canvas id="mm-canvas"></canvas>
+        </div>
+        <div class="mm-strokes" id="mm-strokes"></div>
+        <div class="mm-btns" id="mm-btns">
+          <button class="act-btn" id="mm-undo">↶ Xóa nét cuối</button>
+          <button class="act-btn" id="mm-clear">Xóa hết</button>
+          <button class="act-btn" id="mm-peek">🤔 Quên rồi</button>
+          <button class="act-btn primary" id="mm-check">Chấm điểm</button>
+        </div>
+        <div class="mm-result" id="mm-result" hidden></div>
+      </div>
+
+      <!-- Kết thúc -->
+      <div class="mm-card mm-end" id="mm-end" hidden></div>
+    </section>
+    <svg id="mm-measure" width="0" height="0" style="position:absolute" aria-hidden="true"></svg>
+  </main>
+</body>
+</html>

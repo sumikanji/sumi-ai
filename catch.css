@@ -1,0 +1,61 @@
+/*! © 2026 Sumi Kanji */
+/* ===== Hiyo hứng chữ ===== */
+.cg { display: grid; gap: 10px; }
+.cg-hud { display: flex; align-items: center; gap: 12px; background: #332d29; color: #fff; border-radius: 20px; padding: 10px 16px; }
+.cg-target { display: grid; min-width: 0; flex: 1; }
+.cg-target small { font-size: 0.72rem; font-weight: 700; color: #d6d3d1; }
+.cg-target b { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: 1.15rem; color: #facc15; line-height: 1.2; }
+/* Nghĩa cần hứng: chữ to nằm giữa màn chơi, chữ rơi bay qua phía trên */
+.cg-bigask { position: absolute; left: 12px; right: 12px; top: 34%; transform: translateY(-50%); display: grid; justify-items: center; gap: 2px; text-align: center; pointer-events: none; z-index: 0; }
+.cg-bigask small { font-size: clamp(0.85rem, 2.6vw, 1rem); font-weight: 800; color: #a16207; background: rgba(255, 255, 255, .7); border-radius: 99px; padding: 2px 12px; }
+.cg-bigask b { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: clamp(2.2rem, 9vw, 3.8rem); line-height: 1.15; color: #422006; overflow-wrap: anywhere;
+  text-shadow: 0 0 6px #fff, 0 0 2px #fff, 0 3px 0 rgba(250, 204, 21, .55); }
+.cg-bigask b.pop { animation: cgPop .4s ease; }
+@keyframes cgPop { 40% { transform: scale(1.12); } }
+.cg-stats { display: grid; justify-items: end; gap: 1px; font-variant-numeric: tabular-nums; }
+.cg-hearts { color: #f87171; font-size: 1.05rem; letter-spacing: 2px; }
+.cg-score { font-size: 0.8rem; color: #d6d3d1; } .cg-score b { color: #fff; font-size: 1.1rem; }
+.cg-combo { font-size: 0.72rem; font-weight: 800; color: #facc15; min-height: 1em; }
+
+.cg-stage { position: relative; height: min(64vh, 560px); min-height: 380px; border-radius: 24px; overflow: hidden; touch-action: none; user-select: none;
+  background: linear-gradient(180deg, #e0f2fe 0%, #fef9c3 70%, #fde68a 100%); border: 2px solid #f1e3b3; }
+.cg-stage::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: #e7c66f; }
+.cg-stage.hurt { animation: cgHurt .35s; }
+@keyframes cgHurt { 30% { box-shadow: inset 0 0 0 6px rgba(239, 68, 68, .5); transform: translateX(-4px); } 60% { transform: translateX(4px); } }
+#cg-canvas { position: absolute; inset: 0; display: block; z-index: 1; }
+.cg-float { z-index: 2; }
+.cg-screen { z-index: 3; }
+.cg-float { position: absolute; inset: 0; pointer-events: none; }
+.ft { position: absolute; bottom: 96px; transform: translateX(-50%); white-space: nowrap; font-weight: 900; font-size: 0.95rem; padding: 3px 10px; border-radius: 99px; animation: ftUp .9s ease-out forwards; }
+.ft.ok { background: #dcfce7; color: #15803d; }
+.ft.bad { background: #fee2e2; color: #b91c1c; }
+.ft.lv { background: #332d29; color: #facc15; bottom: 50%; font-size: 1.2rem; }
+@keyframes ftUp { to { transform: translate(-50%, -60px); opacity: 0; } }
+
+.cg-screen { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: 10px; padding: 18px; text-align: center; background: rgba(255, 253, 244, .94); overflow-y: auto; }
+.cg-screen h1 { margin: 0; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: 1.5rem; }
+.cg-screen p { margin: 0; max-width: 380px; color: #57534e; font-size: 0.92rem; line-height: 1.6; }
+.cg-hiyo-svg { width: 96px; height: auto; }
+.cg-pool { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.cg-pool button { border: 2px solid #ede7de; background: #fff; border-radius: 99px; padding: 6px 13px; font: inherit; font-weight: 800; font-size: 0.82rem; cursor: pointer; color: #57534e; }
+.cg-pool button small { color: #a8a29e; margin-left: 3px; }
+.cg-pool button.on { border-color: #eab308; background: #fef9c3; color: #854d0e; }
+.cg-pool button:disabled { opacity: .45; cursor: not-allowed; }
+.cg-go { font-size: 1.05rem; padding: 12px 34px; }
+.cg-keys { font-size: 0.75rem !important; color: #a8a29e !important; }
+.cg-big { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 3rem; line-height: 1; color: #ca8a04; }
+.cg-big small { font-size: 0.9rem; color: #a8a29e; margin-left: 4px; }
+.cg-sum { font-weight: 700; }
+.cg-list { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; align-items: center; max-width: 420px; }
+.cg-list span { width: 100%; font-size: 0.72rem; font-weight: 800; color: #a8a29e; text-transform: uppercase; letter-spacing: .06em; }
+.cg-list b, .cg-list a { font-family: 'Klee One', serif; font-size: 1.25rem; border-radius: 10px; padding: 2px 8px; text-decoration: none; }
+.cg-list.ok b { background: #dcfce7; color: #15803d; }
+.cg-list.bad a { background: #fee2e2; color: #b91c1c; display: grid; justify-items: center; line-height: 1.1; padding: 4px 8px; }
+.cg-list.bad a small { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.6rem; font-weight: 700; }
+.cg-acts { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
+
+.cg-foot { display: flex; align-items: center; justify-content: space-between; }
+.cg-btn { border: 1.5px solid #ede7de; background: #fff; border-radius: 99px; padding: 6px 14px; font: inherit; font-weight: 800; font-size: 0.8rem; cursor: pointer; color: #57534e; }
+.cg-btn:disabled { opacity: .4; cursor: default; }
+.cg-level { font-size: 0.78rem; font-weight: 800; color: #a16207; }
+.cg-screen[hidden] { display: none; }

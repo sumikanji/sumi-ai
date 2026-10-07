@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>In PDF – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="print.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="print.js" defer></script>
+</head>
+<body>
+  <!-- Thanh công cụ (không in ra) -->
+  <header class="toolbar no-print">
+    <div class="tb-row">
+      <a class="tb-back" id="back-btn" href="index.html">← Về cấp học</a>
+      <div class="tb-tabs" id="opt-type">
+        <button data-v="write">✍️ PDF luyện viết</button>
+        <button data-v="note">📒 Sổ tay ôn tập</button>
+      </div>
+      <button class="tb-print" id="print-btn">🖨️ Lưu PDF / In</button>
+    </div>
+    <div class="tb-row tb-opts">
+      <label>Chữ:
+        <select id="opt-scope">
+          <option value="all">Tất cả chữ của cấp</option>
+          <option value="todo">Chữ chưa học</option>
+          <option value="learned">Chữ đã học</option>
+          <option value="fav">Chữ yêu thích (tự chọn)</option>
+        </select>
+      </label>
+      <span class="only-write">
+        <label>Ô tô mờ:
+          <select id="opt-trace">
+            <option value="0">0</option><option value="2">2</option><option value="3">3</option><option value="5">5</option><option value="10">Cả hàng</option>
+          </select>
+        </label>
+        <label>Số hàng luyện:
+          <select id="opt-rows"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </label>
+      </span>
+      <span class="only-note">
+        <label><input type="checkbox" id="opt-sent"> Câu ví dụ</label>
+        <label><input type="checkbox" id="opt-en"> Tiếng Anh</label>
+        <label><input type="checkbox" id="opt-origin"> Nguồn gốc chữ</label>
+      </span>
+      <span class="tb-count" id="tb-count"></span>
+    </div>
+    <div class="pick" id="pick" hidden>
+      <div class="pick-head">
+        <b>❤️ Chọn chữ cho vào sổ</b><span id="pick-count"></span>
+        <span class="pick-acts">
+          <button data-a="all">Chọn tất cả</button>
+          <button data-a="learned">Chữ đã học</button>
+          <button data-a="none">Bỏ chọn hết</button>
+        </span>
+      </div>
+      <div class="pick-grid" id="pick-grid"></div>
+      <small class="pick-tip">Bấm vào chữ để thêm / bỏ. Trong trang học, bấm 🤍 ở góc trên để thêm chữ yêu thích.</small>
+    </div>
+    <p class="tb-hint">Bấm <b>🖨️ Lưu PDF / In</b> → trong hộp thoại chọn máy in <b>“Lưu dưới dạng PDF” / “Save as PDF”</b>, khổ <b>A4</b>, bật <b>“Đồ họa nền / Background graphics”</b> để giữ màu.</p>
+  </header>
+
+  <!-- Nội dung in -->
+  <main class="paper" id="paper"></main>
+  <svg id="sym" width="0" height="0" style="position:absolute" aria-hidden="true"></svg>
+</body>
+</html>

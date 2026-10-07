@@ -1,0 +1,16 @@
+/*! © 2026 Sumi Kanji */
+.terms-page { max-width: 860px; padding-top: 28px; }
+.terms-hero h2 { font-family: 'Zen Maru Gothic', sans-serif; font-size: 28px; margin: 0 0 6px; }
+.terms-hero h2 span { display: block; font-size: 16px; color: var(--text-sub); font-weight: 700; }
+.terms-hero p { color: var(--text-sub); margin: 0 0 14px; }
+.terms-toc { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.terms-toc a { background: #fff8db; border: 1px solid #ffe066; border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 700; color: #7a5b00; text-decoration: none; }
+.terms-toc a:hover { background: #ffe066; }
+.terms-card { background: #fff; border: 1px solid #eee6d8; border-radius: 18px; padding: 18px 22px; margin-bottom: 14px; line-height: 1.75; scroll-margin-top: 90px; }
+.terms-card h3 { margin: 0 0 8px; font-size: 18px; }
+.terms-card ul { margin: 6px 0; padding-left: 22px; }
+.terms-card li { margin: 3px 0; }
+.terms-card a { color: #b07d00; font-weight: 700; }
+.terms-card.ok { border-left: 5px solid #51cf66; }
+.terms-card.ng { border-left: 5px solid #ff6b6b; }
+.terms-note { background: #f8f5ef; border-radius: 10px; padding: 8px 12px; font-size: 14px; color: var(--text-sub); }

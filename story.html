@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Truyện ghi nhớ – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="story.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="data/stories.js" defer></script>
+  <script src="story.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topbar">
+      <a href="index.html" class="back-btn" id="back-btn">← Về cấp học</a>
+      <div class="top-title" id="top-title">📖 Truyện ghi nhớ</div>
+      <div class="top-xp" id="top-xp">0/10</div>
+    </div>
+
+    <section class="st-card" id="st-card">
+      <div class="st-head">
+        <span class="st-kicker">記憶ストーリー</span>
+        <h1 id="st-title">Truyện ghi nhớ</h1>
+        <div class="st-say"><span id="st-hiyo"></span><p class="st-bubble" id="st-msg"></p></div>
+      </div>
+
+      <div class="st-story">
+        <p class="st-jp" id="st-jp"></p>
+        <p class="st-vi" id="st-vi"></p>
+      </div>
+
+      <div class="st-play" id="st-play">
+        <div class="st-bank-head">
+          <span>Chạm chữ đúng để điền vào ô đang sáng</span>
+          <button class="st-toggle" id="st-hv" aria-pressed="true">Âm Hán Việt</button>
+        </div>
+        <div class="st-bank" id="st-bank"></div>
+        <div class="st-stats"><span id="st-miss">Sai 0</span><span id="st-prog"></span></div>
+      </div>
+
+      <div class="st-end" id="st-end" hidden></div>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+/*! © 2026 Sumi Kanji */
+/* ===== Truyện ghi nhớ ===== */
+.st-card { background: #fff; border: 1.5px solid var(--border-soft, #ede7de); border-radius: 26px; padding: 20px 20px 18px; display: grid; gap: 16px; }
+.st-kicker { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; color: #ca8a04; font-size: 0.8rem; letter-spacing: .12em; }
+.st-head h1 { margin: 2px 0 10px; font-size: 1.4rem; }
+.st-say { display: flex; align-items: center; gap: 10px; }
+.st-hiyo { width: 62px; height: auto; flex-shrink: 0; }
+.st-bubble { margin: 0; background: #fffdf2; border: 1.5px solid #f3e6bf; border-radius: 16px; padding: 9px 13px; font-size: 0.9rem; font-weight: 600; color: #57534e; line-height: 1.55; }
+.st-bubble b { color: #a16207; }
+
+.st-story { background: #fffdf6; border: 1.5px solid #f1e7cc; border-radius: 20px; padding: 18px 18px 14px; background-image: repeating-linear-gradient(transparent 0 46px, #f6ecd2 46px 47px); }
+.st-jp { margin: 0 0 12px; font-family: 'Klee One', 'Zen Maru Gothic', serif; font-size: 1.32rem; line-height: 2.6; color: #332d29; word-break: break-all; }
+.st-jp ruby rt { font-size: 0.52em; color: #a8a29e; font-family: 'Zen Maru Gothic', sans-serif; }
+.bl { display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; margin: 0 2px; vertical-align: -0.35em; border: 2px dashed #d6c79c; border-radius: 10px; background: #fff; cursor: pointer; padding: 0; font: inherit; }
+.bl span { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.55em; font-weight: 800; color: #b9a877; }
+.bl.on { border: 2.5px solid #eab308; background: #fef9c3; box-shadow: 0 0 0 4px rgba(250, 204, 21, .3); animation: blPulse 1.4s ease-in-out infinite; }
+.bl.on span { color: #a16207; }
+@keyframes blPulse { 50% { box-shadow: 0 0 0 7px rgba(250, 204, 21, .12); } }
+ruby.fill .fk { background: #dcfce7; border-radius: 6px; padding: 0 2px; color: #15803d; font-weight: 600; }
+.st-jp ruby.fill rt { color: #16a34a; font-weight: 700; }
+ruby.fill .fk.pop { animation: blPop .45s ease; }
+@keyframes blPop { 50% { background: #86efac; } }
+.st-vi { margin: 0; font-size: 0.95rem; line-height: 1.75; color: #57534e; border-top: 1px dashed #eadfbf; padding-top: 10px; }
+.st-vi mark { background: none; color: inherit; font-weight: 700; border-bottom: 2px solid #f1e7cc; border-radius: 3px; padding: 0 1px; transition: background .2s; }
+.st-vi mark.on { background: #fde047; border-color: #eab308; color: #422006; }
+.st-vi mark.ok { border-color: #86efac; color: #15803d; }
+
+.st-play { display: grid; gap: 10px; }
+.st-bank-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.8rem; font-weight: 700; color: #78716c; flex-wrap: wrap; }
+.st-toggle { border: 1.5px solid #ede7de; background: #fff; border-radius: 99px; padding: 4px 11px; font: inherit; font-size: 0.75rem; font-weight: 800; color: #a8a29e; cursor: pointer; }
+.st-toggle[aria-pressed="true"] { border-color: #facc15; background: #fef9c3; color: #854d0e; }
+.st-bank { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.tk { display: grid; justify-items: center; gap: 0; padding: 8px 4px 6px; border: 2px solid #ede7de; background: #fff; border-radius: 16px; cursor: pointer; font: inherit; box-shadow: 0 3px 0 #ede7de; transition: transform .1s; }
+.tk b { font-family: 'Klee One', serif; font-size: 1.9rem; line-height: 1.1; color: #332d29; }
+.tk small { font-size: 0.62rem; font-weight: 800; color: #a8a29e; letter-spacing: .03em; min-height: 1em; }
+.st-bank.no-hv .tk small { visibility: hidden; }
+.tk:hover:not(:disabled) { transform: translateY(-2px); border-color: #facc15; }
+.tk.used { opacity: .25; box-shadow: none; cursor: default; }
+.tk.glow { border-color: #0ea5e9; animation: tkGlow 1s ease-in-out infinite; }
+@keyframes tkGlow { 50% { box-shadow: 0 0 0 5px #bae6fd, 0 3px 0 #ede7de; } }
+.shake { animation: stShake .35s; }
+@keyframes stShake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.st-stats { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; font-weight: 800; color: #b91c1c; }
+#st-prog { flex: 1; height: 8px; border-radius: 9px; background: #f5f0e6; overflow: hidden; }
+#st-prog i { display: block; height: 100%; background: linear-gradient(90deg, #86efac, #22c55e); border-radius: 9px; transition: width .3s; }
+
+.st-end { display: grid; gap: 12px; justify-items: center; text-align: center; }
+.se-stars { display: flex; gap: 6px; font-size: 2.2rem; }
+.se-stars span { filter: grayscale(1) opacity(.3); }
+.se-stars span.on { filter: none; animation: blPop .5s ease; }
+.se-sub { margin: 0; font-weight: 700; color: #78716c; font-size: 0.88rem; }
+.se-words { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.se-words span { display: grid; justify-items: center; background: #fef9c3; border-radius: 12px; padding: 4px 9px; }
+.se-words b { font-family: 'Klee One', serif; font-size: 1.3rem; }
+.se-words small { font-size: 0.6rem; font-weight: 800; color: #a16207; }
+.se-acts { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
+@media (max-width: 560px) {
+  .st-card { padding: 16px 12px; border-radius: 20px; }
+  .st-jp { font-size: 1.15rem; line-height: 2.5; }
+  .st-bank { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .tk b { font-size: 1.6rem; }
+}

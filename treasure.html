@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiyo truy tìm kho báu – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="treasure.css">
+  <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="firebase-config.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="data/treasure-levels.js" defer></script>
+  <script src="treasure-scenes.js" defer></script>
+  <script src="treasure.js" defer></script>
+</head>
+<body>
+  <main class="wrap tr-wrap">
+    <div class="topbar">
+      <a href="index.html" class="back-btn" id="back-btn">← Về cấp học</a>
+      <div class="top-title">🗺️ Hiyo truy tìm kho báu</div>
+      <button class="top-xp tr-pbtn" id="tr-pause-btn" title="Tạm dừng (phím P)">⏸</button>
+    </div>
+
+    <div class="tr-hud">
+      <div class="tr-me">
+        <span class="tr-av" id="tr-me-av"></span>
+        <div class="tr-me-txt"><b id="tr-me-name">Bạn</b><small id="tr-me-form">Tama</small></div>
+        <div class="tr-slots" id="tr-slots" title="Các chữ Kanji cần tìm"></div>
+      </div>
+      <div class="tr-stats">
+        <span title="Số mạng"><i class="tr-heart">♥</i><b id="tr-lives">3</b></span>
+        <span title="Xu"><i class="tr-coin"></i><b id="tr-coins">0</b></span>
+        <span title="Thời gian"><i class="tr-clock"></i><b id="tr-time">0</b></span>
+      </div>
+    </div>
+
+    <div class="tr-stage" id="tr-stage">
+      <canvas id="tr-canvas"></canvas>
+      <div class="tr-toast" id="tr-toast"></div>
+      <div class="tr-count" id="tr-count" hidden></div>
+      <div class="tr-evo" id="tr-evo" hidden></div>
+
+      <!-- Câu hỏi khi đập hộp quẻ -->
+      <div class="tr-quiz" id="tr-quiz" hidden>
+        <div class="tq-in">
+          <div class="tq-head"><span class="tq-k" id="tq-k"></span><div><b>Hộp quẻ mở ra!</b><small>Trả lời đúng để lấy chữ</small></div><span class="tq-t" id="tq-t"></span></div>
+          <div class="tq-ask" id="tq-ask"></div>
+          <div class="tq-opts" id="tq-opts"></div>
+        </div>
+      </div>
+
+      <!-- Menu -->
+      <div class="tr-over" id="tr-menu">
+        <div class="tr-end-in">
+          <span id="tr-menu-hiyo"></span>
+          <h2>Hiyo truy tìm kho báu</h2>
+          <p>Hành trình qua <b>Hà Nội, Hội An, Đà Nẵng, Sài Gòn</b>! Chạy, nhảy, nhặt <b>xu</b>, giẫm lên đầu <b>yêu quái mực</b> và tìm <b>10 chữ Kanji</b> giấu trong các <b>hộp quẻ 吉</b>. Đập đầu vào hộp, trả lời đúng thì chữ hiện lên, nhảy lên để ăn chữ. Đủ 10 chữ thì mở được rương kho báu ở cuối đường. Bạn có <b>3 mạng</b>, 50 xu được thêm 1 mạng.</p>
+          <p class="tr-sub" id="tr-menu-sub"></p>
+          <div class="tr-step"><span>Chọn thành phố</span><div class="tr-levels" id="tr-levels"></div></div>
+          <button class="act-btn primary tr-go" id="tr-go">▶ Bắt đầu</button>
+          <p class="tr-keys">Máy tính: ← → chạy · Space/↑ nhảy (giữ lâu nhảy cao hơn) · P tạm dừng. Điện thoại: dùng nút bên dưới.</p>
+        </div>
+      </div>
+      <div class="tr-over" id="tr-end" hidden></div>
+      <div class="tr-over" id="tr-pause" hidden><div class="tr-end-in"><h2>Tạm dừng</h2><p id="tr-pause-note"></p><button class="act-btn primary" id="tr-resume">▶ Chơi tiếp</button><button class="act-btn" id="tr-quit">🗺 Về menu</button></div></div>
+    </div>
+
+    <div class="tr-pad">
+      <div class="tr-dir"><button data-k="l" aria-label="Sang trái">◀</button><button data-k="r" aria-label="Sang phải">▶</button></div>
+      <button class="tr-jump" data-k="j" aria-label="Nhảy">Nhảy</button>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sách Kanji – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="level.css">
+  <link rel="stylesheet" href="fx.css">
+  <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="community.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="firebase-config.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="community.js" defer></script>
+  <script src="level.js" defer></script>
+</head>
+<body>
+
+  <main class="page">
+    <!-- Đầu trang -->
+    <div class="page-top">
+      <a href="index.html" class="back-btn">← Quay lại trang chủ</a>
+      <div class="top-pills">
+        <a class="pill pill-lv" id="pill-lv" href="profile.html#evo"></a>
+        <a class="pill pill-review" id="pill-review" href="review.html">📚 Ôn tập <b id="pill-due">0</b></a>
+        <span class="pill pill-xp" id="pill-xp" title="Điểm hôm nay / mục tiêu">⭐ 0/50</span>
+        <span class="pill pill-streak" id="pill-streak" title="Chuỗi ngày học">🔥 0</span>
+      </div>
+    </div>
+
+    <!-- Màn hình khóa cấp -->
+    <section class="lock-screen" id="lock-screen" hidden></section>
+
+    <div class="level-head">
+      <div>
+        <span class="level-badge" id="level-badge"></span>
+        <h1 id="level-title">Đang tải...</h1>
+        <p id="level-desc"></p>
+      </div>
+      <div class="level-total" id="level-total"></div>
+    </div>
+
+    <!-- Thanh tiến độ -->
+    <section class="progress-card">
+      <div class="progress-info">
+        <span class="progress-label">Tiến độ đã học</span>
+        <span class="progress-count" id="progress-count">0 / 0 chữ</span>
+      </div>
+      <div class="progress-track"><span id="progress-fill"></span></div>
+      <p class="progress-note" id="progress-note"></p>
+    </section>
+
+    <!-- Lộ trình màn chơi -->
+    <section class="path-card" id="path-card"></section>
+
+    <!-- Trò chơi ghi nhớ -->
+    <section class="games-row" id="games-row">
+      <div class="gr-head"><b>🎮 Trò chơi ghi nhớ</b><small>Dùng các chữ bạn đã học trong cấp này</small></div>
+      <div class="gr-list">
+        <a class="gr-card hot" id="g-treasure" href="treasure.html"><span class="gr-ic">🗺️</span><b>Truy tìm kho báu</b><small>Chạy nhảy, giẫm yêu quái, đập hộp tìm chữ</small></a>
+        <a class="gr-card hot" id="g-hunt" href="hunt.html"><span class="gr-ic">🔮</span><b>Săn cầu chữ</b><small>Tìm cầu chữ trong bụi cỏ, đúng 3 câu thì thu phục</small></a>
+        <a class="gr-card" id="g-catch" href="catch.html"><span class="gr-ic">🎮</span><b>Hiyo hứng chữ</b><small>Phản xạ: hứng đúng chữ theo nghĩa</small></a>
+        <a class="gr-card" id="g-memo" href="memo.html"><span class="gr-ic">✍️</span><b>Nhìn rồi viết</b><small>Nhìn 3 giây, viết lại, chấm từng nét</small></a>
+        <a class="gr-card" id="g-twins" href="twins.html"><span class="gr-ic">👯</span><b>Chữ sinh đôi</b><small>Phân biệt chữ na ná: 未・末, 土・士</small></a>
+      </div>
+    </section>
+
+    <!-- Tab: Chưa học / Đã học -->
+    <div class="list-tabs">
+      <div class="tabs-group">
+        <button class="tab-btn active" data-list="todo">📖 Chưa học <span class="tab-count" id="count-todo">0</span></button>
+        <button class="tab-btn" data-list="done">✅ Đã học <span class="tab-count" id="count-done">0</span></button>
+      </div>
+      <div class="list-actions">
+        <a class="quiz-btn" id="quiz-btn" href="review.html?mode=practice">⚡ Luyện nhanh</a>
+        <a class="quiz-btn tool-btn" id="flash-btn" href="flash.html">🃏 Flashcard</a>
+        <a class="quiz-btn tool-btn" id="write-btn" href="print.html?type=write">✍️ PDF luyện viết</a>
+        <a class="quiz-btn tool-btn" id="note-btn" href="print.html?type=note">📒 Sổ tay ôn tập</a>
+        <button class="reset-all-btn" id="reset-all" hidden>↺ Học lại tất cả</button>
+      </div>
+    </div>
+
+    <!-- Lưới chữ -->
+    <div class="kanji-grid" id="kanji-grid"></div>
+    <div class="empty-state" id="empty-state" hidden></div>
+  </main>
+
+  <!-- ===== Cửa sổ học từng chữ ===== -->
+  <div class="study-overlay" id="study" hidden>
+    <div class="study-sheet" role="dialog" aria-modal="true" aria-labelledby="study-kanji">
+      <div class="study-topbar">
+        <button class="icon-btn" id="study-prev" aria-label="Chữ trước">‹</button>
+        <span class="study-pos" id="study-pos"></span>
+        <button class="icon-btn" id="study-next" aria-label="Chữ sau">›</button>
+        <button class="icon-btn fav-btn" id="study-fav" aria-label="Chữ yêu thích" title="Thêm vào chữ yêu thích (sổ tay ôn tập)">🤍</button>
+        <button class="icon-btn close-btn" id="study-close" aria-label="Đóng">✕</button>
+      </div>
+
+      <div class="study-body">
+        <!-- ① Quan sát -->
+        <section class="step step-look">
+          <div class="step-title"><span class="step-num">1</span>みる <small>Quan sát chữ</small></div>
+          <div class="look-row">
+            <div class="kanji-box"><span id="study-kanji"></span></div>
+            <div class="look-info">
+              <div class="hv" id="study-hv"></div>
+              <div class="meaning" id="study-meaning"></div>
+              <div class="meaning-en en-line" id="study-en"></div>
+              <div class="chips" id="study-chips"></div>
+              <p class="tip" id="study-look-tip"></p>
+            </div>
+          </div>
+          <!-- なりたち: nguồn gốc chữ -->
+          <div class="origin" id="study-origin" hidden>
+            <div class="origin-head">
+              <span class="origin-title">なりたち <small>Nguồn gốc chữ</small></span>
+              <span class="origin-type" id="origin-type"></span>
+            </div>
+            <div class="origin-row">
+              <svg class="origin-svg" id="origin-svg" viewBox="0 0 109 109" aria-hidden="true"></svg>
+              <div class="origin-info">
+                <div class="origin-formula" id="origin-formula"></div>
+                <div class="origin-parts" id="origin-parts"></div>
+                <p class="origin-vi" id="origin-vi"></p>
+                <p class="origin-en en-line" id="origin-en"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ② Cách đọc -->
+        <section class="step">
+          <div class="step-title"><span class="step-num">2</span>よむ <small>Cách đọc</small></div>
+          <div class="reading-row">
+            <div class="reading-label">音読み <small>Âm On – đọc theo âm Hán, hay dùng trong từ ghép</small></div>
+            <div class="reading-chips on" id="study-on"></div>
+          </div>
+          <div class="reading-row">
+            <div class="reading-label">訓読み <small>Âm Kun – đọc kiểu Nhật, hay dùng khi chữ đứng một mình</small></div>
+            <div class="reading-chips kun" id="study-kun"></div>
+          </div>
+        </section>
+
+        <!-- ③ Thứ tự nét -->
+        <section class="step">
+          <div class="step-title"><span class="step-num">3</span>かきじゅん <small>Thứ tự nét</small></div>
+          <div class="order-wrap">
+            <svg class="stroke-svg" id="order-svg" viewBox="0 0 109 109" aria-label="Thứ tự nét"></svg>
+            <div class="order-controls">
+              <button class="soft-btn" id="order-play">▶ Xem viết</button>
+              <button class="soft-btn" id="order-step">Từng nét ⏭</button>
+              <button class="soft-btn" id="order-reset">↺</button>
+              <p class="tip">Quy tắc chung: <b>trên trước, dưới sau</b> · <b>trái trước, phải sau</b> · <b>ngang trước, sổ sau</b>. Vừa xem vừa đếm nét thành tiếng: いち、に、さん…</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ④ Tập viết -->
+        <section class="step">
+          <div class="step-title"><span class="step-num">4</span>なぞって かこう <small>Tập viết</small><span class="must-badge" id="write-badge">✍️ Bắt buộc</span></div>
+          <div class="practice-wrap">
+            <div class="practice-pad">
+              <svg class="practice-guide" id="practice-guide" viewBox="0 0 109 109" aria-hidden="true"></svg>
+              <canvas id="practice-canvas" width="520" height="520"></canvas>
+            </div>
+            <div class="practice-side">
+              <div class="drill-dots" id="drill-dots"></div>
+              <p class="drill-hint" id="drill-hint"></p>
+              <div class="practice-btns">
+                <button class="soft-btn primary-soft" id="practice-done">Viết xong ✓</button>
+                <button class="soft-btn" id="practice-clear">Xóa</button>
+                <button class="soft-btn" id="practice-guide-toggle">Ẩn mẫu</button>
+              </div>
+              <p class="tip">Cách luyện của học sinh Nhật: <b>tô theo mẫu 3 lần</b> (なぞりがき) rồi <b>tự viết 2 lần</b> không nhìn mẫu.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ⑤ Từ ví dụ -->
+        <section class="step">
+          <div class="step-title"><span class="step-num">5</span>つかってみよう <small>Từ vựng &amp; câu ví dụ</small></div>
+          <div class="sub-title">ことば <small>Từ vựng</small></div>
+          <ul class="examples" id="study-examples"></ul>
+          <div class="sub-title sent-head">
+            <span>れいぶん <small>Câu ví dụ</small></span>
+            <span class="sent-toggles">
+              <button class="mini-toggle on" id="toggle-furi" aria-pressed="true">ふりがな</button>
+              <button class="mini-toggle on" id="toggle-trans" aria-pressed="true">Dịch nghĩa</button>
+              <button class="mini-toggle on" id="toggle-en" aria-pressed="true">English</button>
+            </span>
+          </div>
+          <ul class="sentences" id="study-sentences"></ul>
+          <p class="tip">Mẹo: đọc to từng câu 3 lần. Thử tắt "Dịch nghĩa" rồi tự đoán nghĩa trước khi xem đáp án. Nếu nghĩa tiếng Việt chưa rõ, xem thêm dòng tiếng Anh.</p>
+        </section>
+
+        <!-- Góp ý cộng đồng -->
+        <section class="step step-community" id="study-community"></section>
+      </div>
+
+      <!-- Kiểm tra từng chữ -->
+      <div class="kq" id="kq" hidden>
+        <div class="kq-head">
+          <span class="kq-title" id="kq-title"></span>
+          <span class="kq-dots" id="kq-dots"></span>
+          <button class="icon-btn" id="kq-close" aria-label="Quay lại học">✕</button>
+        </div>
+        <div class="kq-body" id="kq-body"></div>
+      </div>
+
+      <div class="study-footer">
+        <button class="done-btn" id="study-done">📝 Kiểm tra chữ này <small>3 câu · +10⭐</small></button>
+        <button class="relearn-btn" id="study-relearn" hidden>↺ Học lại chữ này</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

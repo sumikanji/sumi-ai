@@ -1,0 +1,60 @@
+/*! © 2026 Sumi Kanji */
+/* ===== Chữ sinh đôi ===== */
+.tw-card { background: #fff; border: 1.5px solid #ede7de; border-radius: 26px; padding: 22px 18px; display: grid; justify-items: center; gap: 12px; text-align: center; }
+.tw-card[hidden], .tw-reveal[hidden] { display: none; }
+.tw-card h1 { margin: 0; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: 1.45rem; }
+.tw-card > p { margin: 0; max-width: 430px; color: #57534e; line-height: 1.6; font-size: 0.92rem; }
+.tw-hiyo { width: 54px; height: auto; flex-shrink: 0; }
+.tw-hiyo.big { width: 96px; }
+.tw-pool { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.tw-pool button { border: 2px solid #ede7de; background: #fff; border-radius: 99px; padding: 6px 13px; font: inherit; font-weight: 800; font-size: 0.82rem; cursor: pointer; color: #57534e; }
+.tw-pool button small { color: #a8a29e; margin-left: 3px; }
+.tw-pool button.on { border-color: #eab308; background: #fef9c3; color: #854d0e; }
+.tw-pool button:disabled { opacity: .45; cursor: not-allowed; }
+.tw-go { font-size: 1.05rem; padding: 12px 30px; }
+.tw-note { font-size: 0.78rem !important; color: #a8a29e !important; }
+
+.tw-q { display: grid; gap: 6px; justify-items: center; }
+.tw-kind { font-size: 0.75rem; font-weight: 800; color: #7c3aed; background: #f3e8ff; border-radius: 99px; padding: 3px 12px; }
+.tw-ask { font-size: 1.15rem; font-weight: 700; }
+.tw-ask b { color: #a16207; }
+.tw-hv { color: #a8a29e; font-weight: 700; font-size: 0.95rem; }
+.tw-show { font-family: 'Klee One', serif; font-size: 5.5rem; line-height: 1.1; color: #2b2522; }
+.tw-opts { display: grid; gap: 10px; width: 100%; max-width: 520px; }
+.tw-opts.big { grid-template-columns: repeat(var(--n, 2), 1fr); }
+.tw-opts.big.n2 { --n: 2; } .tw-opts.big.n3 { --n: 3; } .tw-opts.big.n4 { --n: 4; } .tw-opts.big.n5 { --n: 3; } .tw-opts.big.n6 { --n: 3; }
+.tw-opts.txt { grid-template-columns: 1fr 1fr; }
+.tw-opt { border: 2px solid #ede7de; background: #fffdf8; border-radius: 18px; cursor: pointer; font: inherit; color: #2b2522; box-shadow: 0 3px 0 #ede7de; transition: transform .1s, border-color .1s; display: grid; justify-items: center; gap: 2px; padding: 10px 6px; }
+.tw-opts.big .tw-opt b { font-family: 'Klee One', serif; font-size: clamp(3rem, 14vw, 4.6rem); line-height: 1.15; font-weight: 600; }
+.tw-opts.txt .tw-opt span { font-weight: 800; font-size: 1rem; }
+.tw-opts.txt .tw-opt small { font-size: 0.72rem; font-weight: 800; color: #a8a29e; }
+.tw-opt:hover:not(:disabled) { transform: translateY(-2px); border-color: #c084fc; }
+.tw-opt.right { border-color: #22c55e; background: #f0fdf4; color: #15803d; }
+.tw-opt.wrong { border-color: #ef4444; background: #fef2f2; color: #b91c1c; animation: twShake .35s; }
+.tw-opt:disabled { cursor: default; }
+@keyframes twShake { 25%, 75% { transform: translateX(-5px); } 50% { transform: translateX(5px); } }
+
+.tw-reveal { display: grid; gap: 12px; justify-items: center; width: 100%; max-width: 560px; background: #faf5ff; border: 1.5px solid #e9d5ff; border-radius: 20px; padding: 14px; }
+.tw-say { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; }
+.tw-say .ok { color: #16a34a; } .tw-say .bad { color: #dc2626; }
+.tw-family { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.tw-m { display: grid; justify-items: center; background: #fff; border: 2px solid #ede7de; border-radius: 16px; padding: 6px 12px; min-width: 84px; }
+.tw-m b { font-family: 'Klee One', serif; font-size: 2.4rem; line-height: 1.15; }
+.tw-m span { font-size: 0.72rem; font-weight: 900; color: #a16207; letter-spacing: .03em; }
+.tw-m small { font-size: 0.78rem; font-weight: 700; color: #57534e; }
+.tw-m.t { border-color: #22c55e; background: #f0fdf4; }
+.tw-m.p { border-color: #ef4444; background: #fef2f2; }
+.tw-tip { margin: 0; text-align: left; font-size: 0.92rem; line-height: 1.65; color: #3b0764; background: #fff; border-radius: 14px; padding: 10px 14px; }
+.tw-tip b { color: #7c3aed; }
+
+.tw-score { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 3rem; color: #7c3aed; line-height: 1; }
+.tw-score small { font-size: 1.2rem; color: #a8a29e; }
+.tw-review { display: grid; gap: 10px; width: 100%; max-width: 560px; }
+.tw-rv { background: #faf5ff; border: 1.5px solid #e9d5ff; border-radius: 16px; padding: 10px 12px; text-align: left; }
+.tw-rv-k { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.tw-rv-k span { display: grid; justify-items: center; background: #fff; border-radius: 10px; padding: 2px 10px; }
+.tw-rv-k b { font-family: 'Klee One', serif; font-size: 1.6rem; line-height: 1.2; }
+.tw-rv-k small { font-size: 0.66rem; font-weight: 700; color: #78716c; }
+.tw-rv p { margin: 0; font-size: 0.84rem; color: #57534e; line-height: 1.55; }
+.tw-acts { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+@media (max-width: 480px) { .tw-opts.txt { grid-template-columns: 1fr; } .tw-show { font-size: 4.6rem; } }

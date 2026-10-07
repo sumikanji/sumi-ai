@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài kiểm tra – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="test.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="test.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topbar">
+      <a href="index.html" class="back-btn" id="back-btn">← Về cấp học</a>
+      <div class="top-title" id="top-title">Bài kiểm tra</div>
+      <div class="top-xp" id="top-xp" title="Điểm hôm nay">⭐ 0</div>
+    </div>
+
+    <!-- Màn hình bắt đầu -->
+    <section class="screen start" id="screen-start" hidden>
+      <div id="start-mascot"></div>
+      <h1 id="start-title"></h1>
+      <p class="start-sub" id="start-sub"></p>
+      <div class="t-options">
+        <div class="t-opt-group">
+          <div class="t-opt-label">Phạm vi chữ</div>
+          <div class="seg" id="opt-pool">
+            <button data-v="all">Tất cả chữ của cấp</button>
+            <button data-v="learned">Chỉ chữ đã học <span id="learned-n"></span></button>
+          </div>
+        </div>
+        <div class="t-opt-group">
+          <div class="t-opt-label">Câu 書き (viết chữ) làm bằng</div>
+          <div class="seg" id="opt-write">
+            <button data-v="hand">✍️ Viết tay, tự chấm</button>
+            <button data-v="choice">🔘 Chọn chữ đúng</button>
+          </div>
+        </div>
+      </div>
+      <div class="start-rules" id="start-rules"></div>
+      <div class="resume" id="resume" hidden></div>
+      <div class="start-actions" id="start-actions"></div>
+    </section>
+
+    <!-- Màn hình làm bài -->
+    <section class="screen quiz" id="screen-quiz" hidden>
+      <div class="quiz-meta">
+        <div class="meta-left" id="meta-left"></div>
+        <div class="meta-right" id="meta-right"></div>
+      </div>
+      <div class="bar"><span id="bar-fill"></span></div>
+
+      <div class="q-card t-card" id="q-card">
+        <div class="t-qhead"><span class="t-kind" id="t-kind"></span><span class="t-no" id="t-no"></span></div>
+        <div class="q-label" id="q-label"></div>
+        <p class="t-sent" id="t-sent"></p>
+        <p class="t-tr" id="t-tr"></p>
+      </div>
+
+      <!-- Trắc nghiệm -->
+      <div class="options" id="options"></div>
+
+      <!-- Viết tay -->
+      <div class="hand" id="hand" hidden>
+        <div class="hand-pad">
+          <div class="hand-cells" id="hand-cells"></div>
+          <canvas id="hand-canvas"></canvas>
+        </div>
+        <div class="hand-okuri" id="hand-okuri"></div>
+        <div class="hand-actions" id="hand-actions">
+          <button class="act-btn" id="hand-clear">Xóa</button>
+          <button class="act-btn" id="hand-skip">🤔 Không nhớ</button>
+          <button class="act-btn primary" id="hand-check">Xem đáp án</button>
+        </div>
+        <div class="hand-judge" id="hand-judge" hidden>
+          <div class="hj-answer" id="hj-answer"></div>
+          <p class="hj-tip">So sánh với chữ bạn viết: đúng hình, đủ nét, đúng とめ・はね・はらい thì chấm ○.</p>
+          <div class="hj-btns">
+            <button class="hj-btn ok" id="hj-ok">○ Đúng <small>(phím 1)</small></button>
+            <button class="hj-btn bad" id="hj-bad">× Chưa đúng <small>(phím 2)</small></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phản hồi -->
+      <div class="feedback" id="feedback" hidden>
+        <div class="fb-head">
+          <div class="fb-mascot" id="fb-mascot"></div>
+          <div>
+            <div class="fb-verdict" id="fb-verdict"></div>
+            <div class="fb-stage" id="fb-stage"></div>
+          </div>
+        </div>
+        <div class="fb-info" id="fb-info"></div>
+        <button class="next-btn" id="next-btn">Câu tiếp →</button>
+      </div>
+      <button class="t-pause" id="t-pause">⏸ Dừng, làm tiếp sau</button>
+    </section>
+
+    <!-- Kết quả -->
+    <section class="screen end" id="screen-end" hidden>
+      <div class="t-paper">
+        <div class="t-paper-head">
+          <div>
+            <div class="t-paper-title" id="paper-title"></div>
+            <div class="t-paper-sub" id="paper-sub"></div>
+          </div>
+          <div class="t-score" id="t-score"></div>
+        </div>
+        <div class="t-stamp" id="t-stamp"></div>
+        <div class="end-stats" id="end-stats"></div>
+        <div class="t-sheet" id="t-sheet"></div>
+        <div class="end-list" id="end-list"></div>
+        <div class="start-actions" id="end-actions"></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

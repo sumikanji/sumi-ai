@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Săn cầu chữ – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="hunt.css">
+  <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="data/dict-index.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="firebase-config.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="hunt-sfx.js" defer></script>
+  <script src="hunt-hero.js" defer></script>
+  <script src="hunt.js" defer></script>
+</head>
+<body>
+  <main class="wrap hn-wrap">
+    <div class="topbar">
+      <a href="index.html" class="back-btn" id="back-btn">← Về cấp học</a>
+      <div class="top-title">🔮 Săn cầu chữ</div>
+      <button class="top-xp hn-bookbtn" id="hn-book-btn" title="Hộp sưu tập">Hộp chữ <b id="hn-book-n">0</b></button>
+    </div>
+
+    <div class="hn-hud">
+      <div class="hn-life" id="hn-life"></div>
+      <div class="hn-txt"><b id="hn-caught">Đã thu phục 0 chữ</b><small id="hn-near">Đi vào bụi cỏ cao để tìm cầu chữ</small></div>
+      <div class="hn-radar" title="Khoảng cách tới cầu chữ gần nhất"><b id="hn-rtxt" class="hn-heat">Lạnh</b></div>
+      <div class="hn-snd"><button id="hn-snd" aria-label="Hiệu ứng âm thanh"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="w" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="x" d="M16 9l6 6M22 9l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button id="hn-mus" aria-label="Nhạc nền"><svg viewBox="0 0 24 24"><path d="M9 17V5l11-2v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="17.5" r="2.8" fill="currentColor"/><circle cx="17.5" cy="15.5" r="2.8" fill="currentColor"/><path class="x" d="M3 3l18 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button></div>
+    </div>
+
+    <div class="hn-stage" id="hn-stage">
+      <canvas id="hn-canvas"></canvas>
+      <div class="hn-toast" id="hn-toast"></div>
+
+      <!-- Nhân vật của bạn -->
+      <button class="hn-hero" id="hn-hero" title="Nhân vật của bạn"><canvas id="hn-hero-cv" width="128" height="128"></canvas><span class="hh-txt"><span class="hh-lv">Lv <b id="hn-lv">0</b><small>/2136</small></span><span class="hh-bar"><i id="hn-lvbar"></i></span></span><span class="hh-due" id="hn-due" hidden></span></button>
+      <!-- Lệnh truy nã -->
+      <div class="hn-wanted" id="hn-wanted"></div>
+      <!-- Hộp sưu tập ở góc bản đồ -->
+      <button class="hn-box" id="hn-box" title="Hộp sưu tập"><svg viewBox="0 0 64 56" aria-hidden="true">
+        <rect x="4" y="22" width="56" height="30" rx="5" fill="#9a3412" stroke="#451a03" stroke-width="2.5"/>
+        <rect x="4" y="22" width="56" height="7" fill="#7c2d12"/>
+        <path d="M2 14 Q2 6 10 6 H54 Q62 6 62 14 V22 H2 Z" fill="#c2410c" stroke="#451a03" stroke-width="2.5"/>
+        <path d="M2 18 H62" stroke="#fbbf24" stroke-width="3"/><path d="M4 40 H60" stroke="#fbbf24" stroke-width="2" opacity=".7"/>
+        <rect x="26" y="15" width="12" height="14" rx="3" fill="#fbbf24" stroke="#92400e" stroke-width="2"/><circle cx="32" cy="22" r="2.2" fill="#92400e"/>
+        <ellipse cx="14" cy="11" rx="6" ry="2" fill="#fdba74" opacity=".7"/></svg><b id="hn-box-n">0</b></button>
+
+      <!-- Gặp cầu chữ: giải đố mở khoá rồi trả lời 3 câu hỏi -->
+      <div class="hn-over hn-enc" id="hn-enc" hidden>
+        <div class="hn-quiz">
+          <div class="hn-qhead">
+            <div class="hn-qk" id="hn-qk"></div>
+            <div class="hn-qmeta"><div class="hn-rar" id="hn-rar"></div><small id="hn-qtag"></small></div>
+            <button class="hn-run" id="hn-run">Bỏ đi</button>
+          </div>
+          <div class="hn-qstage" id="hn-qstage">
+            <div class="hn-seals" id="hn-seals"><i></i><i></i><i></i></div>
+            <div class="hn-ask" id="hn-ask"></div>
+            <div class="hn-opts" id="hn-opts"></div>
+            <div class="hn-fb" id="hn-fb"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thu phục thành công -->
+      <div class="hn-over" id="hn-got" hidden></div>
+
+      <!-- Trang nhân vật -->
+      <div class="hn-over" id="hn-heropage" hidden></div>
+
+      <!-- Sổ sưu tập -->
+      <div class="hn-over" id="hn-book" hidden></div>
+
+      <!-- Màn mở đầu -->
+      <div class="hn-over" id="hn-menu">
+        <div class="hn-card">
+          <span id="hn-menu-hiyo"></span>
+          <h2>Săn cầu chữ</h2>
+          <p>Mỗi lượt có một <b>lệnh truy nã</b> ghi nghĩa của chữ cần bắt. <b>Đi theo chấm vàng</b> trên ra-đa để tìm cầu chữ. Gặp chữ, trả lời đúng <b>3 câu hỏi</b> để thu phục.</p><p>Trên đường đi có <b>quái thú mực</b> tấn công: giữ nút <b>Bắn</b> để bắn trả. Nhặt <b>vàng</b>, <b>húc vào trứng cam</b> để tiến hoá và có đạn mạnh hơn. Hạ quái sẽ rơi <b>phụ kiện</b> có công năng riêng (áo giáp, đôi cánh, thêm tay…), xem ở khung nhân vật góc trái. Bạn có <b>3 mạng</b>: cứu được 1 chữ hoặc nhặt đủ 50 vàng thì thêm mạng. Bị quái thú bắt sẽ <b>mất 1 mạng và mất tiến hoá</b>!</p><p>Mỗi chữ thu phục = <b>+1 level</b> (tối đa 2136). Hôm sau có bài <b>ôn lại</b>: trả lời sai thì chữ trốn khỏi hộp và tụt level.</p>
+          <div class="hn-legend">
+            <span class="r1">Thường</span><span class="r2">Hiếm</span><span class="r3">Quý</span><span class="r4">Lấp lánh</span>
+          </div>
+          <p class="hn-sub" id="hn-menu-sub"></p>
+          <button class="act-btn primary" id="hn-go">▶ Bắt đầu săn</button>
+          <p class="hn-keys">Máy tính: phím mũi tên / WASD để đi · giữ Space (hoặc J) để bắn · số 1–4 chọn đáp án. Điện thoại: chạm vào bản đồ để đi tới đó, hoặc dùng nút bên dưới; giữ nút Bắn để bắn (đạn tự nhắm quái thú gần nhất).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hn-pad">
+      <div class="hn-dpad">
+        <button data-k="l" aria-label="Sang trái">◀</button>
+        <div class="hn-ud"><button data-k="u" aria-label="Lên">▲</button><button data-k="d" aria-label="Xuống">▼</button></div>
+        <button data-k="r" aria-label="Sang phải">▶</button>
+      </div>
+      <button class="hn-fire" id="hn-fire" aria-label="Bắn">Bắn</button>
+    </div>
+  </main>
+</body>
+</html>

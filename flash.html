@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcard – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="flash.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="flash.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topbar">
+      <a href="index.html" class="back-btn" id="back-btn">← Về cấp học</a>
+      <div class="top-title">🃏 Flashcard</div>
+      <div class="top-xp" id="top-count">0 / 0</div>
+    </div>
+
+    <!-- Tùy chọn -->
+    <div class="fc-opts">
+      <div class="seg small" id="opt-scope">
+        <button data-v="all">Tất cả</button>
+        <button data-v="todo">Chưa học</button>
+        <button data-v="learned">Đã học</button>
+        <button data-v="fav">❤️ Yêu thích</button>
+      </div>
+      <div class="seg small" id="opt-front">
+        <button data-v="kanji">Mặt trước: Chữ Hán</button>
+        <button data-v="mean">Mặt trước: Nghĩa</button>
+        <button data-v="word">Mặt trước: Từ vựng</button>
+      </div>
+    </div>
+
+    <!-- Tự chọn chữ yêu thích -->
+    <div class="pick" id="pick" hidden>
+      <div class="pick-head">
+        <b>❤️ Chọn chữ yêu thích</b><span id="pick-count"></span>
+        <span class="pick-acts">
+          <button data-a="all">Chọn tất cả</button>
+          <button data-a="learned">Chữ đã học</button>
+          <button data-a="none">Bỏ chọn hết</button>
+          <button data-a="fold" id="pick-fold">Thu gọn ▲</button>
+        </span>
+      </div>
+      <div class="pick-grid" id="pick-grid"></div>
+      <small class="pick-tip">Bấm vào chữ để thêm / bỏ. Khi đang lật thẻ, bấm 🤍 Yêu thích để thêm chữ đó.</small>
+    </div>
+
+    <div class="fc-progress">
+      <div class="fc-bar"><i id="fc-bar"></i></div>
+      <div class="fc-piles">
+        <span class="pile bad">😕 Chưa nhớ <b id="n-bad">0</b></span>
+        <span class="pile left">Còn lại <b id="n-left">0</b></span>
+        <span class="pile ok">😊 Đã nhớ <b id="n-ok">0</b></span>
+      </div>
+    </div>
+
+    <!-- Thẻ -->
+    <section class="fc-stage" id="fc-stage">
+      <div class="fc-card" id="fc-card" tabindex="0" aria-live="polite">
+        <div class="fc-inner" id="fc-inner">
+          <div class="fc-face fc-front" id="fc-front"></div>
+          <div class="fc-face fc-back" id="fc-back"></div>
+        </div>
+        <span class="fc-hint fc-hint-l">😕</span>
+        <span class="fc-hint fc-hint-r">😊</span>
+      </div>
+      <p class="fc-tip">Chạm vào thẻ (hoặc phím <kbd>Space</kbd>) để lật · Vuốt / phím <kbd>←</kbd> chưa nhớ · <kbd>→</kbd> đã nhớ</p>
+      <div class="fc-actions">
+        <button class="fc-btn bad" id="btn-bad">😕 Chưa nhớ</button>
+        <button class="fc-btn flip" id="btn-flip">↻ Lật thẻ</button>
+        <button class="fc-btn ok" id="btn-ok">😊 Đã nhớ</button>
+      </div>
+      <div class="fc-tools">
+        <button class="fc-tool" id="btn-undo" title="Quay lại thẻ trước (phím Z)">↶ Thẻ trước</button>
+        <button class="fc-tool" id="btn-speak" title="Đọc to (phím S)">🔊 Nghe đọc</button>
+        <button class="fc-tool" id="btn-shuffle">🔀 Xáo lại</button>
+        <button class="fc-tool fav" id="btn-fav" title="Thêm / bỏ chữ yêu thích (phím F)">🤍 Yêu thích</button>
+      </div>
+    </section>
+
+    <!-- Kết thúc lượt -->
+    <section class="screen end fc-end" id="fc-end" hidden></section>
+  </main>
+</body>
+</html>

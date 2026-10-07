@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiyo hứng chữ – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <link rel="stylesheet" href="catch.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="catch.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topbar">
+      <a href="index.html" class="back-btn" id="back-btn">← Về cấp học</a>
+      <div class="top-title">🎮 Hiyo hứng chữ</div>
+      <div class="top-xp" id="top-best">Kỷ lục 0</div>
+    </div>
+
+    <section class="cg" id="cg">
+      <div class="cg-hud">
+        <div class="cg-target"><b>Hiyo hứng chữ</b><small id="cg-level">Cấp độ 1</small></div>
+        <div class="cg-stats">
+          <span class="cg-hearts" id="cg-hearts"></span>
+          <span class="cg-score"><b id="cg-score">0</b> điểm</span>
+          <span class="cg-combo" id="cg-combo"></span>
+        </div>
+      </div>
+      <div class="cg-stage" id="cg-stage">
+        <div class="cg-bigask" aria-live="polite"><small id="cg-ask">Hứng chữ có nghĩa</small><b id="cg-word">…</b></div>
+        <canvas id="cg-canvas"></canvas>
+        <div class="cg-float" id="cg-float"></div>
+
+        <!-- Màn bắt đầu -->
+        <div class="cg-screen" id="cg-start">
+          <div class="cg-hiyo" id="cg-start-hiyo"></div>
+          <h1>Hiyo hứng chữ</h1>
+          <p>Chữ Hán rơi từ trên xuống. Di chuyển Hiyo để <b>hứng đúng chữ</b> có nghĩa ghi ở trên. Hứng nhầm chữ khác mất 1 trái tim ♥.</p>
+          <div class="cg-pool" id="cg-pool">
+            <button data-v="learned">Chữ đã học <small></small></button>
+            <button data-v="fav">❤️ Yêu thích <small></small></button>
+            <button data-v="open">Chữ đang mở <small></small></button>
+          </div>
+          <button class="act-btn primary cg-go" id="cg-go">▶ Bắt đầu</button>
+          <p class="cg-keys">Điện thoại: kéo ngón tay trái/phải · Máy tính: rê chuột hoặc phím ← →</p>
+        </div>
+
+        <!-- Màn kết thúc -->
+        <div class="cg-screen" id="cg-end" hidden></div>
+
+        <!-- Tạm dừng -->
+        <div class="cg-screen cg-pause" id="cg-pause" hidden>
+          <h1>Tạm dừng</h1>
+          <button class="act-btn primary" id="cg-resume">▶ Chơi tiếp</button>
+        </div>
+      </div>
+      <div class="cg-foot">
+        <button class="cg-btn" id="cg-pause-btn" disabled>⏸ Tạm dừng</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

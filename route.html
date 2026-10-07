@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="copyright" content="© 2026 Sumi Kanji. All rights reserved.">
+  <meta name="author" content="Sumi Kanji">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lộ trình học – Sumi Kanji</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="route.css">
+  <link rel="stylesheet" href="fx.css">
+  <script src="data/index-data.js" defer></script>
+  <script src="common.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="site.js" defer></script>
+  <script src="srs.js" defer></script>
+  <script src="progress.js" defer></script>
+  <script src="firebase-config.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="route.js" defer></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <!-- Logo gà con Hiyo -->
+        <svg class="brand-logo-unko" viewBox="-72 -66 144 132" fill="none" aria-hidden="true"><g><path d="M-2 -40 C-6 -52 2 -56 4 -48 C6 -54 14 -52 8 -42" fill="#FFE066" stroke="#9A6A1F" stroke-width="2.5" stroke-linejoin="round"/><path d="M0 -40 C30 -40 46 -18 46 10 C46 36 28 50 0 50 C-28 50 -46 36 -46 10 C-46 -18 -30 -40 0 -40 Z" fill="#FFE066" stroke="#9A6A1F" stroke-width="3"/><path d="M-44 14 Q-58 22 -48 34 Q-42 28 -40 22 Z" fill="#FFD43B" stroke="#9A6A1F" stroke-width="2.5"/><path d="M44 14 Q58 22 48 34 Q42 28 40 22 Z" fill="#FFD43B" stroke="#9A6A1F" stroke-width="2.5"/><path d="M-14 50 l-4 6 M-14 50 l0 7 M-14 50 l4 6 M14 50 l-4 6 M14 50 l0 7 M14 50 l4 6" stroke="#FF922B" stroke-width="3" stroke-linecap="round"/><ellipse cx="-15" cy="4" rx="7.5" ry="9.5" fill="#3B2412"/><ellipse cx="15" cy="4" rx="7.5" ry="9.5" fill="#3B2412"/><circle cx="-12" cy="0" r="3" fill="#fff"/><circle cx="18" cy="0" r="3" fill="#fff"/><circle cx="-17" cy="9" r="1.4" fill="#fff"/><circle cx="13" cy="9" r="1.4" fill="#fff"/><path d="M-5 14 Q0 20 5 14 Q0 11 -5 14 Z" fill="#FF922B"/><ellipse cx="-28" cy="16" rx="7" ry="4" fill="#FF8FA3" opacity="0.75"/><ellipse cx="28" cy="16" rx="7" ry="4" fill="#FF8FA3" opacity="0.75"/><ellipse cx="-8" cy="-36" rx="24" ry="8.5" fill="#2E2A27" transform="rotate(-10 -8 -36)"/><circle cx="-10" cy="-45" r="3.5" fill="#2E2A27"/><path transform="translate(46 -30) scale(1)" d="M0 -8 L2.4 -2.4 L8 0 L2.4 2.4 L0 8 L-2.4 2.4 L-8 0 L-2.4 -2.4 Z" fill="#FFD43B"/></g></svg>
+        <div class="brand-text">
+          <h1>Sumi Kanji</h1>
+          <p>笑って 楽しくマスター！</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span>Trang chủ</span>
+        </a>
+        <a href="route.html" class="nav-item active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          <span>Lộ trình học</span>
+        </a>
+        <a href="dict.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span>Từ điển Kanji</span>
+        </a>
+        <a href="kanken.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Thi Kanken</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          <span>Cá nhân</span>
+        </a>
+      </nav>
+
+      <div class="nav-right">
+        <div class="profile-pill">
+          <span>漢字はかせ</span>
+          <span class="profile-emoji">🐣</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container route-page">
+
+    <!-- Vị trí hiện tại -->
+    <section class="rt-hero" id="rt-hero"></section>
+
+    <nav class="rt-toc" aria-label="Mục lục">
+      <a href="#ban-do">🗺️ Bản đồ</a><a href="#man-choi">⚔️ Màn &amp; mở khóa</a><a href="#tien-hoa">🐣 Tiến hóa</a>
+      <a href="#on-tap">🔁 Ôn tập ngắt quãng</a><a href="#moi-ngay">🔥 Mỗi ngày</a><a href="#kanken">📝 Thi Kanken</a>
+      <a href="#cong-cu">🧰 Công cụ</a><a href="#hoi-dap">❓ Hỏi đáp</a>
+    </nav>
+
+    <!-- 1. Bản đồ -->
+    <section class="rt-sec" id="ban-do">
+      <div class="rt-head"><span class="rt-no">1</span><div><h2>Bản đồ lộ trình <small>学習マップ</small></h2>
+        <p>Đi từ <b>小1</b> đến <b>高</b>, giống như trẻ em Nhật học từ lớp 1 đến hết cấp 3. Qua hết 8 chặng là bạn biết đủ <b>2.136 chữ Thường dụng</b>, đọc được báo chí.</p></div></div>
+      <div class="rt-map" id="rt-map"></div>
+    </section>
+
+    <!-- 2. Màn chơi -->
+    <section class="rt-sec" id="man-choi">
+      <div class="rt-head"><span class="rt-no">2</span><div><h2>Màn chơi &amp; mở khóa <small>ステージ</small></h2>
+        <p>Mỗi cấp được chia thành nhiều <b>màn, mỗi màn 10 chữ</b>. Bài kiểm tra đã nằm sẵn trong lộ trình, không cần tự chọn: làm xong bài này mới mở bước tiếp theo.</p></div></div>
+      <div class="rt-flow">
+        <div class="rf-step"><i>✍️</i><b>Học &amp; luyện viết</b><span>Xem nghĩa, cách đọc, thứ tự nét, từ vựng. <em>Bắt buộc</em> luyện viết đủ <em>5 lần</em> (tô 3 · tự viết 2).</span></div>
+        <div class="rf-arrow">➜</div>
+        <div class="rf-step"><i>✅</i><b>Kiểm tra chữ</b><span><em>3 câu</em>: nghĩa, cách đọc, cách viết. Đúng từ <em>2/3</em> là chữ được tính đã học.</span></div>
+        <div class="rf-arrow">➜</div>
+        <div class="rf-step"><i>⚔️</i><b>Kiểm tra màn</b><span>Học đủ 10 chữ → kiểm tra cả 10 chữ, đúng từ <em>80%</em> → chơi <em>Truyện ghi nhớ</em> rồi mở màn tiếp.</span></div>
+        <div class="rf-arrow">➜</div>
+        <div class="rf-step mid"><i>📝</i><b>Giữa cấp</b><span>Học xong <em>nửa cấp</em> → kiểm tra <em>50 câu</em>, đạt từ <em>80 điểm</em> để mở nửa sau.</span></div>
+        <div class="rf-arrow">➜</div>
+        <div class="rf-step boss"><i>🏯</i><b>Thi tổng hợp</b><span>Học hết cấp → kiểm tra <em>toàn bộ chữ</em>, đạt từ <em>80 điểm</em>.</span></div>
+        <div class="rf-arrow">➜</div>
+        <div class="rf-step win"><i>🎉</i><b>Lên lớp</b><span>Hiyo <em>tiến hóa</em> và cấp kế tiếp được mở khóa.</span></div>
+      </div>
+      <div class="rt-grid2">
+        <div class="rt-box">
+          <h3>🏷️ Đọc ký hiệu Lv</h3>
+          <div class="rt-lv-demo"><span class="lv-big">Lv 小2-3</span></div>
+          <ul class="rt-list">
+            <li><b>小2</b> là đang ở Tiểu học lớp 2 (小 = 小学校). <b>中</b> là THCS, <b>高</b> là THPT.</li>
+            <li><b>-3</b> là đang ở màn thứ 3 của cấp đó.</li>
+            <li><b>小2-📝</b> là đã học xong nửa cấp, đang chờ <b>Kiểm tra giữa cấp</b>.</li>
+            <li><b>小2-🏯</b> là đã qua hết các màn, chỉ còn bài <b>Thi tổng hợp</b>.</li>
+            <li><b>極</b> (cực) là đã học hết toàn bộ lộ trình.</li>
+          </ul>
+        </div>
+        <div class="rt-box">
+          <h3>🚀 Đã biết sẵn? Vượt cấp!</h3>
+          <p>Nếu bạn đã biết chữ của một cấp, không cần học lại từng màn. Bấm <b>🚀 Thi vượt cấp</b> trong trang cấp đó để làm thẳng <b>Thi tổng hợp</b>:</p>
+          <ul class="rt-list">
+            <li>Đạt <b>từ 90 điểm</b>: <b>vượt cấp</b> ngay. Các chữ chưa học được đưa vào ôn tập ở mức 🌿 Đang lớn.</li>
+            <li>Đạt <b>80–89 điểm</b>: cần học hết các màn trước, rồi kết quả này mới được tính.</li>
+            <li>Chỉ làm được với cấp <b>đã mở khóa</b>.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="rt-tip">💡 Bấm <b>Học lại</b> một chữ <b>không làm mất</b> màn hay cấp đã qua. Chữ đó chỉ quay lại danh sách để bạn xem lại.</p>
+    </section>
+
+    <!-- 3. Tiến hóa -->
+    <section class="rt-sec" id="tien-hoa">
+      <div class="rt-head"><span class="rt-no">3</span><div><h2>Nuôi gà con Hiyo <small>ひよの進化</small></h2>
+        <p>Hiyo lớn lên cùng bạn. Mỗi lần <b>qua một cấp</b>, Hiyo tiến hóa sang dạng mới, hiện ở góc phải trên cùng và trong trang Cá nhân. Dạng nào đã mở thì có thể chọn làm avatar.</p></div></div>
+      <div class="rt-evo" id="rt-evo"></div>
+    </section>
+
+    <!-- 4. Ôn tập ngắt quãng -->
+    <section class="rt-sec" id="on-tap">
+      <div class="rt-head"><span class="rt-no">4</span><div><h2>Ôn tập ngắt quãng <small>間隔反復</small></h2>
+        <p>Bạn <b>không phải ôn mọi chữ mỗi ngày</b>. Trang tự tính chữ nào bạn <b>sắp quên</b> thì mới đưa ra ôn. Chữ càng nhớ chắc thì càng lâu mới gặp lại.</p></div></div>
+
+      <div class="rt-ladder" id="rt-ladder"></div>
+
+      <div class="rt-grid2">
+        <div class="rt-box">
+          <h3>✅ Trả lời đúng</h3>
+          <p>Chữ <b>lên 1 bậc</b>, lần ôn sau cách xa hơn: 1 → 2 → 4 → 7 → 15 → 30 → 60 → 120 ngày.</p>
+          <h3>❌ Trả lời sai</h3>
+          <p>Chữ <b>tụt 2 bậc</b> và <b>ngày mai</b> phải ôn lại. Không sao cả, đây chính là cách não ghi nhớ lâu hơn.</p>
+        </div>
+        <div class="rt-box rt-sim">
+          <h3>🎮 Thử xem</h3>
+          <p class="rt-small">Bấm Đúng hoặc Sai để xem chữ 学 di chuyển thế nào:</p>
+          <div class="sim-card"><div class="sim-ch">学</div><div class="sim-info" id="sim-info"></div></div>
+          <div class="sim-btns"><button class="sim-ok" id="sim-ok">✅ Đúng</button><button class="sim-ng" id="sim-ng">❌ Sai</button><button class="sim-reset" id="sim-reset">↺</button></div>
+          <div class="sim-log" id="sim-log"></div>
+        </div>
+      </div>
+      <div class="rt-mine" id="rt-mine"></div>
+      <p class="rt-tip">💡 Ôn đúng lúc <b>sắp quên</b> giúp trí nhớ được củng cố mạnh nhất. Học một chữ rồi chỉ cần ôn khoảng 8 lần trong 8 tháng là nhớ lâu dài.</p>
+    </section>
+
+    <!-- 5. Mỗi ngày -->
+    <section class="rt-sec" id="moi-ngay">
+      <div class="rt-head"><span class="rt-no">5</span><div><h2>Thói quen mỗi ngày <small>毎日の習慣</small></h2>
+        <p>Chỉ cần 10–15 phút mỗi ngày, theo đúng thứ tự sau:</p></div></div>
+      <ol class="rt-daily">
+        <li><b>Ôn tập trước</b>: bấm ô <em>Ôn tập</em> ở trang chủ, làm hết số chữ đến hạn hôm nay.</li>
+        <li><b>Học chữ mới sau</b>: khoảng <em>5–10 chữ</em> mỗi ngày là vừa. Học nhiều quá thì vài tuần sau số chữ phải ôn sẽ dồn lại rất nhiều.</li>
+        <li><b>Còn thời gian</b>: lật flashcard, in phiếu luyện viết hoặc đọc mẹo nhớ của cộng đồng.</li>
+      </ol>
+      <div class="rt-grid3">
+        <div class="rt-box"><h3>⭐ Điểm sao</h3>
+          <table class="rt-table"><tr><td>Học chữ mới</td><td>+10⭐</td></tr><tr><td>Ôn đúng</td><td>+3⭐</td></tr><tr><td>Ôn sai</td><td>+1⭐</td></tr><tr><td>Mỗi câu kiểm tra đúng</td><td>+1⭐</td></tr></table>
+        </div>
+        <div class="rt-box"><h3>🎯 Mục tiêu ngày</h3>
+          <p>Chọn ở trang chủ: <b>Thong thả 30⭐</b> (~5 phút), <b>Đều đặn 50⭐</b> (~10 phút) hoặc <b>Chăm chỉ 100⭐</b> (~20 phút). Đạt mục tiêu thì ngày hôm đó được tính vào chuỗi.</p>
+        </div>
+        <div class="rt-box"><h3>🔥 Chuỗi &amp; 🧊 ngày nghỉ</h3>
+          <p>Mỗi <b>7 ngày liên tiếp</b> được thưởng 1 <b>ngày nghỉ phép</b> (giữ tối đa 2). Lỡ bỏ 1–2 ngày thì ngày nghỉ được dùng tự động, chuỗi không bị mất.</p>
+        </div>
+      </div>
+      <div class="rt-mine" id="rt-today"></div>
+    </section>
+
+    <!-- 6. Kanken -->
+    <section class="rt-sec" id="kanken">
+      <div class="rt-head"><span class="rt-no">6</span><div><h2>Thi thử Kanken <small>漢検</small></h2>
+        <p>Mỗi cấp học tương ứng với một hoặc hai cấp Kanken. Đề thi thử của một cấp <b>mở khi bạn đã học tới cấp đó</b>.</p></div></div>
+      <div class="rt-kk" id="rt-kk"></div>
+      <p class="rt-tip">💡 Làm xong đề, bấm <b>Xem câu sai</b> để chỉ xem lại các câu làm sai, hoặc <b>Xem toàn bộ đáp án</b> để xem lần lượt từng phần.</p>
+    </section>
+
+    <!-- 7. Công cụ -->
+    <section class="rt-sec" id="cong-cu">
+      <div class="rt-head"><span class="rt-no">7</span><div><h2>Công cụ hỗ trợ <small>ツール</small></h2>
+        <p>Có trong trang học của mỗi cấp (cạnh nút <em>Luyện nhanh</em>) và trên thanh menu.</p></div></div>
+      <div class="rt-tools">
+        <div class="tool"><i>⚡</i><b>Luyện nhanh</b><span>Trắc nghiệm các chữ đã học trong cấp, không ảnh hưởng lịch ôn.</span></div>
+        <div class="tool"><i>🎮</i><b>Hiyo hứng chữ</b><span>Game phản xạ: chữ rơi xuống, di chuyển Hiyo hứng đúng chữ theo nghĩa. Càng chơi càng nhanh.</span></div>
+        <div class="tool"><i>🔮</i><b>Săn cầu chữ</b><span>Dẫn Hiyo đi khắp bãi cỏ tìm các quả cầu ngọc chứa chữ Kanji. Trả lời đúng cả 3 câu hỏi để thu phục chữ vào sổ sưu tập; sai một câu là cầu chạy mất.</span></div>
+        <div class="tool"><i>🗺️</i><b>Hiyo truy tìm kho báu</b><span>Game chạy nhảy qua Hà Nội, Hội An, Đà Nẵng, Sài Gòn: nhặt xu, giẫm lên đầu yêu quái mực, đập hộp quẻ và trả lời đúng để lấy 10 chữ Kanji, mở rương kho báu cuối màn.</span></div>
+        <div class="tool"><i>✍️</i><b>Nhìn rồi viết</b><span>Chữ hiện vài giây rồi biến mất, bạn viết lại theo trí nhớ. Trang chấm từng nét: đủ nét, đúng thứ tự, đúng chiều.</span></div>
+        <div class="tool"><i>👯</i><b>Chữ sinh đôi</b><span>Phân biệt các chữ na ná nhau như 未・末, 土・士, 人・入, kèm mẹo nhớ chỗ khác biệt.</span></div>
+        <div class="tool"><i>🃏</i><b>Flashcard</b><span>Lật thẻ, vuốt trái / phải để chia chữ “đã nhớ” và “chưa nhớ”.</span></div>
+        <div class="tool"><i>✍️</i><b>Phiếu luyện viết</b><span>In ra giấy A4 hoặc lưu PDF, có nét mẫu mờ để tô theo.</span></div>
+        <div class="tool"><i>📒</i><b>Sổ tay ôn tập</b><span>In bảng tóm tắt chữ, âm đọc, từ vựng để mang theo.</span></div>
+        <div class="tool"><i>📚</i><b>Từ điển Kanji</b><span>Tra theo chữ, âm Hán Việt, nghĩa Việt / Anh, bộ thủ, số nét.</span></div>
+        <div class="tool"><i>💡</i><b>Mẹo nhớ cộng đồng</b><span>Cuối trang học mỗi chữ: đọc và chia sẻ cách nhớ, thả tim cho mẹo hay.</span></div>
+        <div class="tool"><i>🏆</i><b>Bảng xếp hạng</b><span>Đăng nhập để có tên trên bảng. Bảng <em>Điểm tuần này</em> làm mới mỗi tuần.</span></div>
+      </div>
+    </section>
+
+    <!-- 8. Hỏi đáp -->
+    <section class="rt-sec" id="hoi-dap">
+      <div class="rt-head"><span class="rt-no">8</span><div><h2>Hỏi đáp <small>よくある質問</small></h2></div></div>
+      <div class="rt-faq">
+        <details><summary>Bỏ ôn mấy ngày thì sao?</summary><p>Các chữ đến hạn sẽ dồn lại, không bị mất. Bạn cứ ôn dần, mỗi ngày một ít. Chữ nào quên thì trả lời sai, chữ đó sẽ tự quay lại lịch ôn dày hơn.</p></details>
+        <details><summary>Tại sao không mở được cấp sau?</summary><p>Bạn cần qua hết các màn, bài <b>Kiểm tra giữa cấp</b> và đạt từ 80 điểm bài <b>Thi tổng hợp</b> của cấp trước. Bản đồ phía trên cho biết bạn còn thiếu gì.</p></details>
+        <details><summary>“Luyện nhanh” và “Ôn tập” khác nhau thế nào?</summary><p><b>Ôn tập</b> chỉ hỏi chữ đến hạn, và kết quả làm thay đổi lịch ôn. <b>Luyện nhanh</b>, flashcard và kiểm tra thì luyện bao nhiêu cũng được, không làm xáo trộn lịch ôn.</p></details>
+        <details><summary>Tiến độ lưu ở đâu?</summary><p>Chưa đăng nhập thì tiến độ lưu trên trình duyệt của máy này. Hãy dùng <b>Sao lưu</b> trong trang Cá nhân. Đăng nhập bằng Google, Apple hoặc email (khi đã bật đồng bộ) thì học trên điện thoại và máy tính đều giữ tiến độ.</p></details>
+        <details><summary>Học theo “Khối lớp” hay “Kanken”?</summary><p>Cùng một bộ chữ, chỉ chia theo hai cách. Tiến độ dùng chung: học chữ ở bên nào thì bên kia cũng được tính.</p></details>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,91 @@
+/* ===== Tài khoản: nút đăng nhập, menu, hộp thoại ===== */
+.acct-box { position: relative; }
+.acct-login {
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px; cursor: pointer;
+  border: none; background: linear-gradient(135deg, #fde047, #facc15); color: #713f12;
+  font: inherit; font-weight: 800; font-size: 0.88rem; box-shadow: 0 3px 0 #ca8a04; white-space: nowrap;
+}
+.acct-login svg { width: 18px; height: 18px; }
+.acct-login:hover { filter: brightness(1.03); transform: translateY(-1px); }
+.acct-me {
+  display: inline-flex; align-items: center; gap: 8px; padding: 3px 12px 3px 3px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid #fef08a; background: #fefce8; font: inherit; font-weight: 800; font-size: 0.85rem; color: #854d0e; max-width: 210px;
+}
+.acct-me span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.acct-me i { font-style: normal; font-size: 0.7rem; opacity: .7; }
+.acct-av { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; object-fit: cover; display: block; }
+.acct-menu {
+  position: absolute; right: 0; top: calc(100% + 8px); width: 260px; background: #fff; border: 1.5px solid #ede7de;
+  border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,.12); padding: 8px; z-index: 300; display: flex; flex-direction: column;
+}
+.acct-menu[hidden] { display: none; }
+.am-head { display: flex; gap: 10px; align-items: center; padding: 8px; border-bottom: 1px dashed #ede7de; margin-bottom: 4px; }
+.am-av { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.am-head b { display: block; color: #332d29; }
+.am-head small { display: block; color: #78716c; font-size: 0.75rem; word-break: break-all; }
+.am-head em { display: block; font-style: normal; font-size: 0.7rem; color: #a16207; font-weight: 700; margin-top: 2px; }
+.acct-menu a, .acct-menu button {
+  text-align: left; padding: 9px 10px; border-radius: 10px; text-decoration: none; color: #332d29; font: inherit; font-weight: 700;
+  font-size: 0.88rem; background: none; border: none; cursor: pointer;
+}
+.acct-menu a:hover, .acct-menu button:hover { background: #fefce8; }
+
+.login-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(41, 37, 36, .45); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.login-overlay[hidden] { display: none; }
+.login-card {
+  position: relative; width: 100%; max-width: 410px; max-height: calc(100vh - 32px); overflow-y: auto; background: #fffdf8;
+  border: 2px solid #fef08a; border-radius: 26px; padding: 26px 24px 20px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,.2);
+  font-family: 'Plus Jakarta Sans', sans-serif; color: #332d29; animation: lgIn .25s ease;
+}
+@keyframes lgIn { from { transform: translateY(12px) scale(.98); opacity: 0; } }
+.lg-close { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid #ede7de; background: #fff; cursor: pointer; font-size: 0.9rem; }
+.lg-av { width: 76px; height: 76px; }
+.login-card h2 { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: 1.3rem; margin: 6px 0 4px; }
+.lg-sub { font-size: 0.86rem; color: #78716c; margin: 0 0 16px; }
+.lg-providers { display: flex; flex-direction: column; gap: 8px; }
+.lg-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px; padding: 11px 14px; border-radius: 14px; cursor: pointer;
+  font: inherit; font-weight: 800; font-size: 0.92rem; border: 1.5px solid #e7e5e4; background: #fff; color: #1f2937;
+}
+.lg-btn:hover { background: #fafaf9; }
+.lg-btn.a { background: #111; color: #fff; border-color: #111; }
+.lg-btn.a:hover { background: #262626; }
+.lg-or { display: flex; align-items: center; gap: 10px; color: #a8a29e; font-size: 0.78rem; margin: 16px 0 12px; }
+.lg-or::before, .lg-or::after { content: ''; flex: 1; height: 1px; background: #e7e5e4; }
+.lg-tabs { display: flex; background: #f5f5f4; border-radius: 12px; padding: 4px; margin-bottom: 12px; }
+.lg-tabs button { flex: 1; padding: 8px; border: none; border-radius: 9px; background: none; font: inherit; font-weight: 800; font-size: 0.86rem; color: #78716c; cursor: pointer; }
+.lg-tabs button.on { background: #fff; color: #854d0e; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.lg-form { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+.lg-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; font-weight: 700; color: #57534e; }
+.lg-form label[hidden] { display: none; }
+.lg-form input { padding: 11px 12px; border-radius: 12px; border: 1.5px solid #e7e5e4; font: inherit; font-size: 0.95rem; background: #fff; }
+.lg-form input:focus { outline: none; border-color: #eab308; box-shadow: 0 0 0 3px #fef9c3; }
+.lg-err { min-height: 1em; margin: 0; font-size: 0.82rem; color: #dc2626; font-weight: 600; }
+.lg-err.ok { color: #16a34a; }
+.lg-submit { padding: 12px; border-radius: 14px; border: none; background: linear-gradient(135deg, #fde047, #facc15); color: #713f12; font: inherit; font-weight: 900; font-size: 1rem; cursor: pointer; box-shadow: 0 3px 0 #ca8a04; }
+.lg-submit:disabled, .lg-btn:disabled { opacity: .6; cursor: wait; }
+.lg-forgot { background: none; border: none; color: #a16207; font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+.lg-forgot[hidden] { display: none; }
+.lg-note { font-size: 0.75rem; color: #78716c; margin: 14px 0 0; line-height: 1.5; }
+body.no-scroll { overflow: hidden; }
+@media (max-width: 640px) {
+  .acct-me span, .acct-me i { display: none; }
+  .acct-login { padding: 7px 12px; font-size: 0.8rem; }
+  .acct-login svg { width: 16px; height: 16px; }
+  .acct-me { padding: 3px; }
+}
+
+/* Huy hiệu cấp – màn */
+.lv-chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 12px 2px 2px; margin-right: 8px; border-radius: 999px; background: #fffdf5; border: 1.5px solid #fde68a; text-decoration: none; color: #854d0e; }
+.lv-chip:hover { background: #fef9c3; }
+.lc-av { position: relative; width: 40px; height: 40px; flex-shrink: 0; }
+.lc-ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.lc-ring circle { fill: none; stroke-width: 3.5; }
+.lc-bg { stroke: #fef3c7; }
+.lc-fg { stroke: #eab308; stroke-linecap: round; transition: stroke-dashoffset .5s; }
+.lc-hiyo { position: absolute; inset: 5px; width: 30px; height: 30px; }
+.lc-txt { display: flex; flex-direction: column; line-height: 1.1; }
+.lc-txt b { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: 0.9rem; white-space: nowrap; }
+.lc-txt small { font-size: 0.68rem; font-weight: 700; color: #a16207; white-space: nowrap; }
+.nav-right { display: flex; align-items: center; }
+@media (max-width: 640px) { .lc-txt small { display: none; } .lv-chip { padding-right: 8px; margin-right: 4px; } }
